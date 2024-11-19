@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "outDir": "./src/js"
+    "outDir": "./src/js",
+    "jsx": "react-jsx"
   },
   "include": ["src/**/*"]
 }
