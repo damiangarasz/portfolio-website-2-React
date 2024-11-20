@@ -1,12 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var jsx_runtime_1 = require("react/jsx-runtime");
-var react_1 = require("react");
-var react_dom_1 = require("react-dom");
-var Header_1 = require("./Header");
-var App = function () {
-    (0, jsx_runtime_1.jsx)(Header_1.default, {});
+import { jsx as _jsx } from "react/jsx-runtime";
+import { createRoot } from "react-dom/client";
+import Header from "./Header";
+const App = () => {
+    return _jsx(Header, {});
 };
-var container = document.getElementById("root");
-var root = react_dom_1.default.createRoot(container);
-root.render(react_1.default.createElement(App));
+document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("root");
+    if (container == null) {
+        return;
+    }
+    const root = createRoot(container);
+    root.render(_jsx(App, {}));
+});

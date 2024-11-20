@@ -1,9 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "target": "ESNext", // Używanie ESNext do generowania nowoczesnych plików JS
+    "module": "ESNext", // Używanie modułów ESNext
+    "moduleResolution": "node", // Rozwiązywanie modułów jak w Node.js
+    "jsx": "react-jsx", // JSX w stylu React 17
+    "strict": true, // Włączenie wszystkich reguł TypeScript
+    "esModuleInterop": true, // Pozwala na interoperacyjność z CommonJS
+    "skipLibCheck": true, // Pomija sprawdzanie typów w bibliotekach
+    "resolveJsonModule": true,
     "outDir": "./src/js",
-    "jsx": "react-jsx"
+    "types": ["react", "react-dom", "node"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
