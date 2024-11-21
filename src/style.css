@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  body {
+    background-color: #edebef;
+  }
+
+  /* hamburger toggle logika POCZĄTEK */
+  .hamburger-toggle[data-state="on"] {
+    display: block;
+  }
+  .hamburger-toggle[data-state="off"] {
+    display: none;
+  }
+  .x-toggle[data-state="off"] {
+    display: none;
+  }
+  .x-toggle[data-state="on"] {
+    display: block;
+  }
+  /* hamburger toggle logika KONIEC */
+
+  /* menu główne POCZĄTEK */
+  .learn:hover .drop-menu {
+    display: block;
+  }
+  /* menu główne KONIEC */
+
+  /* search bar POCZĄTEK */
+  .search-bar[data-state="on"] {
+    display: block;
+  }
+  .search-bar[data-state="off"] {
+    display: none;
+  }
+  .lupa[data-state="on"] {
+    display: block;
+  }
+  .lupa[data-state="off"] {
+    display: none;
+  }
+  /* search bar KONIEC */
+}

@@ -1,7 +1,7 @@
 const SearchBar = () => {
   return (
     <div>
-      <form>
+      <form data-state="off" className="search-bar">
         <div>
           <input type="search" data-state="off" placeholder="search" />
           <button data-state="off">
@@ -24,11 +24,13 @@ const SearchBar = () => {
           </button>
         </div>
       </form>
-      <div data-state="off">
+      <div data-state="on" className="lupa">
         <svg
           fill="#000000"
           viewBox="0 0 32 32"
           version="1.1"
+          width="25px"
+          height="25px"
           xmlns="http://www.w3.org/2000/svg"
         >
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -42,7 +44,6 @@ const SearchBar = () => {
           </g>
         </svg>
       </div>
-      <button>Sign in</button>
     </div>
   );
 };
