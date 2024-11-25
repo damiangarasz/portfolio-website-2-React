@@ -1,10 +1,63 @@
+import { useState, useEffect } from "react";
+
+const data = [
+  "krówka",
+  "konik",
+  "muszka",
+  "prówka",
+  "robaczek",
+  "krokusek",
+  "krokodylek",
+];
+
 const SearchBar = () => {
+  const [search, searchResoult] = useState("");
+  const [wynik, filtrowanie] = useState<string[]>([]);
+
+  useEffect(
+    function searchFunction() {
+      const filteredData = data.filter((word) => {
+        return word.toLowerCase().includes(search.toLowerCase());
+      });
+      filtrowanie(filteredData);
+    },
+    [search],
+  );
+
+  useEffect(() => {
+    const lol = document.querySelector<HTMLElement>(".hint");
+    if (search.length != 0) {
+      if (lol) {
+        lol.classList.remove("hidden");
+        lol.classList.add("visible");
+        console.log(search);
+      }
+    } else {
+      if (lol) {
+        lol.classList.remove("visible");
+        lol.classList.add("hidden");
+      }
+    }
+  }, [wynik]);
+
   return (
     <div>
-      <form data-state="off" className="search-bar">
+      <form data-state="on" className="search-bar">
         <div>
-          <input type="search" data-state="off" placeholder="search" />
-          <button data-state="off">
+          <input
+            onChange={(e) => {
+              searchResoult(e.target.value);
+            }}
+            type="search"
+            data-state="off"
+            placeholder="search"
+          />
+          <ul className="hint absolute hidden">
+            {wynik.map((wynik, index) => {
+              return <li key={index}>{wynik}</li>;
+            })}
+          </ul>
+          <button data-state="on">
             <svg
               fill="#000000"
               viewBox="0 0 32 32"

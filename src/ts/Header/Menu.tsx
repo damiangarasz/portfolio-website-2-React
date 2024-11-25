@@ -1,6 +1,6 @@
 const Menu = () => {
   return (
-    <div>
+    <div className="w-[350px/30] bg-[#00adef]">
       <div data-state="on">
         <svg
           className="md:hidden"
@@ -70,7 +70,7 @@ const Menu = () => {
         </svg>
       </div>
       <nav aria-label="main menu hover:color" aria-expanded="false">
-        <ol className="flex">
+        <ol className="flex space-x-5">
           <li className="">
             <span>•</span>Home
           </li>
