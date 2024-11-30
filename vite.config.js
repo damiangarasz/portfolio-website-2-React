@@ -2,12 +2,21 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
+  root: "src",
   plugins: [react()],
   build: {
-    target: "esnext", // Ustawienie targetu na ESNext
+    rollupOptions: {
+      output: {
+        manualChunks: undefined, // Dla uproszczenia budowania
+      },
+    },
   },
   server: {
-    open: true, // Otwiera stronę w przeglądarce po uruchomieniu serwera
+    open: true,
   },
-  root: "src",
+  resolve: {
+    alias: {
+      "@": "/src",
+    },
+  },
 });

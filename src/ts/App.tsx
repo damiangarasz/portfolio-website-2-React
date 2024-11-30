@@ -1,8 +1,13 @@
 import { createRoot } from "react-dom/client";
 import Header from "./Header/Header";
+import ErrorBoundary from "./ErrorBoundary";
 
 const App = () => {
-  return <Header />;
+  return (
+    <ErrorBoundary>
+      <Header />
+    </ErrorBoundary>
+  );
 };
 
 const container = document.getElementById("root");
