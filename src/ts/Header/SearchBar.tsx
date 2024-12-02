@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 
 const data = [
   "krówka",
@@ -40,7 +40,7 @@ const SearchBar = () => {
     }
   }, [wynik]);
 
-  // logika kliknięcia w lupę początek
+  // ----- logika kliknięcia w lupę początek
 
   const [stanSearchBar, searchBarFn] = useState("off");
   const [stanLupa, lupaFn] = useState("on");
@@ -71,7 +71,60 @@ const SearchBar = () => {
       document.removeEventListener("click", clickOutside);
     };
   }, [stanSearchBar]);
-  // logika klikniecia w lupę koniec
+  // ----- logika klikniecia w lupę koniec
+  // ----- logika smooth search bara
+
+  let aktualnaSzerokoscOkna = 1024;
+  let poczatkowaSzerokoscSearchBara = 50;
+  let docelowaSzererokoscSearchBara: number = 300;
+
+  const searchBar = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    function kolejnaFn() {
+      aktualnaSzerokoscOkna = window.innerWidth;
+      animacjaSearchBara();
+      docelowaSzererokoscSearchBara = aktualnaSzerokoscOkna * 0.13;
+    }
+    kolejnaFn();
+
+    window.addEventListener("resize", kolejnaFn);
+
+    const animacja = requestAnimationFrame(animacjaSearchBara);
+
+    function animacjaSearchBara() {
+      const tolerancja = 5;
+      if (
+        Math.abs(
+          docelowaSzererokoscSearchBara - poczatkowaSzerokoscSearchBara,
+        ) < tolerancja
+      ) {
+        //jezeli Math.abs zwróci true to returnuje całą funkcję co zatrzymuje animacje
+        return;
+      }
+
+      if (poczatkowaSzerokoscSearchBara < docelowaSzererokoscSearchBara) {
+        poczatkowaSzerokoscSearchBara++;
+      } else if (
+        poczatkowaSzerokoscSearchBara > docelowaSzererokoscSearchBara
+      ) {
+        poczatkowaSzerokoscSearchBara--;
+      }
+
+      if (searchBar.current) {
+        searchBar.current.style(`w-[${poczatkowaSzerokoscSearchBara}]`);
+      }
+
+      requestAnimationFrame(animacjaSearchBara);
+    }
+
+    return () => {
+      window.removeEventListener("resize", kolejnaFn);
+      cancelAnimationFrame(animacja);
+    };
+  });
+
+  // ----- logika smooth search bara koniec
 
   return (
     <div>
@@ -86,6 +139,7 @@ const SearchBar = () => {
             onChange={(e) => {
               searchResoult(e.target.value);
             }}
+            ref={searchBar}
             type="search"
             data-state=""
             placeholder="search"
