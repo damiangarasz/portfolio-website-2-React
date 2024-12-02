@@ -49,11 +49,34 @@ const SearchBar = () => {
     lupaFn((prev): string => (prev === "on" ? "off" : "on"));
   }
 
+  //kliknięcie poza form i lupą powoduje zamknięcie search bara
+  const formRef = useRef<HTMLFormElement>(null);
+  const lupaRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    function clickOutside(event: MouseEvent) {
+      if (
+        stanSearchBar == "on" &&
+        formRef.current &&
+        !formRef.current.contains(event.target as Node) &&
+        lupaRef.current &&
+        !lupaRef.current.contains(event.target as Node)
+      ) {
+        lupaSwitch();
+      }
+    }
+
+    document.addEventListener("click", clickOutside);
+
+    return () => {
+      document.removeEventListener("click", clickOutside);
+    };
+  }, [stanSearchBar]);
   // logika klikniecia w lupę koniec
 
   return (
     <div>
       <form
+        ref={formRef}
         onSubmit={lupaSwitch}
         data-state={stanSearchBar}
         className="search-bar"
@@ -67,6 +90,7 @@ const SearchBar = () => {
             data-state=""
             placeholder="search"
           />
+          {/* mapowanie wyników search bara */}
           <ul className="hint absolute hidden">
             {wynik.map((wynik, index) => {
               return <li key={index}>{wynik}</li>;
@@ -94,6 +118,7 @@ const SearchBar = () => {
       </form>
       {/* lupa początek*/}
       <button
+        ref={lupaRef}
         onClick={lupaSwitch}
         data-state={stanLupa}
         className="lupa hover:cursor-pointer"
