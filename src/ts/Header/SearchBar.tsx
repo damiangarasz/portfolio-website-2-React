@@ -128,7 +128,7 @@ const SearchBar = () => {
   // ----- logika smooth search bara koniec
 
   return (
-    <div>
+    <div className="absolute right-2">
       <form
         ref={formRef}
         onSubmit={lupaSwitch}
@@ -144,7 +144,7 @@ const SearchBar = () => {
             type="search"
             data-state=""
             placeholder="search"
-            className="absolute -right-[100px] -top-0.5 h-3 rounded-full"
+            className="absolute right-[75px] -top-0.5 h-3 rounded-full"
           />
           {/* mapowanie wyników search bara */}
           <ul className="hint absolute hidden">
@@ -177,7 +177,7 @@ const SearchBar = () => {
         ref={lupaRef}
         onClick={lupaSwitch}
         data-state={stanLupa}
-        className="lupa absolute right-20 top-3.5 hover:cursor-pointer"
+        className="lupa absolute right-20 top-1 hover:cursor-pointer"
       >
         <svg
           fill="#000000"

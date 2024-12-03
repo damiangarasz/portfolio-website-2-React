@@ -3,8 +3,8 @@ import SearchBar from "./SearchBar";
 
 const Header = () => {
   return (
-    <header className="mx-3 mt-3 flex justify-between font-medium">
-      <div className="flex">
+    <header className="mx-3 mt-3 flex justify-between font-medium relative">
+      <div className="flex w-[150px]">
         <svg
           className="w-6"
           viewBox="0 0 16 16"
@@ -32,9 +32,10 @@ const Header = () => {
       </div>
       <Menu />
       <SearchBar />
-      <button className="rounded-full border border-black px-2 font-normal right-1">
+      <button className="absolute right-1 rounded-full border border-black px-2 font-normal">
         Sign in
       </button>
+      <div className="w-[175px]"></div>
     </header>
   );
 };
