@@ -147,7 +147,7 @@ const SearchBar = () => {
             className="absolute right-[75px] -top-0.5 h-3 rounded-full"
           />
           {/* mapowanie wyników search bara */}
-          <ul className="hint absolute hidden">
+          <ul className="hint absolute right-[105px] top-6 hidden">
             {wynik.map((wynik, index) => {
               return <li key={index}>{wynik}</li>;
             })}

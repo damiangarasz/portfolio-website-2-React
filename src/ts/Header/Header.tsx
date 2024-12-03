@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar";
 
 const Header = () => {
   return (
-    <header className="mx-3 mt-3 flex justify-between font-medium relative">
+    <header className="mx-10 mt-7 flex justify-between font-medium relative">
       <div className="flex w-[150px]">
         <svg
           className="w-6"
