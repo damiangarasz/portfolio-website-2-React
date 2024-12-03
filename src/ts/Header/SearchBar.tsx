@@ -81,6 +81,7 @@ const SearchBar = () => {
   const searchBar = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    //TODO animacja po zapisaniu nowego kodu szarpie / odtwarza się dwa razy
     function kolejnaFn() {
       aktualnaSzerokoscOkna = window.innerWidth;
       animacjaSearchBara();
@@ -112,7 +113,7 @@ const SearchBar = () => {
       }
 
       if (searchBar.current) {
-        searchBar.current.style(`w-[${poczatkowaSzerokoscSearchBara}]`);
+        searchBar.current.style.width = `${poczatkowaSzerokoscSearchBara}px`;
       }
 
       requestAnimationFrame(animacjaSearchBara);
@@ -134,7 +135,7 @@ const SearchBar = () => {
         data-state={stanSearchBar}
         className="search-bar"
       >
-        <div>
+        <div className="relative">
           <input
             onChange={(e) => {
               searchResoult(e.target.value);
@@ -143,6 +144,7 @@ const SearchBar = () => {
             type="search"
             data-state=""
             placeholder="search"
+            className="absolute -right-[100px] -top-0.5 h-3 rounded-full"
           />
           {/* mapowanie wyników search bara */}
           <ul className="hint absolute hidden">
@@ -175,14 +177,14 @@ const SearchBar = () => {
         ref={lupaRef}
         onClick={lupaSwitch}
         data-state={stanLupa}
-        className="lupa hover:cursor-pointer"
+        className="lupa absolute right-20 top-3.5 hover:cursor-pointer"
       >
         <svg
           fill="#000000"
           viewBox="0 0 32 32"
           version="1.1"
-          width="25px"
-          height="25px"
+          width="20px"
+          height="20px"
           xmlns="http://www.w3.org/2000/svg"
         >
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

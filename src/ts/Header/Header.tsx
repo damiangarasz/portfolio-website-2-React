@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar";
 
 const Header = () => {
   return (
-    <header className="flex justify-between">
+    <header className="mx-3 mt-3 flex justify-between font-medium">
       <div className="flex">
         <svg
           className="w-6"
@@ -32,7 +32,9 @@ const Header = () => {
       </div>
       <Menu />
       <SearchBar />
-      <button>Sign in</button>
+      <button className="rounded-full border border-black px-2 font-normal right-1">
+        Sign in
+      </button>
     </header>
   );
 };

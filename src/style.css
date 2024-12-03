@@ -32,6 +32,22 @@
   .learn:hover .drop-menu {
     display: block;
   }
+
+  .main-menu > li:hover {
+    color: #a96cfe;
+    transition: all;
+    transition-duration: 500ms;
+  }
+
+  .dot {
+    color: rgb(153, 153, 153);
+  }
+
+  .main-menu > li:hover .dot {
+    color: black;
+    transition: color 0.5s;
+  }
+
   /* menu główne KONIEC */
 
   /* search bar POCZĄTEK */

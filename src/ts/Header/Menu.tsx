@@ -1,6 +1,6 @@
 const Menu = () => {
   return (
-    <div className="w-[350px/30] bg-[#00adef]">
+    <div className="w-[350px/30]">
       <div data-state="on">
         <svg
           className="md:hidden"
@@ -70,27 +70,25 @@ const Menu = () => {
         </svg>
       </div>
       <nav aria-label="main menu hover:color" aria-expanded="false">
-        <ol className="flex space-x-5">
-          <li className="">
-            <span>•</span>Home
+        <ol className="main-menu flex cursor-pointer space-x-5">
+          <li>
+            <span className="dot">•</span>
+            Home
           </li>
           <li className="learn relative">
-            <span>•</span>Learn<span>⯆</span>
+            <span className="dot">•</span>Games<span>⯆</span>
             <ul className="drop-menu absolute top-4 hidden hover:block">
-              <li>example</li>
-              <li>example</li>
-              <li>example</li>
-              <li>example</li>
+              <li className="text-black">Game 1</li>
             </ul>
           </li>
           <li>
-            <span>•</span>Help
+            <span className="dot">•</span>Help
           </li>
           <li>
-            <span>•</span>Blog
+            <span className="dot">•</span>Blog
           </li>
           <li>
-            <span>•</span>About
+            <span className="dot">•</span>About
           </li>
         </ol>
       </nav>
