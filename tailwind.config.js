@@ -2,6 +2,9 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,tsx,tsx,html}"],
   theme: {
+    fontFamily: {
+    "form": []
+    },
     extend: {
       colors: {
         primary: {

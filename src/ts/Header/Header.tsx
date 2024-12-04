@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import Menu from "./Menu";
 import SearchBar from "./SearchBar";
 
 const Header = () => {
   return (
-    <header className="mx-10 mt-7 flex justify-between font-medium relative">
+    <header className="relative mx-10 mt-7 flex justify-between font-medium">
       <div className="flex w-[150px]">
         <svg
           className="w-6"
@@ -32,9 +33,12 @@ const Header = () => {
       </div>
       <Menu />
       <SearchBar />
-      <button className="absolute right-1 rounded-full border border-black px-2 font-normal">
+      <Link
+        to="/form"
+        className="absolute right-1 rounded-full border border-black px-2 font-normal"
+      >
         Sign in
-      </button>
+      </Link>
       <div className="w-[175px]"></div>
     </header>
   );

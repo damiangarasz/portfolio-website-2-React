@@ -3,16 +3,21 @@ import ErrorBoundary from "./ErrorBoundary";
 import Header from "./Header/Header";
 import { Form } from "./Sing-in/Form";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <Header />
-        <Form />
-      </QueryClientProvider>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <Header />
+          <Routes>
+            <Route path="/form" element={<Form />}></Route>
+          </Routes>
+        </QueryClientProvider>
+      </BrowserRouter>
     </ErrorBoundary>
   );
 };
