@@ -1,5 +1,4 @@
 import { Component, ErrorInfo, ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -26,7 +25,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
         <div className="error-boundary">
           <h2>Oh no!</h2>
           <p>
-            There was an error. <Link to="/">Click here</Link> to go back to the
+            There was an error. <a href="/">Click here</a> to go back to the
             homepage.
           </p>
         </div>

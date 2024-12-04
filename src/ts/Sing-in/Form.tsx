@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import postContact from "./postContact";
 
-const Form = () => {
+export function Form() {
   const mutation = useMutation({
     mutationFn: (formData: FormData) => {
       return postContact(
@@ -39,5 +39,3 @@ const Form = () => {
     </div>
   );
 };
-
-export default Form;

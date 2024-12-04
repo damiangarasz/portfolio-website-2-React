@@ -1,13 +1,18 @@
 import { createRoot } from "react-dom/client";
-import Header from "./Header/Header";
 import ErrorBoundary from "./ErrorBoundary";
-import Form from "./Sing-in/Form";
+import Header from "./Header/Header";
+import { Form } from "./Sing-in/Form";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <ErrorBoundary>
-      <Header />
-      <Form />
+      <QueryClientProvider client={queryClient}>
+        <Header />
+        <Form />
+      </QueryClientProvider>
     </ErrorBoundary>
   );
 };

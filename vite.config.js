@@ -1,10 +1,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 
 export default defineConfig({
   root: "src",
-  plugins: [TanStackRouterVite(), react()],
+  plugins: [react()],
   build: {
     rollupOptions: {
       output: {
