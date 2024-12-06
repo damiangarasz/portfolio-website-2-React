@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Menu = () => {
   return (
     <div className="w-[350px/30]">
@@ -78,7 +80,9 @@ const Menu = () => {
           <li className="learn relative">
             <span className="dot">•</span>Games<span>⯆</span>
             <ul className="drop-menu absolute top-4 hidden hover:block">
-              <li className="text-black">Game 1</li>
+              <li className="text-black">
+                <Link to="/game-1">Game 1</Link>
+              </li>
             </ul>
           </li>
           <li>
