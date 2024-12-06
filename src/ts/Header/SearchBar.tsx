@@ -72,16 +72,21 @@ const SearchBar = () => {
     };
   }, [stanSearchBar]);
   // ----- logika klikniecia w lupę koniec
-  // ----- logika smooth search bara
+  // ----- logika smooth search bara początek
 
   let aktualnaSzerokoscOkna = 1024;
-  let poczatkowaSzerokoscSearchBara = 50;
+  // let poczatkowaSzerokoscSearchBara = 50;
+
+  const poczatkowaSzerokoscSearchBara = useRef(50);
+
   let docelowaSzererokoscSearchBara: number = 300;
 
   const searchBar = useRef<HTMLInputElement>(null);
+  const animacjaDziala = useRef(true);
 
   useEffect(() => {
     //TODO animacja po zapisaniu nowego kodu szarpie / odtwarza się dwa razy
+    //TODO animacja sie na nowo odpala po wpisaniu litery
     function kolejnaFn() {
       aktualnaSzerokoscOkna = window.innerWidth;
       animacjaSearchBara();
@@ -95,28 +100,35 @@ const SearchBar = () => {
 
     function animacjaSearchBara() {
       const tolerancja = 5;
+
       if (
         Math.abs(
-          docelowaSzererokoscSearchBara - poczatkowaSzerokoscSearchBara,
+          docelowaSzererokoscSearchBara - poczatkowaSzerokoscSearchBara.current,
         ) < tolerancja
       ) {
         //jezeli Math.abs zwróci true to returnuje całą funkcję co zatrzymuje animacje
+        animacjaDziala.current = false;
         return;
       }
-
-      if (poczatkowaSzerokoscSearchBara < docelowaSzererokoscSearchBara) {
-        poczatkowaSzerokoscSearchBara++;
-      } else if (
-        poczatkowaSzerokoscSearchBara > docelowaSzererokoscSearchBara
+      if (
+        poczatkowaSzerokoscSearchBara.current < docelowaSzererokoscSearchBara
       ) {
-        poczatkowaSzerokoscSearchBara--;
+        poczatkowaSzerokoscSearchBara.current++;
+        console.log(poczatkowaSzerokoscSearchBara.current);
+      } else if (
+        poczatkowaSzerokoscSearchBara.current > docelowaSzererokoscSearchBara
+      ) {
+        poczatkowaSzerokoscSearchBara.current--;
+        console.log(poczatkowaSzerokoscSearchBara.current);
       }
 
       if (searchBar.current) {
-        searchBar.current.style.width = `${poczatkowaSzerokoscSearchBara}px`;
+        searchBar.current.style.width = `${poczatkowaSzerokoscSearchBara.current}px`;
       }
 
-      requestAnimationFrame(animacjaSearchBara);
+      if (animacjaDziala.current) {
+        requestAnimationFrame(animacjaSearchBara);
+      }
     }
 
     return () => {
@@ -175,7 +187,11 @@ const SearchBar = () => {
       {/* lupa początek*/}
       <button
         ref={lupaRef}
-        onClick={lupaSwitch}
+        onClick={() => {
+          poczatkowaSzerokoscSearchBara.current = 50;
+          lupaSwitch;
+          console.log(poczatkowaSzerokoscSearchBara.current);
+        }}
         data-state={stanLupa}
         className="lupa absolute right-20 top-1 hover:cursor-pointer"
       >
