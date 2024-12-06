@@ -13,6 +13,7 @@ const data = [
 const SearchBar = () => {
   const [search, searchResoult] = useState("");
   const [wynik, filtrowanie] = useState<string[]>([]);
+  const [animachaSearchBara, aktywacjaAnimacjiSearchBara] = useState(false);
 
   useEffect(
     function searchFunction() {
@@ -47,6 +48,7 @@ const SearchBar = () => {
   function lupaSwitch() {
     searchBarFn((prev): string => (prev === "off" ? "on" : "off"));
     lupaFn((prev): string => (prev === "on" ? "off" : "on"));
+    aktywacjaAnimacjiSearchBara(true);
   }
 
   //kliknięcie poza form i lupą powoduje zamknięcie search bara
@@ -62,6 +64,7 @@ const SearchBar = () => {
         !lupaRef.current.contains(event.target as Node)
       ) {
         lupaSwitch();
+        aktywacjaAnimacjiSearchBara(false);
       }
     }
 
@@ -77,12 +80,11 @@ const SearchBar = () => {
   let aktualnaSzerokoscOkna = 1024;
   // let poczatkowaSzerokoscSearchBara = 50;
 
-  const poczatkowaSzerokoscSearchBara = useRef(50);
+  const poczatkowaSzerokoscSearchBara = useRef(25);
 
   let docelowaSzererokoscSearchBara: number = 300;
 
   const searchBar = useRef<HTMLInputElement>(null);
-  const animacjaDziala = useRef(true);
 
   useEffect(() => {
     //TODO animacja po zapisaniu nowego kodu szarpie / odtwarza się dwa razy
@@ -107,7 +109,7 @@ const SearchBar = () => {
         ) < tolerancja
       ) {
         //jezeli Math.abs zwróci true to returnuje całą funkcję co zatrzymuje animacje
-        animacjaDziala.current = false;
+
         return;
       }
       if (
@@ -126,16 +128,14 @@ const SearchBar = () => {
         searchBar.current.style.width = `${poczatkowaSzerokoscSearchBara.current}px`;
       }
 
-      if (animacjaDziala.current) {
-        requestAnimationFrame(animacjaSearchBara);
-      }
+      requestAnimationFrame(animacjaSearchBara);
     }
 
     return () => {
       window.removeEventListener("resize", kolejnaFn);
       cancelAnimationFrame(animacja);
     };
-  });
+  }, [animachaSearchBara]);
 
   // ----- logika smooth search bara koniec
 
@@ -188,8 +188,8 @@ const SearchBar = () => {
       <button
         ref={lupaRef}
         onClick={() => {
-          poczatkowaSzerokoscSearchBara.current = 50;
-          lupaSwitch;
+          poczatkowaSzerokoscSearchBara.current = 25;
+          lupaSwitch();
           console.log(poczatkowaSzerokoscSearchBara.current);
         }}
         data-state={stanLupa}
