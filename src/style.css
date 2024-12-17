@@ -96,4 +96,8 @@
     font-family: "Dancing Script", cursive;
   }
   /* form KONIEC */
+
+  #game_canvas {
+    image-rendering: pixelated;
+  }
 }
