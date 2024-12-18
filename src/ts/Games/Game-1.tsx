@@ -39,6 +39,8 @@ export function Game1() {
       }
     }
 
+    const tlo = new srodowisko();
+
     //tło koniec --------
     // hero początek ------
 
@@ -208,9 +210,117 @@ export function Game1() {
 
     // hero koniec -------
 
+    // bee początek
+
+    class Bee {
+      img;
+      pos;
+      frame;
+      maxframes;
+      constructor({
+        img,
+        pos,
+      }: {
+        img: CanvasImageSource;
+        pos: { x: number; y: number };
+      }) {
+        this.img = img;
+        this.pos = pos;
+        this.frame = 0;
+        this.maxframes = 2;
+      }
+
+      show() {
+        if (this.frame < this.maxframes) this.frame++;
+        else this.frame = 0;
+
+        ctx.drawImage(
+          this.img,
+          this.frame * 64,
+          0,
+          64,
+          64,
+          this.pos.x,
+          this.pos.y,
+          64,
+          64,
+        );
+      }
+    }
+
+    const villain = new Bee({
+      img: imageCache.beeIdle,
+      pos: {
+        x: 250,
+        y: 75,
+      },
+    });
+
+    function poz() {
+      if (villain.pos.x <= -50) {
+        villain.pos.x = 280;
+      } else {
+        villain.pos.x -= 3;
+      }
+
+      if (damian.pos.x >= villain.pos.x && damian.isJumping == false) {
+        damian.dead();
+      }
+    }
+
+    // bee koniec
+
+    // zczytywnaie klawiszy początek
+    window.addEventListener("keydown", keydown);
+    window.addEventListener("keyup", keyup);
+
+    function keydown(event: KeyboardEvent) {
+      if (event.key == "ArrowRight" || event.key == "d" || event.key == "D") {
+        key.prawo.pressed = true;
+      } else if (
+        event.key == "ArrowLeft" ||
+        event.key == "a" ||
+        event.key == "A"
+      ) {
+        key.lewo.pressed = true;
+      } else if (
+        event.key == "w" ||
+        event.key == "W" ||
+        event.key == "ArrowUp"
+      ) {
+        key.skok.pressed = true;
+      } else if (event.keyCode == 32) {
+        key.atak.pressed = true;
+      }
+    }
+
+    function keyup(event: KeyboardEvent) {
+      if (event.key == "ArrowRight" || event.key == "d" || event.key == "D") {
+        key.prawo.pressed = false;
+        damian.moving = false;
+      } else if (
+        event.key == "ArrowLeft" ||
+        event.key == "a" ||
+        event.key == "A"
+      ) {
+        key.lewo.pressed = false;
+        damian.moving = false;
+      } else if (
+        event.key == "w" ||
+        event.key == "W" ||
+        event.key == "ArrowUp"
+      ) {
+        key.skok.pressed = false;
+        damian.moving = false;
+      } else if (event.keyCode == 32) {
+        key.atak.pressed = false;
+      }
+    }
+    // zczytywanie klawiszy koniec
+
     //rysowanie na canvasie początek --------
     function lol() {
-      const tlo = new srodowisko();
+      // const tlo = new srodowisko();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(imageCache.background, 0, 0, 600, 200);
       tlo.drawTrzeci();
@@ -218,9 +328,10 @@ export function Game1() {
       tlo.drawPierwszy();
 
       damian.draw();
-      // requestAnimationFrame(lol);
+      villain.show();
+      poz();
     }
-    // requestAnimationFrame(lol);
+
     setInterval(lol, 100);
 
     //rysowanie na canvasie koniec --------
