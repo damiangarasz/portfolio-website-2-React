@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 5s;
+} */
+
 @layer base {
   .dancing-script-form {
     font-family: "Dancing Script", cursive;
