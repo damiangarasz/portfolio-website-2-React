@@ -105,4 +105,20 @@
   #game_canvas {
     image-rendering: pixelated;
   }
+
+  /* chess board początek */
+  .chess-grid {
+    background-image: url("./img/Game-2/board.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+  }
+
+  .wp {
+    
+  }
+  /* chess board koniec */
 }
