@@ -1,6 +1,12 @@
-import { createElement, useEffect } from "react";
+import { useEffect } from "react";
+import { useSkalowanieBoardu } from "./useSkalowanieBoardu";
 
 export function MovingPieces() {
+
+  // TODO tutaj odbieram aktualną wielkość piona
+  const lol = useSkalowanieBoardu();
+  // TODO
+
   useEffect(() => {
     const square = document.querySelectorAll(".chess-grid > div");
     if (!square) {
@@ -19,16 +25,11 @@ export function MovingPieces() {
         const img = target.getAttribute("src");
         //koniec zapisywania obrazka
 
-        console.log(event);
-
         const temp = document.createElement("img");
         if (img) {
           temp.src = img;
-          temp.className = "dupa";
         }
         temp.style.position = "absolute";
-        // temp.style.x = window.screenX.toString();
-        // temp.style.y = window.screenY.toString();
 
         window.addEventListener("mousemove", (event) => {
           temp.style.left = event.clientX + "px";
@@ -39,6 +40,9 @@ export function MovingPieces() {
         chwytak?.appendChild(temp);
       }
     }
+
+    // TODO dodać upuszczanie pionka
+    // TODO pobrać wielkośc kratki na podstawie skalowania
 
     for (let n of square) {
       n.addEventListener("mousedown", MovingPicesHandler as EventListener);
