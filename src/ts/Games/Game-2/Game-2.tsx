@@ -25,7 +25,10 @@ export function Game2() {
 
   useEffect(() => {
     function resize() {
-      const temp = window.innerWidth * 0.6;
+      let temp = window.innerWidth * 0.6;
+      if (temp >= 580) {
+        temp = 580;
+      }
       const rozmiar = {
         width: temp + "px",
         height: temp + "px",
@@ -33,6 +36,8 @@ export function Game2() {
       setRozmiarOkna(rozmiar);
       console.log("halo");
     }
+
+    //TODO opisać co się tu dzieje
 
     window.addEventListener("resize", resize);
 
