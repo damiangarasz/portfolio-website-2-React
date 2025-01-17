@@ -1,12 +1,6 @@
 import { useEffect } from "react";
-import { useSkalowanieBoardu } from "./useSkalowanieBoardu";
 
 export function MovingPieces() {
-
-  // TODO tutaj odbieram aktualną wielkość piona
-  const lol = useSkalowanieBoardu();
-  // TODO
-
   useEffect(() => {
     const square = document.querySelectorAll(".chess-grid > div");
     if (!square) {
@@ -14,12 +8,14 @@ export function MovingPieces() {
     }
 
     function MovingPicesHandler(event: MouseEvent) {
+      event.preventDefault();
       const target = event.target as HTMLElement;
+      const squareWidth = (window.innerWidth * 0.6) / 8;
       if (target.className == "myImage") {
-        // usówanie oobrazka z diva
+        // usuwanie oobrazka z diva
         const parent = target.parentElement;
         if (parent) parent.innerHTML = "";
-        //koniec usówania obrazka z diva
+        //koniec usuwania obrazka z diva
 
         // zapisuje obrazek
         const img = target.getAttribute("src");
@@ -30,6 +26,9 @@ export function MovingPieces() {
           temp.src = img;
         }
         temp.style.position = "absolute";
+        temp.style.width = squareWidth + "px";
+        temp.style.pointerEvents = "none";
+        temp.className = "temp";
 
         window.addEventListener("mousemove", (event) => {
           temp.style.left = event.clientX + "px";
@@ -41,16 +40,46 @@ export function MovingPieces() {
       }
     }
 
-    // TODO dodać upuszczanie pionka
-    // TODO pobrać wielkośc kratki na podstawie skalowania
-
     for (let n of square) {
       n.addEventListener("mousedown", MovingPicesHandler as EventListener);
+    }
+
+    function DropPicesHandler(event: MouseEvent) {
+      const temp = document.querySelector(".temp");
+      const chwytak = document.querySelector(".chess-grid");
+
+      const target = event.target as HTMLElement;
+      const div = target.getAttribute("id");
+      const img = temp?.getAttribute("src");
+      const query = "" + div;
+      console.log(query);
+      const insertDiv = document.getElementById(query);
+
+      const imgEl = document.createElement("img");
+      imgEl.className = "myImage";
+      if (img) {
+        imgEl.src = img;
+      }
+
+      insertDiv?.appendChild(imgEl);
+
+      if (temp) {
+        chwytak?.removeChild(temp);
+      }
+
+      console.log(event.target);
+    }
+
+    for (let n of square) {
+      n.addEventListener("mouseup", DropPicesHandler as EventListener);
     }
 
     return () => {
       for (let n of square) {
         n.removeEventListener("mousedown", MovingPicesHandler as EventListener);
+      }
+      for (let n of square) {
+        n.removeEventListener("mousedown", DropPicesHandler as EventListener);
       }
     };
   });

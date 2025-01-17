@@ -3,21 +3,24 @@ import { MovingPieces } from "./movingPieces";
 
 export function Game2() {
   useEffect(() => {
+    //usuwam defalutowe działanie przeciągania elementu
+    const test = document.querySelectorAll(".chess-grid div");
     const img = document.querySelectorAll(".myImage");
     function preventDefaultDrag(event: DragEvent) {
       event.preventDefault();
     }
-    for (let n of img) {
+    for (let n of test) {
       n.addEventListener("dragstart", preventDefaultDrag as EventListener);
     }
 
     return () => {
-      for (let n of img) {
+      for (let n of test) {
         n.removeEventListener("dragstart", preventDefaultDrag as EventListener);
       }
     };
   });
 
+  //początek określania wielkości boardu
   const [rozmiarOkna, setRozmiarOkna] = useState({
     width: window.innerWidth * 0.6 + "px",
     height: window.innerWidth * 0.6 + "px",
@@ -45,6 +48,7 @@ export function Game2() {
       window.removeEventListener("resize", resize);
     };
   });
+  //koniec określania wielkości boardu
 
   MovingPieces();
 
