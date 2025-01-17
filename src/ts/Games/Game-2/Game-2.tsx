@@ -25,6 +25,7 @@ export function Game2() {
     width: window.innerWidth * 0.6 + "px",
     height: window.innerWidth * 0.6 + "px",
   });
+  
 
   useEffect(() => {
     function resize() {
@@ -37,10 +38,8 @@ export function Game2() {
         height: temp + "px",
       };
       setRozmiarOkna(rozmiar);
-      console.log("halo");
+      
     }
-
-    //TODO opisać co się tu dzieje
 
     window.addEventListener("resize", resize);
 
@@ -51,6 +50,8 @@ export function Game2() {
   //koniec określania wielkości boardu
 
   MovingPieces();
+
+  //TODO board przy pierwszym princie jest za duży
 
   return (
     <div className="chess-grid mx-auto" style={rozmiarOkna}>

@@ -21,6 +21,8 @@ export function MovingPieces() {
         const img = target.getAttribute("src");
         //koniec zapisywania obrazka
 
+        //TODO opisać co się dzieje poniżej
+
         const temp = document.createElement("img");
         if (img) {
           temp.src = img;
@@ -73,6 +75,8 @@ export function MovingPieces() {
     for (let n of square) {
       n.addEventListener("mouseup", DropPicesHandler as EventListener);
     }
+
+    //TODO ogarnąć wyjeżdżanie poza plansze
 
     return () => {
       for (let n of square) {
