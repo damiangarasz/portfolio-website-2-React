@@ -21,11 +21,21 @@ export function Game2() {
   });
 
   //początek określania wielkości boardu
-  const [rozmiarOkna, setRozmiarOkna] = useState({
-    width: window.innerWidth * 0.6 + "px",
-    height: window.innerWidth * 0.6 + "px",
-  });
-  
+  const [rozmiarOkna, setRozmiarOkna] = useState(
+    () => {
+      let temp = window.innerWidth * 0.6;
+      if (temp >= 580) {
+        temp = 580;
+      }
+
+      const ret = {
+        width: temp + "px",
+        height: temp + "px",
+      };
+
+      return ret;
+    },
+  );
 
   useEffect(() => {
     function resize() {
@@ -38,7 +48,6 @@ export function Game2() {
         height: temp + "px",
       };
       setRozmiarOkna(rozmiar);
-      
     }
 
     window.addEventListener("resize", resize);
@@ -50,8 +59,6 @@ export function Game2() {
   //koniec określania wielkości boardu
 
   MovingPieces();
-
-  //TODO board przy pierwszym princie jest za duży
 
   return (
     <div className="chess-grid mx-auto" style={rozmiarOkna}>

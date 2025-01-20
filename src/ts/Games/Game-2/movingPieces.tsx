@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { MouseEventHandler, useEffect } from "react";
 
 export function MovingPieces() {
   useEffect(() => {
@@ -7,8 +7,12 @@ export function MovingPieces() {
       return;
     }
 
+    let mouseMove: (event: MouseEvent) => void;
+    let piceMove: (event: MouseEvent) => void;
+
     function MovingPicesHandler(event: MouseEvent) {
       event.preventDefault();
+
       const target = event.target as HTMLElement;
       const squareWidth = (window.innerWidth * 0.6) / 8;
       if (target.className == "myImage") {
@@ -32,13 +36,35 @@ export function MovingPieces() {
         temp.style.pointerEvents = "none";
         temp.className = "temp";
 
-        window.addEventListener("mousemove", (event) => {
+        const div = document.getElementsByClassName(
+          "chess-grid",
+        ) as HTMLCollectionOf<HTMLDivElement>;
+
+        const top = div[0].offsetTop;
+        const left = div[0].offsetLeft;
+        const tableWidth = window.innerWidth * 0.6;
+
+        piceMove = function (event: MouseEvent) {
           temp.style.left = event.clientX + "px";
           temp.style.top = event.clientY + "px";
-        });
+        };
+
+        window.addEventListener("mousemove", mouseMove);
 
         const chwytak = document.querySelector(".chess-grid");
         chwytak?.appendChild(temp);
+
+        mouseMove = function (event: MouseEvent) {
+          if (
+            event.clientX < left ||
+            event.clientX > left + tableWidth ||
+            event.clientY < top ||
+            event.clientY > top + tableWidth
+          ) {
+
+            const tempPice = document.querySelector(".temp");
+          }
+        };
       }
     }
 
@@ -54,7 +80,6 @@ export function MovingPieces() {
       const div = target.getAttribute("id");
       const img = temp?.getAttribute("src");
       const query = "" + div;
-      console.log(query);
       const insertDiv = document.getElementById(query);
 
       const imgEl = document.createElement("img");
@@ -69,14 +94,13 @@ export function MovingPieces() {
         chwytak?.removeChild(temp);
       }
 
-      console.log(event.target);
+      window.removeEventListener("mousemove", mouseMove);
+      window.removeEventListener("mousemove", piceMove);
     }
 
     for (let n of square) {
       n.addEventListener("mouseup", DropPicesHandler as EventListener);
     }
-
-    //TODO ogarnąć wyjeżdżanie poza plansze
 
     return () => {
       for (let n of square) {
