@@ -1,32 +1,36 @@
-import { MouseEventHandler, useEffect } from "react";
+import { MouseEventHandler, useEffect, useRef } from "react";
 
 export function MovingPieces() {
+  const target = useRef<HTMLElement | null>(null);
+  const parent = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     const square = document.querySelectorAll(".chess-grid > div");
     if (!square) {
       return;
     }
 
-    let mouseMove: (event: MouseEvent) => void;
-    let piceMove: (event: MouseEvent) => void;
-
     function MovingPicesHandler(event: MouseEvent) {
       event.preventDefault();
 
-      const target = event.target as HTMLElement;
+      // const target = useRef(event.target as HTMLElement);
+      target.current = event.target as HTMLElement;
       const squareWidth = (window.innerWidth * 0.6) / 8;
-      if (target.className == "myImage") {
+
+      if (target.current == null) return;
+      parent.current = target.current.parentElement;
+
+      if (target.current.className == "myImage") {
         // usuwanie oobrazka z diva
-        const parent = target.parentElement;
-        if (parent) parent.innerHTML = "";
+
+        if (parent.current) parent.current.innerHTML = "";
         //koniec usuwania obrazka z diva
 
         // zapisuje obrazek
-        const img = target.getAttribute("src");
+        const img = target.current.getAttribute("src");
         //koniec zapisywania obrazka
 
-        //TODO opisać co się dzieje poniżej
-
+        //Tworze elmenent do przeciągania
         const temp = document.createElement("img");
         if (img) {
           temp.src = img;
@@ -40,33 +44,43 @@ export function MovingPieces() {
           "chess-grid",
         ) as HTMLCollectionOf<HTMLDivElement>;
 
+        //wyznaczam granice szachownicy do anulowania przeciąganego elementu
         const top = div[0].offsetTop;
         const left = div[0].offsetLeft;
         const tableWidth = window.innerWidth * 0.6;
 
-        piceMove = function (event: MouseEvent) {
+        const piceMove = function (event: MouseEvent) {
           temp.style.left = event.clientX + "px";
           temp.style.top = event.clientY + "px";
         };
 
-        window.addEventListener("mousemove", mouseMove);
+        window.addEventListener("mousemove", piceMove);
 
         const chwytak = document.querySelector(".chess-grid");
         chwytak?.appendChild(temp);
 
-        mouseMove = function (event: MouseEvent) {
+        const mouseMove = function (event: MouseEvent) {
           if (
             event.clientX < left ||
             event.clientX > left + tableWidth ||
             event.clientY < top ||
             event.clientY > top + tableWidth
           ) {
-
-            const tempPice = document.querySelector(".temp");
+            // console.log(parent.current);
+            const id = parent.current?.getAttribute("id");
+            const chwytak = document.getElementById(id + "");
+            if (target.current == null) return;
+            const src = target.current.getAttribute("src");
+            console.log(chwytak);
           }
         };
+        console.log(target);
+
+        window.addEventListener("mousemove", mouseMove);
       }
     }
+
+    //TODO po pierwszym princie nie działa usuwanie przeciąganego piona po wyjeździe za plansze
 
     for (let n of square) {
       n.addEventListener("mousedown", MovingPicesHandler as EventListener);
@@ -93,9 +107,6 @@ export function MovingPieces() {
       if (temp) {
         chwytak?.removeChild(temp);
       }
-
-      window.removeEventListener("mousemove", mouseMove);
-      window.removeEventListener("mousemove", piceMove);
     }
 
     for (let n of square) {
