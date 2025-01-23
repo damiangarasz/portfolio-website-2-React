@@ -1,4 +1,8 @@
-export function engine(data: { pieceId: string; startBoardId: number }) {
+export function engine(data: {
+  pieceId: string;
+  startBoardId: number;
+  occupatedSquares: number[];
+}) {
   console.log(data);
 
   let posPossition: number[] = [];
@@ -35,6 +39,7 @@ export function engine(data: { pieceId: string; startBoardId: number }) {
   console.log(posPossition);
 
   function ruchyWiezy(pole: number) {
+    const zajetePola = data.occupatedSquares;
     const ruchy = [];
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)

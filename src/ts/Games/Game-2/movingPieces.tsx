@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { engine } from "./engine";
 
 export function MovingPieces() {
@@ -19,13 +19,15 @@ export function MovingPieces() {
     targetBoardId: 0,
     occupatedSquares: [],
   };
+
   useEffect(() => {
     //pchanie zajętych kwadratów
-    const square = document.querySelectorAll(".myImage");
-    for (let n of square) {
+    const imgSquare = document.querySelectorAll(".myImage");
+    for (let n of imgSquare) {
       const parent = n.parentElement;
       const id = Number(parent?.id.slice(1));
       data.occupatedSquares.push(id);
+      console.log("lol");
     }
   });
 
@@ -176,6 +178,7 @@ export function MovingPieces() {
       }
 
       changedPos.current = true;
+      data.occupatedSquares = [];
     }
 
     for (let n of square) {
@@ -189,6 +192,7 @@ export function MovingPieces() {
       for (let n of square) {
         n.removeEventListener("mousedown", DropPicesHandler as EventListener);
       }
+      
     };
   });
 }
