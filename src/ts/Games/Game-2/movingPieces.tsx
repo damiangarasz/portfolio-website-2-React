@@ -6,11 +6,28 @@ export function MovingPieces() {
   const parent = useRef<HTMLElement | null>(null);
   const changedPos = useRef(false);
 
-  const data = {
+  interface data {
+    pieceId: string;
+    startBoardId: number;
+    targetBoardId: number;
+    occupatedSquares: number[];
+  }
+
+  const data: data = {
     pieceId: "",
     startBoardId: 0,
     targetBoardId: 0,
+    occupatedSquares: [],
   };
+  useEffect(() => {
+    //pchanie zajętych kwadratów
+    const square = document.querySelectorAll(".myImage");
+    for (let n of square) {
+      const parent = n.parentElement;
+      const id = Number(parent?.id.slice(1));
+      data.occupatedSquares.push(id);
+    }
+  });
 
   useEffect(() => {
     const square = document.querySelectorAll(".chess-grid > div");
@@ -20,7 +37,7 @@ export function MovingPieces() {
 
     function MovingPicesHandler(event: MouseEvent) {
       event.preventDefault();
-      changedPos.current == false;
+      changedPos.current = false;
 
       // const target = useRef(event.target as HTMLElement);
       target.current = event.target as HTMLElement;
@@ -86,7 +103,6 @@ export function MovingPieces() {
               event.clientY > top + tableWidth) &&
             changedPos.current == false
           ) {
-            console.log("lol");
             const tempEl = document.querySelector(".temp");
             const id = parent.current?.getAttribute("id");
             const chwytakSq = document.getElementById("" + id);
@@ -122,8 +138,6 @@ export function MovingPieces() {
       if (letters) data.pieceId = letters;
       //koniec wyciągania id trzymanego piona
     }
-
-    //TODO po pierwszym princie nie działa usuwanie przeciąganego piona po wyjeździe za plansze
 
     for (let n of square) {
       n.addEventListener("mousedown", MovingPicesHandler as EventListener);
@@ -161,9 +175,7 @@ export function MovingPieces() {
         chwytak?.removeChild(temp);
       }
 
-      //TODO jestem tutaj 
-      console.log(target);
-      // changedPos.current = true;
+      changedPos.current = true;
     }
 
     for (let n of square) {
