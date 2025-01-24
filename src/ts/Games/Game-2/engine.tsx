@@ -3,8 +3,6 @@ export function engine(data: {
   startBoardId: number;
   occupatedSquares: number[];
 }) {
-  console.log(data);
-
   let posPossition: number[] = [];
 
   switch (data.pieceId) {
@@ -36,20 +34,33 @@ export function engine(data: {
       break;
   }
 
-  console.log(posPossition);
+  function compareNumbers(a: number, b: number) {
+    return a - b;
+  }
 
   function ruchyWiezy(pole: number) {
     const zajetePola = data.occupatedSquares;
-    const ruchy = [];
+    const ruchy: number[] = [];
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
+    console.log(pole);
 
     // Ruchy w pionie (góra i dół)
-    for (let i = 1; i <= 8; i++) {
-      if (i !== wiersz) {
-        ruchy.push((i - 1) * 8 + kolumna); // Przesuwanie w pionie
+    function wPionie() {
+      const rawArr: number[] = [];
+      const poss = data.startBoardId;
+      rawArr.push(poss);
+
+      for (let i = 1; i <= 8; i++) {
+        if (i !== wiersz) {
+          rawArr.push((i - 1) * 8 + kolumna);
+          // Przesuwanie w pionie
+        }
       }
+      rawArr.sort(compareNumbers);
+      console.log(rawArr);
     }
+    wPionie();
 
     // Ruchy w poziomie (lewo i prawo)
     for (let j = 1; j <= 8; j++) {

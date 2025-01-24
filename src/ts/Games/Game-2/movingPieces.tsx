@@ -5,6 +5,7 @@ export function MovingPieces() {
   const target = useRef<HTMLElement | null>(null);
   const parent = useRef<HTMLElement | null>(null);
   const changedPos = useRef(false);
+  const [fillArr, setFillArr] = useState(false);
 
   interface data {
     pieceId: string;
@@ -27,9 +28,8 @@ export function MovingPieces() {
       const parent = n.parentElement;
       const id = Number(parent?.id.slice(1));
       data.occupatedSquares.push(id);
-      console.log("lol");
     }
-  });
+  }, [fillArr]);
 
   useEffect(() => {
     const square = document.querySelectorAll(".chess-grid > div");
@@ -147,6 +147,7 @@ export function MovingPieces() {
 
     function DropPicesHandler(event: MouseEvent) {
       const temp = document.querySelector(".temp");
+      if (!temp) return;
       const chwytak = document.querySelector(".chess-grid");
 
       const target = event.target as HTMLElement;
@@ -179,6 +180,7 @@ export function MovingPieces() {
 
       changedPos.current = true;
       data.occupatedSquares = [];
+      setFillArr(fillArr ? false : true);
     }
 
     for (let n of square) {
@@ -190,9 +192,8 @@ export function MovingPieces() {
         n.removeEventListener("mousedown", MovingPicesHandler as EventListener);
       }
       for (let n of square) {
-        n.removeEventListener("mousedown", DropPicesHandler as EventListener);
+        n.removeEventListener("mouseup", DropPicesHandler as EventListener);
       }
-      
     };
   });
 }
