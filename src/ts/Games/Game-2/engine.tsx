@@ -38,12 +38,15 @@ export function engine(data: {
     return a - b;
   }
 
+  function reverseComparenumbers(a: number, b: number) {
+    return b - a;
+  }
+
   function ruchyWiezy(pole: number) {
     const zajetePola = data.occupatedSquares;
     const ruchy: number[] = [];
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
-    console.log(pole);
 
     // Ruchy w pionie (góra i dół)
     function wPionie() {
@@ -58,22 +61,105 @@ export function engine(data: {
         }
       }
       rawArr.sort(compareNumbers);
-      console.log(rawArr);
+      const top: number[] = [];
+      const bottom: number[] = [];
+
+      rawArr.map((n) => {
+        if (n < poss) {
+          top.push(n);
+        } else if (n > poss) {
+          bottom.push(n);
+        }
+      });
+
+      top.sort(reverseComparenumbers);
+
+      function topFn() {
+        for (let n of top) {
+          if (!zajetePola.includes(n)) {
+            ruchy.push(n);
+          } else if (zajetePola.includes(n)) {
+            ruchy.push(n);
+            return;
+          }
+        }
+      }
+      topFn();
+
+      function bottomFn() {
+        for (let n of bottom) {
+          if (!zajetePola.includes(n)) {
+            ruchy.push(n);
+          } else if (zajetePola.includes(n)) {
+            ruchy.push(n);
+            return;
+          }
+        }
+      }
+      bottomFn();
+      //TODO
     }
     wPionie();
-
     // Ruchy w poziomie (lewo i prawo)
-    for (let j = 1; j <= 8; j++) {
-      if (j !== kolumna) {
-        ruchy.push((wiersz - 1) * 8 + j); // Przesuwanie w poziomie
+    function wPoziomie() {
+      const rawArr: number[] = [];
+      const poss = data.startBoardId;
+      rawArr.push(poss);
+
+      for (let j = 1; j <= 8; j++) {
+        if (j !== kolumna) {
+          rawArr.push((wiersz - 1) * 8 + j); // Przesuwanie w poziomie
+        }
       }
+      rawArr.sort(compareNumbers);
+
+      const left: number[] = [];
+      const right: number[] = [];
+
+      rawArr.map((n) => {
+        if (n < poss) {
+          left.push(n);
+        } else if (n > poss) {
+          right.push(n);
+        }
+      });
+
+      left.sort(reverseComparenumbers);
+
+      function leftFn() {
+        for (let n of left) {
+          if (!zajetePola.includes(n)) {
+            ruchy.push(n);
+          } else if (zajetePola.includes(n)) {
+            ruchy.push(n);
+            return;
+          }
+        }
+      }
+      leftFn();
+      function rightFn() {
+        for (let n of right) {
+          if (!zajetePola.includes(n)) {
+            ruchy.push(n);
+          } else if (zajetePola.includes(n)) {
+            ruchy.push(n);
+            return;
+          }
+        }
+      }
+      rightFn();
     }
+    wPoziomie();
 
     return ruchy;
   }
 
   function ruchyGonca(pole: number) {
-    const ruchy = [];
+    const ruchyGP = [];
+    const ruchyGL = [];
+    const ruchyDP = [];
+    const ruchyDL = [];
+    const ruchy: number[] = [];
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
 
@@ -81,7 +167,7 @@ export function engine(data: {
     let r = wiersz + 1;
     let k = kolumna + 1;
     while (r <= 8 && k <= 8) {
-      ruchy.push((r - 1) * 8 + k);
+      ruchyGP.push((r - 1) * 8 + k);
       r++;
       k++;
     }
@@ -90,7 +176,7 @@ export function engine(data: {
     r = wiersz + 1;
     k = kolumna - 1;
     while (r <= 8 && k >= 1) {
-      ruchy.push((r - 1) * 8 + k);
+      ruchyGL.push((r - 1) * 8 + k);
       r++;
       k--;
     }
@@ -99,7 +185,7 @@ export function engine(data: {
     r = wiersz - 1;
     k = kolumna + 1;
     while (r >= 1 && k <= 8) {
-      ruchy.push((r - 1) * 8 + k);
+      ruchyDP.push((r - 1) * 8 + k);
       r--;
       k++;
     }
@@ -108,10 +194,15 @@ export function engine(data: {
     r = wiersz - 1;
     k = kolumna - 1;
     while (r >= 1 && k >= 1) {
-      ruchy.push((r - 1) * 8 + k);
+      ruchyDL.push((r - 1) * 8 + k);
       r--;
       k--;
     }
+
+    function push(){
+
+    }
+    push();
 
     return ruchy;
   }
