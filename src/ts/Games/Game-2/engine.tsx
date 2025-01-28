@@ -97,7 +97,6 @@ export function engine(data: {
         }
       }
       bottomFn();
-      //TODO
     }
     wPionie();
     // Ruchy w poziomie (lewo i prawo)
@@ -155,54 +154,98 @@ export function engine(data: {
   }
 
   function ruchyGonca(pole: number) {
-    const ruchyGP = [];
-    const ruchyGL = [];
-    const ruchyDP = [];
-    const ruchyDL = [];
+    const zajetePola = data.occupatedSquares;
+    const ruchyGP: number[] = [];
+    const ruchyGL: number[] = [];
+    const ruchyDP: number[] = [];
+    const ruchyDL: number[] = [];
     const ruchy: number[] = [];
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
 
-    // Ruchy na przekątnej w górę w prawo (+1 wiersz, +1 kolumna)
+    // Ruchy na przekątnej w dół w prawo (+1 wiersz, +1 kolumna)
     let r = wiersz + 1;
     let k = kolumna + 1;
     while (r <= 8 && k <= 8) {
-      ruchyGP.push((r - 1) * 8 + k);
+      ruchyDP.push((r - 1) * 8 + k);
       r++;
       k++;
     }
 
-    // Ruchy na przekątnej w górę w lewo (+1 wiersz, -1 kolumna)
+    function ruchyDPFn() {
+      for (let n of ruchyDP) {
+        if (!zajetePola.includes(n)) {
+          ruchy.push(n);
+        } else if (zajetePola.includes(n)) {
+          ruchy.push(n);
+          return;
+        }
+      }
+    }
+    ruchyDPFn();
+
+    // Ruchy na przekątnej w dół w lewo (+1 wiersz, -1 kolumna)
     r = wiersz + 1;
     k = kolumna - 1;
     while (r <= 8 && k >= 1) {
-      ruchyGL.push((r - 1) * 8 + k);
+      ruchyDL.push((r - 1) * 8 + k);
       r++;
       k--;
     }
 
-    // Ruchy na przekątnej w dół w prawo (-1 wiersz, +1 kolumna)
+    function ruchyDLFn() {
+      for (let n of ruchyDL) {
+        if (!zajetePola.includes(n)) {
+          ruchy.push(n);
+        } else if (zajetePola.includes(n)) {
+          ruchy.push(n);
+          return;
+        }
+      }
+    }
+    ruchyDLFn();
+
+    // Ruchy na przekątnej w góra w prawo (-1 wiersz, +1 kolumna)
     r = wiersz - 1;
     k = kolumna + 1;
     while (r >= 1 && k <= 8) {
-      ruchyDP.push((r - 1) * 8 + k);
+      ruchyGP.push((r - 1) * 8 + k);
       r--;
       k++;
     }
 
-    // Ruchy na przekątnej w dół w lewo (-1 wiersz, -1 kolumna)
+    function ruchyGPFn() {
+      for (let n of ruchyGP) {
+        if (!zajetePola.includes(n)) {
+          ruchy.push(n);
+        } else if (zajetePola.includes(n)) {
+          ruchy.push(n);
+          return;
+        }
+      }
+    }
+    ruchyGPFn();
+
+    // Ruchy na przekątnej w dół lewo (-1 wiersz, -1 kolumna)
     r = wiersz - 1;
     k = kolumna - 1;
     while (r >= 1 && k >= 1) {
-      ruchyDL.push((r - 1) * 8 + k);
+      ruchyGL.push((r - 1) * 8 + k);
       r--;
       k--;
     }
 
-    function push(){
-
+    function ruchyGLFn() {
+      for (let n of ruchyGL) {
+        if (!zajetePola.includes(n)) {
+          ruchy.push(n);
+        } else if (zajetePola.includes(n)) {
+          ruchy.push(n);
+          return;
+        }
+      }
     }
-    push();
+    ruchyGLFn();
 
     return ruchy;
   }
