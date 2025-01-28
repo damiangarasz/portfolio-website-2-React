@@ -282,67 +282,207 @@ export function engine(data: {
         ruchy.push((nowyWiersz - 1) * 8 + nowaKolumna);
       }
     }
+    console.log(ruchy);
 
     return ruchy;
   }
 
   function ruchyHetmana(pole: number) {
-    const ruchy = [];
+    const zajetePola = data.occupatedSquares;
+    const ruchyGP: number[] = [];
+    const ruchyGL: number[] = [];
+    const ruchyDP: number[] = [];
+    const ruchyDL: number[] = [];
+    const ruchy: number[] = [];
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
 
-    // --- Ruchy wieży (pionowe i poziome) ---
-    // Ruchy w pionie
-    for (let i = 1; i <= 8; i++) {
-      if (i !== wiersz) {
-        ruchy.push((i - 1) * 8 + kolumna); // Przesuwanie w pionie
-      }
-    }
-
-    // Ruchy w poziomie
-    for (let j = 1; j <= 8; j++) {
-      if (j !== kolumna) {
-        ruchy.push((wiersz - 1) * 8 + j); // Przesuwanie w poziomie
-      }
-    }
-
-    // --- Ruchy gońca (przekątne) ---
-    // Przekątna w górę w prawo
+    // Ruchy na przekątnej w dół w prawo (+1 wiersz, +1 kolumna)
     let r = wiersz + 1;
     let k = kolumna + 1;
     while (r <= 8 && k <= 8) {
-      ruchy.push((r - 1) * 8 + k);
+      ruchyDP.push((r - 1) * 8 + k);
       r++;
       k++;
     }
 
-    // Przekątna w górę w lewo
+    function ruchyDPFn() {
+      for (let n of ruchyDP) {
+        if (!zajetePola.includes(n)) {
+          ruchy.push(n);
+        } else if (zajetePola.includes(n)) {
+          ruchy.push(n);
+          return;
+        }
+      }
+    }
+    ruchyDPFn();
+
+    // Ruchy na przekątnej w dół w lewo (+1 wiersz, -1 kolumna)
     r = wiersz + 1;
     k = kolumna - 1;
     while (r <= 8 && k >= 1) {
-      ruchy.push((r - 1) * 8 + k);
+      ruchyDL.push((r - 1) * 8 + k);
       r++;
       k--;
     }
 
-    // Przekątna w dół w prawo
+    function ruchyDLFn() {
+      for (let n of ruchyDL) {
+        if (!zajetePola.includes(n)) {
+          ruchy.push(n);
+        } else if (zajetePola.includes(n)) {
+          ruchy.push(n);
+          return;
+        }
+      }
+    }
+    ruchyDLFn();
+
+    // Ruchy na przekątnej w góra w prawo (-1 wiersz, +1 kolumna)
     r = wiersz - 1;
     k = kolumna + 1;
     while (r >= 1 && k <= 8) {
-      ruchy.push((r - 1) * 8 + k);
+      ruchyGP.push((r - 1) * 8 + k);
       r--;
       k++;
     }
 
-    // Przekątna w dół w lewo
+    function ruchyGPFn() {
+      for (let n of ruchyGP) {
+        if (!zajetePola.includes(n)) {
+          ruchy.push(n);
+        } else if (zajetePola.includes(n)) {
+          ruchy.push(n);
+          return;
+        }
+      }
+    }
+    ruchyGPFn();
+
+    // Ruchy na przekątnej w dół lewo (-1 wiersz, -1 kolumna)
     r = wiersz - 1;
     k = kolumna - 1;
     while (r >= 1 && k >= 1) {
-      ruchy.push((r - 1) * 8 + k);
+      ruchyGL.push((r - 1) * 8 + k);
       r--;
       k--;
     }
 
+    function ruchyGLFn() {
+      for (let n of ruchyGL) {
+        if (!zajetePola.includes(n)) {
+          ruchy.push(n);
+        } else if (zajetePola.includes(n)) {
+          ruchy.push(n);
+          return;
+        }
+      }
+    }
+    ruchyGLFn();
+
+    // Ruchy w pionie (góra i dół)
+    function wPionie() {
+      const rawArr: number[] = [];
+      const poss = data.startBoardId;
+      rawArr.push(poss);
+
+      for (let i = 1; i <= 8; i++) {
+        if (i !== wiersz) {
+          rawArr.push((i - 1) * 8 + kolumna);
+          // Przesuwanie w pionie
+        }
+      }
+      rawArr.sort(compareNumbers);
+      const top: number[] = [];
+      const bottom: number[] = [];
+
+      rawArr.map((n) => {
+        if (n < poss) {
+          top.push(n);
+        } else if (n > poss) {
+          bottom.push(n);
+        }
+      });
+
+      top.sort(reverseComparenumbers);
+
+      function topFn() {
+        for (let n of top) {
+          if (!zajetePola.includes(n)) {
+            ruchy.push(n);
+          } else if (zajetePola.includes(n)) {
+            ruchy.push(n);
+            return;
+          }
+        }
+      }
+      topFn();
+
+      function bottomFn() {
+        for (let n of bottom) {
+          if (!zajetePola.includes(n)) {
+            ruchy.push(n);
+          } else if (zajetePola.includes(n)) {
+            ruchy.push(n);
+            return;
+          }
+        }
+      }
+      bottomFn();
+    }
+    wPionie();
+    // Ruchy w poziomie (lewo i prawo)
+    function wPoziomie() {
+      const rawArr: number[] = [];
+      const poss = data.startBoardId;
+      rawArr.push(poss);
+
+      for (let j = 1; j <= 8; j++) {
+        if (j !== kolumna) {
+          rawArr.push((wiersz - 1) * 8 + j); // Przesuwanie w poziomie
+        }
+      }
+      rawArr.sort(compareNumbers);
+
+      const left: number[] = [];
+      const right: number[] = [];
+
+      rawArr.map((n) => {
+        if (n < poss) {
+          left.push(n);
+        } else if (n > poss) {
+          right.push(n);
+        }
+      });
+
+      left.sort(reverseComparenumbers);
+
+      function leftFn() {
+        for (let n of left) {
+          if (!zajetePola.includes(n)) {
+            ruchy.push(n);
+          } else if (zajetePola.includes(n)) {
+            ruchy.push(n);
+            return;
+          }
+        }
+      }
+      leftFn();
+      function rightFn() {
+        for (let n of right) {
+          if (!zajetePola.includes(n)) {
+            ruchy.push(n);
+          } else if (zajetePola.includes(n)) {
+            ruchy.push(n);
+            return;
+          }
+        }
+      }
+      rightFn();
+    }
+    wPoziomie();
+    console.log(ruchy);
     return ruchy;
   }
 
