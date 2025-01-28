@@ -2,6 +2,7 @@ export function engine(data: {
   pieceId: string;
   startBoardId: number;
   occupatedSquares: number[];
+  targetBoardId: number;
 }) {
   let posPossition: number[] = [];
 
@@ -47,6 +48,8 @@ export function engine(data: {
     const ruchy: number[] = [];
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
+
+    ruchy.push(data.startBoardId);
 
     // Ruchy w pionie (góra i dół)
     function wPionie() {
@@ -163,6 +166,8 @@ export function engine(data: {
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
 
+    ruchy.push(data.startBoardId);
+
     // Ruchy na przekątnej w dół w prawo (+1 wiersz, +1 kolumna)
     let r = wiersz + 1;
     let k = kolumna + 1;
@@ -255,6 +260,8 @@ export function engine(data: {
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
 
+    ruchy.push(data.startBoardId);
+
     // Wszystkie możliwe przeskoki skoczka
     const skoki = [
       { r: -2, k: -1 },
@@ -296,6 +303,8 @@ export function engine(data: {
     const ruchy: number[] = [];
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
+
+    ruchy.push(data.startBoardId);
 
     // Ruchy na przekątnej w dół w prawo (+1 wiersz, +1 kolumna)
     let r = wiersz + 1;
@@ -491,6 +500,8 @@ export function engine(data: {
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
 
+    ruchy.push(data.startBoardId);
+
     // Wszystkie możliwe przesunięcia króla
     const przesuniecia = [
       { r: -1, k: 0 }, // Góra
@@ -527,6 +538,8 @@ export function engine(data: {
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
 
+    ruchy.push(data.startBoardId);
+
     // Kierunek ruchu (dla gracza: w górę, dla przeciwnika: w dół)
     const kierunek = czyGracz ? -1 : 1;
 
@@ -557,9 +570,6 @@ export function engine(data: {
 
     return ruchy;
   }
-}
 
-//TODO sprawdzić jaki pionek
-//TODO matematyczne granice poruszania pionka
-//TODO sprawdzić czy pionek został przeniesiony w granicach poruszania
-//TODO sprawdzić czy nie było przeszkód
+  return posPossition.includes(data.targetBoardId) ? true : false;
+}

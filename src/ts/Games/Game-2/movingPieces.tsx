@@ -152,30 +152,87 @@ export function MovingPieces() {
 
       const target = event.target as HTMLElement;
       const div = target.getAttribute("id");
+      const parentDiv = target.parentElement;
+      const parentDivId = parentDiv?.getAttribute("id");
 
       //dodawanie do data targetowanego id
       if (div) {
         const temp = div.slice(1);
         data.targetBoardId = Number(temp);
+      } else if (parentDivId) {
+        const temp = parentDivId.slice(1);
+        data.targetBoardId = Number(temp);
       }
 
-      //TODO komunikacja z engine
-      const lol = engine(data);
+      //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
 
-      const img = temp?.getAttribute("src");
-      const query = "" + div;
-      const insertDiv = document.getElementById(query);
+      if (engine(data)) {
+        //TODO
 
-      const imgEl = document.createElement("img");
-      imgEl.className = "myImage";
-      if (img) {
-        imgEl.src = img;
-      }
+        if (target.tagName == "DIV") {
+          const img = temp?.getAttribute("src");
+          const query = "" + div;
+          const insertDiv = document.getElementById(query);
 
-      insertDiv?.appendChild(imgEl);
+          const imgEl = document.createElement("img");
+          imgEl.className = "myImage";
+          if (img) {
+            imgEl.src = img;
+          }
 
-      if (temp) {
-        chwytak?.removeChild(temp);
+          insertDiv?.appendChild(imgEl);
+
+          if (temp) {
+            chwytak?.removeChild(temp);
+          }
+        } else {
+          let srcTag = data.pieceId;
+          let targetTag;
+
+          const targetSq = target.getAttribute("src");
+          let pieceId;
+          if (targetSq) {
+            pieceId = targetSq.match(/(\w{2})\.png$/);
+          }
+          if (pieceId) targetTag = pieceId[1];
+          targetTag = targetTag?.slice(0, 1);
+          srcTag = srcTag.slice(0, 1);
+
+          if (srcTag == targetTag) {
+            const piece = document.querySelector(".temp");
+            const pieceSrc = piece?.getAttribute("src");
+            const el = document.createElement("img");
+            if (!pieceSrc) return;
+            el.setAttribute("src", pieceSrc);
+            el.className = "myImage";
+
+            const startId = "#s" + data.startBoardId;
+            const target = document.querySelector(startId);
+            target?.appendChild(el);
+
+            const parent = document.querySelector(".chess-grid");
+            if (!piece) return;
+            parent?.removeChild(piece);
+          } else if (srcTag != targetTag) {
+            console.log("lol");
+            //TODO
+          }
+        }
+      } else {
+        const piece = document.querySelector(".temp");
+        const pieceSrc = piece?.getAttribute("src");
+        const el = document.createElement("img");
+        if (!pieceSrc) return;
+        el.setAttribute("src", pieceSrc);
+        el.className = "myImage";
+
+        const startId = "#s" + data.startBoardId;
+        const target = document.querySelector(startId);
+        target?.appendChild(el);
+
+        const parent = document.querySelector(".chess-grid");
+        if (!piece) return;
+        parent?.removeChild(piece);
       }
 
       changedPos.current = true;
