@@ -168,6 +168,12 @@ export function MovingPieces() {
 
       const returnData = engine(data);
 
+      function legal() {
+        //TODO
+      }
+
+      function illegal() {}
+
       if (returnData.isLegal) {
         //TODO
 
@@ -241,8 +247,131 @@ export function MovingPieces() {
             const index = legal.indexOf(data.startBoardId);
             if (index != -1) legal.splice(index, 1);
             if (legal.length < 3) {
+              //jeśli w lagal array jest mniej niż 3 legal moves co oznacza że piony są skrajne
               const left = [9, 17, 25, 33, 41, 49];
               const right = [16, 24, 32, 40, 48, 56];
+
+              if (left.includes(data.startBoardId)) {
+                //logika lewego piona
+                const targetId = target.parentElement?.getAttribute("id");
+                const targetIdNum = Number(targetId?.slice(1));
+
+                if (targetIdNum == legal[0]) {
+                  //kiedy lewy pion próbuje bić do przodu
+                  const piece = document.querySelector(".temp");
+                  const pieceSrc = piece?.getAttribute("src");
+                  const el = document.createElement("img");
+                  if (!pieceSrc) return;
+                  el.setAttribute("src", pieceSrc);
+                  el.className = "myImage";
+
+                  const startId = "#s" + data.startBoardId;
+                  const target = document.querySelector(startId);
+                  target?.appendChild(el);
+
+                  const parent = document.querySelector(".chess-grid");
+                  if (!piece) return;
+                  parent?.removeChild(piece);
+                } else if (targetIdNum == legal[1]) {
+                  //kiedy lewy pion bije prawidłowo
+                  const piece = document.querySelector(".temp");
+                  const pieceSrc = piece?.getAttribute("src");
+                  const el = document.createElement("img");
+                  if (!pieceSrc) return;
+                  el.setAttribute("src", pieceSrc);
+                  el.className = "myImage";
+
+                  const targetId = target.parentElement?.getAttribute("id");
+                  const targetImg = document.querySelector(
+                    `#${targetId} > img`,
+                  );
+
+                  const square = document.querySelector(`#${targetId}`);
+                  if (targetImg) square?.removeChild(targetImg);
+                  square?.appendChild(el);
+                  const board = document.querySelector(".chess-grid");
+                  if (piece) board?.removeChild(piece);
+                }
+              } else if (right.includes(data.startBoardId)) {
+                //logika prawego piona
+                const targetId = target.parentElement?.getAttribute("id");
+                const targetIdNum = Number(targetId?.slice(1));
+
+                if (targetIdNum == legal[1]) {
+                  //kiedy prawy pion próbuje bić do przodu
+                  const piece = document.querySelector(".temp");
+                  const pieceSrc = piece?.getAttribute("src");
+                  const el = document.createElement("img");
+                  if (!pieceSrc) return;
+                  el.setAttribute("src", pieceSrc);
+                  el.className = "myImage";
+
+                  const startId = "#s" + data.startBoardId;
+                  const target = document.querySelector(startId);
+                  target?.appendChild(el);
+
+                  const parent = document.querySelector(".chess-grid");
+                  if (!piece) return;
+                  parent?.removeChild(piece);
+                } else if (targetIdNum == legal[0]) {
+                  //kiedy prawy pion bije prawidłowo
+                  const piece = document.querySelector(".temp");
+                  const pieceSrc = piece?.getAttribute("src");
+                  const el = document.createElement("img");
+                  if (!pieceSrc) return;
+                  el.setAttribute("src", pieceSrc);
+                  el.className = "myImage";
+
+                  const targetId = target.parentElement?.getAttribute("id");
+                  const targetImg = document.querySelector(
+                    `#${targetId} > img`,
+                  );
+
+                  const square = document.querySelector(`#${targetId}`);
+                  if (targetImg) square?.removeChild(targetImg);
+                  square?.appendChild(el);
+                  const board = document.querySelector(".chess-grid");
+                  if (piece) board?.removeChild(piece);
+                }
+              }
+            } else {
+              //logika gdy są 3 legalne posunięcia
+              const targetId = target.parentElement?.getAttribute("id");
+              const targetIdNum = Number(targetId?.slice(1));
+              if (targetIdNum == legal[0] || targetIdNum == legal[2]) {
+                //logika kiedy pion bije prawidłowo
+                const piece = document.querySelector(".temp");
+                const pieceSrc = piece?.getAttribute("src");
+                const el = document.createElement("img");
+                if (!pieceSrc) return;
+                el.setAttribute("src", pieceSrc);
+                el.className = "myImage";
+
+                const targetId = target.parentElement?.getAttribute("id");
+                const targetImg = document.querySelector(`#${targetId} > img`);
+
+                const square = document.querySelector(`#${targetId}`);
+                if (targetImg) square?.removeChild(targetImg);
+                square?.appendChild(el);
+                const board = document.querySelector(".chess-grid");
+                if (piece) board?.removeChild(piece);
+              } else {
+                //logika kiedy pion próbuje być do przodu
+                const piece = document.querySelector(".temp");
+                const pieceSrc = piece?.getAttribute("src");
+                const el = document.createElement("img");
+                if (!pieceSrc) return;
+                el.setAttribute("src", pieceSrc);
+                el.className = "myImage";
+
+                const startId = "#s" + data.startBoardId;
+                const target = document.querySelector(startId);
+                target?.appendChild(el);
+
+                const parent = document.querySelector(".chess-grid");
+                if (!piece) return;
+                parent?.removeChild(piece);
+              }
             }
             //TODO here
           }
