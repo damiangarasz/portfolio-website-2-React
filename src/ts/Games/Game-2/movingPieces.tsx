@@ -166,7 +166,9 @@ export function MovingPieces() {
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
 
-      if (engine(data)) {
+      const returnData = engine(data);
+
+      if (returnData.isLegal) {
         //TODO
 
         if (target.tagName == "DIV") {
@@ -187,6 +189,7 @@ export function MovingPieces() {
           }
         } else {
           let srcTag = data.pieceId;
+          const ogTag = srcTag;
           let targetTag;
 
           const targetSq = target.getAttribute("src");
@@ -213,9 +216,35 @@ export function MovingPieces() {
             const parent = document.querySelector(".chess-grid");
             if (!piece) return;
             parent?.removeChild(piece);
-          } else if (srcTag != targetTag) {
-            console.log("lol");
-            //TODO
+          } else if (srcTag != targetTag && ogTag != "wp" && ogTag != "bp") {
+            const piece = document.querySelector(".temp");
+            const pieceSrc = piece?.getAttribute("src");
+            const el = document.createElement("img");
+            if (!pieceSrc) return;
+            el.setAttribute("src", pieceSrc);
+            el.className = "myImage";
+
+            const targetId = target.parentElement?.getAttribute("id");
+            const targetImg = document.querySelector(`#${targetId} > img`);
+
+            const square = document.querySelector(`#${targetId}`);
+            if (targetImg) square?.removeChild(targetImg);
+            square?.appendChild(el);
+            const board = document.querySelector(".chess-grid");
+            if (piece) board?.removeChild(piece);
+          } else if (ogTag == "wp" || ogTag == "bp") {
+            function compareNumbers(a: number, b: number) {
+              return a - b;
+            }
+            const legal = returnData.legalSquares;
+            legal.sort(compareNumbers);
+            const index = legal.indexOf(data.startBoardId);
+            if (index != -1) legal.splice(index, 1);
+            if (legal.length < 3) {
+              const left = [9, 17, 25, 33, 41, 49];
+              const right = [16, 24, 32, 40, 48, 56];
+            }
+            //TODO here
           }
         }
       } else {

@@ -4,36 +4,53 @@ export function engine(data: {
   occupatedSquares: number[];
   targetBoardId: number;
 }) {
-  let posPossition: number[] = [];
+  interface returnData {
+    isLegal: boolean;
+    legalSquares: number[];
+  }
+
+  const returnData: returnData = {
+    isLegal: true,
+    legalSquares: [],
+  };
 
   switch (data.pieceId) {
     case "br":
     case "wr":
-      posPossition = ruchyWiezy(data.startBoardId);
+      returnData.legalSquares = ruchyWiezy(data.startBoardId);
+
       break;
     case "bn":
     case "wn":
-      posPossition = ruchySkoczka(data.startBoardId);
+      returnData.legalSquares = ruchySkoczka(data.startBoardId);
+
       break;
     case "bb":
     case "wb":
-      posPossition = ruchyGonca(data.startBoardId);
+      returnData.legalSquares = ruchyGonca(data.startBoardId);
+
       break;
     case "bq":
     case "wq":
-      posPossition = ruchyHetmana(data.startBoardId);
+      returnData.legalSquares = ruchyHetmana(data.startBoardId);
+
       break;
     case "bk":
     case "wk":
-      posPossition = ruchyKrola(data.startBoardId);
+      returnData.legalSquares = ruchyKrola(data.startBoardId);
+
       break;
     case "bp":
-      posPossition = ruchyPionka(data.startBoardId, false);
+      returnData.legalSquares = ruchyPionka(data.startBoardId, false);
+
       break;
     case "wp":
-      posPossition = ruchyPionka(data.startBoardId, true);
+      returnData.legalSquares = ruchyPionka(data.startBoardId, true);
+
       break;
   }
+
+  returnData.isLegal = returnData.legalSquares.includes(data.targetBoardId);
 
   function compareNumbers(a: number, b: number) {
     return a - b;
@@ -289,7 +306,6 @@ export function engine(data: {
         ruchy.push((nowyWiersz - 1) * 8 + nowaKolumna);
       }
     }
-    console.log(ruchy);
 
     return ruchy;
   }
@@ -491,7 +507,6 @@ export function engine(data: {
       rightFn();
     }
     wPoziomie();
-    console.log(ruchy);
     return ruchy;
   }
 
@@ -571,5 +586,5 @@ export function engine(data: {
     return ruchy;
   }
 
-  return posPossition.includes(data.targetBoardId) ? true : false;
+  return returnData;
 }
