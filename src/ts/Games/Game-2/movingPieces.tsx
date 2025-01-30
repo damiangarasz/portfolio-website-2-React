@@ -178,6 +178,31 @@ export function MovingPieces() {
         //TODO
 
         if (target.tagName == "DIV") {
+          if (data.pieceId == "wp" || data.pieceId == "bp") {
+            const targetId = Number(target.id.slice(1));
+
+            if (
+              Math.abs(data.startBoardId - targetId) != 8 ||
+              Math.abs(data.startBoardId - targetId) != 16 ||
+              Math.abs(data.startBoardId + targetId) != 16 ||
+              Math.abs(data.startBoardId + targetId) != 8
+            ) {
+              const piece = document.querySelector(".temp");
+              const pieceSrc = piece?.getAttribute("src");
+              const el = document.createElement("img");
+              if (!pieceSrc) return;
+              el.setAttribute("src", pieceSrc);
+              el.className = "myImage";
+
+              const startId = "#s" + data.startBoardId;
+              const target = document.querySelector(startId);
+              target?.appendChild(el);
+
+              const parent = document.querySelector(".chess-grid");
+              if (!piece) return;
+              parent?.removeChild(piece);
+            }
+          }
           const img = temp?.getAttribute("src");
           const query = "" + div;
           const insertDiv = document.getElementById(query);
