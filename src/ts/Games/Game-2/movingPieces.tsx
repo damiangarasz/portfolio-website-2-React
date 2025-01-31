@@ -165,166 +165,54 @@ export function MovingPieces() {
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
+      //TODO król nie może podchodzić pod bicie
+      //TODO bicie w przeplocie
+      //TODO zamiana piona na figure
+      //TODO szach i mat
+      //TODO kolejność ruchu
+      //TODO refresh nie resetuje planszy
 
       const returnData = engine(data);
 
       function legal() {
-        //TODO
-      }
-
-      function illegal() {}
-
-      if (returnData.isLegal) {
-        //TODO
-
         if (target.tagName == "DIV") {
-          if (data.pieceId == "wp" || data.pieceId == "bp") {
-            const targetId = Number(target.id.slice(1));
+          //kiedy wchodzimy na puste pole
+          const img = temp?.getAttribute("src");
+          const query = "" + div;
+          const insertDiv = document.getElementById(query);
 
-            if (
-              Math.abs(data.startBoardId - targetId) == 8 ||
-              Math.abs(data.startBoardId - targetId) == 16 ||
-              Math.abs(targetId - data.startBoardId) == 16 ||
-              Math.abs(targetId - data.startBoardId) == 8
-            ) {
-              const img = temp?.getAttribute("src");
-              const query = "" + div;
-              const insertDiv = document.getElementById(query);
+          const imgEl = document.createElement("img");
+          imgEl.className = "myImage";
+          if (img) {
+            imgEl.src = img;
+          }
 
-              const imgEl = document.createElement("img");
-              imgEl.className = "myImage";
-              if (img) {
-                imgEl.src = img;
-              }
+          insertDiv?.appendChild(imgEl);
 
-              insertDiv?.appendChild(imgEl);
-
-              if (temp) {
-                chwytak?.removeChild(temp);
-              }
-            } else {
-              const piece = document.querySelector(".temp");
-              const pieceSrc = piece?.getAttribute("src");
-              const el = document.createElement("img");
-              if (!pieceSrc) return;
-              el.setAttribute("src", pieceSrc);
-              el.className = "myImage";
-
-              const startId = "#s" + data.startBoardId;
-              const target = document.querySelector(startId);
-              target?.appendChild(el);
-
-              const parent = document.querySelector(".chess-grid");
-              if (!piece) return;
-              parent?.removeChild(piece);
-            }
-          } else {
-            const img = temp?.getAttribute("src");
-            const query = "" + div;
-            const insertDiv = document.getElementById(query);
-
-            const imgEl = document.createElement("img");
-            imgEl.className = "myImage";
-            if (img) {
-              imgEl.src = img;
-            }
-
-            insertDiv?.appendChild(imgEl);
-
-            if (temp) {
-              chwytak?.removeChild(temp);
-            }
+          if (temp) {
+            chwytak?.removeChild(temp);
           }
         } else {
-          let srcTag = data.pieceId;
-          const ogTag = srcTag;
-          let targetTag;
+          //kiedy bijemy
+          const piece = document.querySelector(".temp");
+          const pieceSrc = piece?.getAttribute("src");
+          const el = document.createElement("img");
+          if (!pieceSrc) return;
+          el.setAttribute("src", pieceSrc);
+          el.className = "myImage";
 
-          const targetSq = target.getAttribute("src");
-          let pieceId;
-          if (targetSq) {
-            pieceId = targetSq.match(/(\w{2})\.png$/);
-          }
-          if (pieceId) targetTag = pieceId[1];
-          targetTag = targetTag?.slice(0, 1);
-          srcTag = srcTag.slice(0, 1);
+          const targetId = target.parentElement?.getAttribute("id");
+          const targetImg = document.querySelector(`#${targetId} > img`);
 
-          if (srcTag == targetTag) {
-            const piece = document.querySelector(".temp");
-            const pieceSrc = piece?.getAttribute("src");
-            const el = document.createElement("img");
-            if (!pieceSrc) return;
-            el.setAttribute("src", pieceSrc);
-            el.className = "myImage";
-
-            const startId = "#s" + data.startBoardId;
-            const target = document.querySelector(startId);
-            target?.appendChild(el);
-
-            const parent = document.querySelector(".chess-grid");
-            if (!piece) return;
-            parent?.removeChild(piece);
-          } else if (srcTag != targetTag && ogTag != "wp" && ogTag != "bp") {
-            const piece = document.querySelector(".temp");
-            const pieceSrc = piece?.getAttribute("src");
-            const el = document.createElement("img");
-            if (!pieceSrc) return;
-            el.setAttribute("src", pieceSrc);
-            el.className = "myImage";
-
-            const targetId = target.parentElement?.getAttribute("id");
-            const targetImg = document.querySelector(`#${targetId} > img`);
-
-            const square = document.querySelector(`#${targetId}`);
-            if (targetImg) square?.removeChild(targetImg);
-            square?.appendChild(el);
-            const board = document.querySelector(".chess-grid");
-            if (piece) board?.removeChild(piece);
-          } else if (ogTag == "wp" || ogTag == "bp") {
-
-            if (!target.parentElement) return;
-            const targetId = Number(target.parentElement.id.slice(1));
-
-            if (
-              Math.abs(data.startBoardId - targetId) == 8 ||
-              Math.abs(data.startBoardId - targetId) == 16 ||
-              Math.abs(targetId - data.startBoardId) == 16 ||
-              Math.abs(targetId - data.startBoardId) == 8
-            ) {
-              const piece = document.querySelector(".temp");
-              const pieceSrc = piece?.getAttribute("src");
-              const el = document.createElement("img");
-              if (!pieceSrc) return;
-              el.setAttribute("src", pieceSrc);
-              el.className = "myImage";
-
-              const startId = "#s" + data.startBoardId;
-              const target = document.querySelector(startId);
-              target?.appendChild(el);
-
-              const parent = document.querySelector(".chess-grid");
-              if (!piece) return;
-              parent?.removeChild(piece);
-            } else {
-              const piece = document.querySelector(".temp");
-              const pieceSrc = piece?.getAttribute("src");
-              const el = document.createElement("img");
-              if (!pieceSrc) return;
-              el.setAttribute("src", pieceSrc);
-              el.className = "myImage";
-
-              const targetId = target.parentElement?.getAttribute("id");
-              const targetImg = document.querySelector(`#${targetId} > img`);
-
-              const square = document.querySelector(`#${targetId}`);
-              if (targetImg) square?.removeChild(targetImg);
-              square?.appendChild(el);
-              const board = document.querySelector(".chess-grid");
-              if (piece) board?.removeChild(piece);
-            }
-          }
+          const square = document.querySelector(`#${targetId}`);
+          if (targetImg) square?.removeChild(targetImg);
+          square?.appendChild(el);
+          const board = document.querySelector(".chess-grid");
+          if (piece) board?.removeChild(piece);
         }
-      } else {
+      }
+
+      function illegal() {
         const piece = document.querySelector(".temp");
         const pieceSrc = piece?.getAttribute("src");
         const el = document.createElement("img");
@@ -339,6 +227,73 @@ export function MovingPieces() {
         const parent = document.querySelector(".chess-grid");
         if (!piece) return;
         parent?.removeChild(piece);
+      }
+
+      if (returnData.isLegal) {
+        if (target.tagName == "DIV") {
+          if (data.pieceId == "wp" || data.pieceId == "bp") {
+            const targetId = Number(target.id.slice(1));
+
+            if (
+              Math.abs(data.startBoardId - targetId) == 8 ||
+              Math.abs(data.startBoardId - targetId) == 16 ||
+              Math.abs(targetId - data.startBoardId) == 16 ||
+              Math.abs(targetId - data.startBoardId) == 8
+            ) {
+              //pion idzie do przodu na puste pole
+              legal();
+            } else {
+              //pion chce zagrać po skosie na puste pole
+              illegal();
+            }
+          } else {
+            //każda inna figura zagrywa na puste pole już po sprawdzeniu czy legal
+            legal();
+          }
+        } else {
+          //tutaj figura trafia na inną figurę
+          let srcTag = data.pieceId;
+          const ogTag = srcTag;
+          let targetTag;
+
+          //sprawdzanie dokąłdnie jakie figury są zaangażowane
+          const targetSq = target.getAttribute("src");
+          let pieceId;
+          if (targetSq) {
+            pieceId = targetSq.match(/(\w{2})\.png$/);
+          }
+          if (pieceId) targetTag = pieceId[1];
+          targetTag = targetTag?.slice(0, 1);
+          srcTag = srcTag.slice(0, 1);
+
+          if (srcTag == targetTag) {
+            //figury tego samego koloru trafiają na siebie illegal
+            illegal();
+          } else if (srcTag != targetTag && ogTag != "wp" && ogTag != "bp") {
+            //figury różnego koloru trafiają na siebie i hero to nie jest pionek
+            legal();
+          } else if (ogTag == "wp" || ogTag == "bp") {
+            //figury różnego koloru i hero to jest pionek
+            if (!target.parentElement) return;
+            const targetId = Number(target.parentElement.id.slice(1));
+
+            if (
+              Math.abs(data.startBoardId - targetId) == 8 ||
+              Math.abs(data.startBoardId - targetId) == 16 ||
+              Math.abs(targetId - data.startBoardId) == 16 ||
+              Math.abs(targetId - data.startBoardId) == 8
+            ) {
+              //pionek pórbuje bić na wprost illegal
+              illegal();
+            } else {
+              //pionek bije prawidłowo na skos
+              legal();
+            }
+          }
+        }
+      } else {
+        //normalny nielegalny ruch figury
+        illegal();
       }
 
       changedPos.current = true;
