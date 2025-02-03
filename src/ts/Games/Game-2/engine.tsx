@@ -3,6 +3,10 @@ export function engine(data: {
   startBoardId: number;
   occupatedSquares: number[];
   targetBoardId: number;
+  collision: boolean;
+  kingCollisions: {
+    pieces: Record<string, string>[];
+  };
 }) {
   interface returnData {
     isLegal: boolean;
@@ -512,6 +516,35 @@ export function engine(data: {
 
   function ruchyKrola(pole: number) {
     const ruchy = [];
+    const polaPodOstrzalem: number[] = [];
+
+    function ciezkiTemat() {
+      for (let n of data.kingCollisions.pieces) {
+        switch (Object.values(n)[0]) {
+          case "br":
+            polaPodOstrzalem.push(ruchyWiezy(Number(Object.keys(n)[0])));
+            break;
+          case "bn":
+            polaPodOstrzalem.push(ruchySkoczka(Number(Object.keys(n)[0])));
+            break;
+          case "bb":
+            polaPodOstrzalem.push(ruchyGonca(Number(Object.keys(n)[0])));
+            break;
+          case "bq":
+            polaPodOstrzalem.push(ruchyHetmana(Number(Object.keys(n)[0])));
+            break;
+          case "bk":
+            polaPodOstrzalem.push(ruchyWiezy(Number(Object.keys(n)[0])));
+            break;
+          case "bp":
+            polaPodOstrzalem.push(ruchyWiezy(Number(Object.keys(n)[0])));
+            break;
+        }
+      }
+    }
+    ciezkiTemat();
+    console.log(polaPodOstrzalem);
+
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
 

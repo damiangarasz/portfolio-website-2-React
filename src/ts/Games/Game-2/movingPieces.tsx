@@ -12,6 +12,10 @@ export function MovingPieces() {
     startBoardId: number;
     targetBoardId: number;
     occupatedSquares: number[];
+    collision: boolean;
+    kingCollisions: {
+      pieces: Record<string, string>[];
+    };
   }
 
   const data: data = {
@@ -19,6 +23,10 @@ export function MovingPieces() {
     startBoardId: 0,
     targetBoardId: 0,
     occupatedSquares: [],
+    collision: false,
+    kingCollisions: {
+      pieces: [],
+    },
   };
 
   useEffect(() => {
@@ -30,6 +38,34 @@ export function MovingPieces() {
       data.occupatedSquares.push(id);
     }
   }, [fillArr]);
+
+  //TODO zapchnąc w jakie pola każda figura villaina strzela
+
+  useEffect(() => {
+    //pchanie pozycji i nazwy każdej figury
+    //TODO zrobione na twardo tylko dla czarnych
+    const occupatedSqueres: Record<string, string>[] = [];
+
+    const figures: Record<string, string>[] = [];
+    for (let n = 1; n <= 64; n++) {
+      const temp = document.querySelector(`#s${n}`);
+      if (temp?.children[0]) {
+        const src = temp.children[0].getAttribute("src");
+        let pieceId;
+        if (src) pieceId = src.match(/(\w{2})\.png$/);
+
+        const obj: Record<string, string> = {};
+        if (pieceId) obj[n.toString()] = pieceId[1];
+        if (pieceId) occupatedSqueres.push(obj);
+      }
+    }
+    occupatedSqueres.map((n) => {
+      if (Object.values(n)[0].slice(0, 1) == "b") {
+        figures.push(n);
+      }
+    });
+    data.kingCollisions.pieces = figures;
+  });
 
   useEffect(() => {
     const square = document.querySelectorAll(".chess-grid > div");
