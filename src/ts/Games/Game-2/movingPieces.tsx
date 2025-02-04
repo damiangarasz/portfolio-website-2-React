@@ -6,6 +6,7 @@ export function MovingPieces() {
   const parent = useRef<HTMLElement | null>(null);
   const changedPos = useRef(false);
   const [fillArr, setFillArr] = useState(false);
+  const [dubble, setDubble] = useState(0);
 
   interface data {
     pieceId: string;
@@ -201,7 +202,6 @@ export function MovingPieces() {
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
-      //TODO król nie może podchodzić pod bicie
       //TODO bicie w przeplocie
       //TODO zamiana piona na figure
       //TODO szach i mat
@@ -209,6 +209,7 @@ export function MovingPieces() {
       //TODO refresh nie resetuje planszy
 
       const returnData = engine(data);
+      console.log(returnData.legalSquares);
 
       function legal() {
         if (target.tagName == "DIV") {
@@ -248,6 +249,29 @@ export function MovingPieces() {
         }
       }
 
+      function wPrzeplocie() {
+        const img = temp?.getAttribute("src");
+        const query = "" + div;
+        const insertDiv = document.getElementById(query);
+
+        const imgEl = document.createElement("img");
+        imgEl.className = "myImage";
+        if (img) {
+          imgEl.src = img;
+        }
+
+        insertDiv?.appendChild(imgEl);
+
+        if (temp) {
+          chwytak?.removeChild(temp);
+        }
+
+        const targetId = `#s${dubble}`;
+        const target = document.querySelector(targetId);
+        const board = document.querySelector(".chess-grid");
+        if (target) board?.removeChild(target);
+      }
+
       function illegal() {
         const piece = document.querySelector(".temp");
         const pieceSrc = piece?.getAttribute("src");
@@ -269,20 +293,55 @@ export function MovingPieces() {
         if (target.tagName == "DIV") {
           if (data.pieceId == "wp" || data.pieceId == "bp") {
             const targetId = Number(target.id.slice(1));
-
+            const top = [25, 26, 27, 28, 29, 30, 31, 32];
+            const bottom = [33, 34, 35, 36, 37, 38, 39];
             if (
               Math.abs(data.startBoardId - targetId) == 8 ||
-              Math.abs(data.startBoardId - targetId) == 16 ||
-              Math.abs(targetId - data.startBoardId) == 16 ||
               Math.abs(targetId - data.startBoardId) == 8
             ) {
               //pion idzie do przodu na puste pole
+              setDubble(0);
               legal();
+            } else if (
+              Math.abs(data.startBoardId - targetId) == 16 ||
+              Math.abs(targetId - data.startBoardId) == 16
+            ) {
+              setDubble(targetId);
+              legal();
+            } else if (
+              data.startBoardId - 1 == dubble &&
+              top.includes(data.startBoardId)
+            ) {
+              //pion bije w przeplocie
+              wPrzeplocie();
+              console.log("here");
+            } else if (
+              data.startBoardId + 1 == dubble &&
+              top.includes(data.startBoardId)
+            ) {
+              //pion bije w przeplocie
+              wPrzeplocie();
+              console.log("here");
+            } else if (
+              data.startBoardId - 1 == dubble &&
+              bottom.includes(data.startBoardId)
+            ) {
+              //pion bije w przeplocie
+              wPrzeplocie();
+              console.log("here");
+            } else if (
+              data.startBoardId + 1 == dubble &&
+              bottom.includes(data.startBoardId)
+            ) {
+              //pion bije w przeplocie
+              wPrzeplocie();
+              console.log("here");
             } else {
               //pion chce zagrać po skosie na puste pole
               illegal();
             }
           } else {
+            setDubble(0);
             //każda inna figura zagrywa na puste pole już po sprawdzeniu czy legal
             legal();
           }
@@ -307,6 +366,7 @@ export function MovingPieces() {
             illegal();
           } else if (srcTag != targetTag && ogTag != "wp" && ogTag != "bp") {
             //figury różnego koloru trafiają na siebie i hero to nie jest pionek
+            setDubble(0);
             legal();
           } else if (ogTag == "wp" || ogTag == "bp") {
             //figury różnego koloru i hero to jest pionek
@@ -323,6 +383,7 @@ export function MovingPieces() {
               illegal();
             } else {
               //pionek bije prawidłowo na skos
+              setDubble(0);
               legal();
             }
           }

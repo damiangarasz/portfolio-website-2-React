@@ -41,15 +41,15 @@ export function engine(data: {
       break;
     case "bk":
     case "wk":
-      returnData.legalSquares = ruchyKrola(data.startBoardId);
+      returnData.legalSquares = ruchyKrola(data.startBoardId, true);
 
       break;
     case "bp":
-      returnData.legalSquares = ruchyPionka(data.startBoardId, false);
+      returnData.legalSquares = ruchyPionka(data.startBoardId, false, false);
 
       break;
     case "wp":
-      returnData.legalSquares = ruchyPionka(data.startBoardId, true);
+      returnData.legalSquares = ruchyPionka(data.startBoardId, true, false);
 
       break;
   }
@@ -75,7 +75,7 @@ export function engine(data: {
     // Ruchy w pionie (góra i dół)
     function wPionie() {
       const rawArr: number[] = [];
-      const poss = data.startBoardId;
+      const poss = pole;
       rawArr.push(poss);
 
       for (let i = 1; i <= 8; i++) {
@@ -126,7 +126,7 @@ export function engine(data: {
     // Ruchy w poziomie (lewo i prawo)
     function wPoziomie() {
       const rawArr: number[] = [];
-      const poss = data.startBoardId;
+      const poss = pole;
       rawArr.push(poss);
 
       for (let j = 1; j <= 8; j++) {
@@ -413,7 +413,7 @@ export function engine(data: {
     // Ruchy w pionie (góra i dół)
     function wPionie() {
       const rawArr: number[] = [];
-      const poss = data.startBoardId;
+      const poss = pole;
       rawArr.push(poss);
 
       for (let i = 1; i <= 8; i++) {
@@ -464,7 +464,7 @@ export function engine(data: {
     // Ruchy w poziomie (lewo i prawo)
     function wPoziomie() {
       const rawArr: number[] = [];
-      const poss = data.startBoardId;
+      const poss = pole;
       rawArr.push(poss);
 
       for (let j = 1; j <= 8; j++) {
@@ -514,36 +514,8 @@ export function engine(data: {
     return ruchy;
   }
 
-  function ruchyKrola(pole: number) {
-    const ruchy = [];
-    const polaPodOstrzalem: number[] = [];
-
-    function ciezkiTemat() {
-      for (let n of data.kingCollisions.pieces) {
-        switch (Object.values(n)[0]) {
-          case "br":
-            polaPodOstrzalem.push(ruchyWiezy(Number(Object.keys(n)[0])));
-            break;
-          case "bn":
-            polaPodOstrzalem.push(ruchySkoczka(Number(Object.keys(n)[0])));
-            break;
-          case "bb":
-            polaPodOstrzalem.push(ruchyGonca(Number(Object.keys(n)[0])));
-            break;
-          case "bq":
-            polaPodOstrzalem.push(ruchyHetmana(Number(Object.keys(n)[0])));
-            break;
-          case "bk":
-            polaPodOstrzalem.push(ruchyWiezy(Number(Object.keys(n)[0])));
-            break;
-          case "bp":
-            polaPodOstrzalem.push(ruchyWiezy(Number(Object.keys(n)[0])));
-            break;
-        }
-      }
-    }
-    ciezkiTemat();
-    console.log(polaPodOstrzalem);
+  function ruchyKrola(pole: number, villain: boolean): number[] {
+    const ruchy: number[] = [];
 
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
@@ -578,10 +550,86 @@ export function engine(data: {
       }
     }
 
-    return ruchy;
+    if (villain) {
+      const lol = krolPrzeciwnika();
+      if (lol) {
+        const index: number = lol?.indexOf(pole);
+        lol?.splice(index, 1);
+        if (lol) {
+          for (let n of lol) {
+            if (ruchy.includes(n)) {
+              const index = ruchy.indexOf(n);
+              ruchy.splice(index, 1);
+            }
+          }
+        }
+      }
+    }
+    console.log(ruchy);
+    return ruchy ? ruchy : [0];
   }
 
-  function ruchyPionka(pole: number, czyGracz: boolean) {
+  function krolPrzeciwnika() {
+    const polaPodOstrzalem: number[] = [];
+
+    for (let n of data.kingCollisions.pieces) {
+      switch (Object.values(n)[0]) {
+        case "br":
+          let temp1 = ruchyWiezy(Number(Object.keys(n)[0]));
+
+          for (let n of temp1) {
+            if (!polaPodOstrzalem.includes(n)) {
+              polaPodOstrzalem.push(n);
+            }
+          }
+          break;
+        case "bn":
+          let temp2 = ruchySkoczka(Number(Object.keys(n)[0]));
+          for (let n of temp2) {
+            if (!polaPodOstrzalem.includes(n)) {
+              polaPodOstrzalem.push(n);
+            }
+          }
+          break;
+        case "bb":
+          let temp3 = ruchyGonca(Number(Object.keys(n)[0]));
+          for (let n of temp3) {
+            if (!polaPodOstrzalem.includes(n)) {
+              polaPodOstrzalem.push(n);
+            }
+          }
+          break;
+        case "bq":
+          let temp4 = ruchyHetmana(Number(Object.keys(n)[0]));
+          for (let n of temp4) {
+            if (!polaPodOstrzalem.includes(n)) {
+              polaPodOstrzalem.push(n);
+            }
+          }
+          break;
+        case "bk":
+          let temp5 = ruchyKrola(Number(Object.keys(n)[0]), false);
+          if (!temp5) return;
+          for (let n of temp5) {
+            if (!polaPodOstrzalem.includes(n)) {
+              polaPodOstrzalem.push(n);
+            }
+          }
+          break;
+        case "bp":
+          let temp = ruchyPionka(Number(Object.keys(n)[0]), false, true);
+          for (let n of temp) {
+            if (!polaPodOstrzalem.includes(n)) {
+              polaPodOstrzalem.push(n);
+            }
+          }
+          break;
+      }
+    }
+    return polaPodOstrzalem;
+  }
+
+  function ruchyPionka(pole: number, czyGracz: boolean, czyKrol: boolean) {
     const ruchy = [];
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
     const kolumna = ((pole - 1) % 8) + 1; // Kolumna (1-8)
@@ -591,16 +639,18 @@ export function engine(data: {
     // Kierunek ruchu (dla gracza: w górę, dla przeciwnika: w dół)
     const kierunek = czyGracz ? -1 : 1;
 
-    // Ruch do przodu (jedno pole)
     const nowyWiersz = wiersz + kierunek;
-    if (nowyWiersz >= 1 && nowyWiersz <= 8) {
-      ruchy.push((nowyWiersz - 1) * 8 + kolumna); // Pole przed pionkiem
-    }
+    if (czyKrol == false) {
+      // Ruch do przodu (jedno pole)
+      if (nowyWiersz >= 1 && nowyWiersz <= 8) {
+        ruchy.push((nowyWiersz - 1) * 8 + kolumna); // Pole przed pionkiem
+      }
 
-    // Ruch początkowy (dwa pola do przodu)
-    if ((czyGracz && wiersz === 7) || (!czyGracz && wiersz === 2)) {
-      const wierszStartowy = wiersz + 2 * kierunek;
-      ruchy.push((wierszStartowy - 1) * 8 + kolumna);
+      // Ruch początkowy (dwa pola do przodu)
+      if ((czyGracz && wiersz === 7) || (!czyGracz && wiersz === 2)) {
+        const wierszStartowy = wiersz + 2 * kierunek;
+        ruchy.push((wierszStartowy - 1) * 8 + kolumna);
+      }
     }
 
     // Ataki na przekątnych (prawo i lewo)
