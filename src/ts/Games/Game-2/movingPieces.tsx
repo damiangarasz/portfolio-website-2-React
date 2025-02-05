@@ -209,7 +209,6 @@ export function MovingPieces() {
       //TODO refresh nie resetuje planszy
 
       const returnData = engine(data);
-      console.log(returnData.legalSquares);
 
       function legal() {
         if (target.tagName == "DIV") {
@@ -267,9 +266,9 @@ export function MovingPieces() {
         }
 
         const targetId = `#s${dubble}`;
-        const target = document.querySelector(targetId);
-        const board = document.querySelector(".chess-grid");
-        if (target) board?.removeChild(target);
+        const childrenId = document.querySelector(`${targetId} > img`);
+        const square = document.querySelector(targetId);
+        if (childrenId) square?.removeChild(childrenId);
       }
 
       function illegal() {
@@ -294,7 +293,7 @@ export function MovingPieces() {
           if (data.pieceId == "wp" || data.pieceId == "bp") {
             const targetId = Number(target.id.slice(1));
             const top = [25, 26, 27, 28, 29, 30, 31, 32];
-            const bottom = [33, 34, 35, 36, 37, 38, 39];
+            const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
             if (
               Math.abs(data.startBoardId - targetId) == 8 ||
               Math.abs(targetId - data.startBoardId) == 8
@@ -314,28 +313,24 @@ export function MovingPieces() {
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
-              console.log("here");
             } else if (
               data.startBoardId + 1 == dubble &&
               top.includes(data.startBoardId)
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
-              console.log("here");
             } else if (
               data.startBoardId - 1 == dubble &&
               bottom.includes(data.startBoardId)
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
-              console.log("here");
             } else if (
               data.startBoardId + 1 == dubble &&
               bottom.includes(data.startBoardId)
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
-              console.log("here");
             } else {
               //pion chce zagrać po skosie na puste pole
               illegal();

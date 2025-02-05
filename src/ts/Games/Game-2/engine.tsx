@@ -565,7 +565,6 @@ export function engine(data: {
         }
       }
     }
-    console.log(ruchy);
     return ruchy ? ruchy : [0];
   }
 
