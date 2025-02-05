@@ -40,8 +40,6 @@ export function MovingPieces() {
     }
   }, [fillArr]);
 
-  //TODO zapchnąc w jakie pola każda figura villaina strzela
-
   useEffect(() => {
     //pchanie pozycji i nazwy każdej figury
     //TODO zrobione na twardo tylko dla czarnych
@@ -202,7 +200,7 @@ export function MovingPieces() {
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
-      //TODO bicie w przeplocie
+      //TODO pole przemiany nie dizała po biciu
       //TODO zamiana piona na figure
       //TODO szach i mat
       //TODO kolejność ruchu
@@ -246,6 +244,69 @@ export function MovingPieces() {
           const board = document.querySelector(".chess-grid");
           if (piece) board?.removeChild(piece);
         }
+      }
+
+      async function przemiana() {
+        const x = event.clientX;
+        const y = event.clientY;
+
+        const div = document.createElement("div");
+        div.style.position = "absolute";
+        div.style.top = y + "px";
+        div.style.left = x + "px";
+        div.style.cursor = "pointer";
+        div.style.height = "70px";
+        div.style.display = "flex";
+        div.style.backgroundColor = "#dce8e0";
+        div.setAttribute("class", "przemianaTemp");
+        console.log(window.innerHeight * 0.4 + "px");
+
+        const rookWhite = document.createElement("img");
+        rookWhite.setAttribute("src", "./img/Game-2/wr.png");
+        const bishopWhite = document.createElement("img");
+        bishopWhite.setAttribute("src", "./img/Game-2/wb.png");
+        const knightWhite = document.createElement("img");
+        knightWhite.setAttribute("src", "./img/Game-2/wn.png");
+        const queenWhite = document.createElement("img");
+        queenWhite.setAttribute("src", "./img/Game-2/wq.png");
+
+        div.appendChild(rookWhite);
+        div.appendChild(bishopWhite);
+        div.appendChild(knightWhite);
+        div.appendChild(queenWhite);
+
+        const board = document.querySelector(".chess-grid");
+        board?.appendChild(div);
+
+        const temp = document.querySelector(".temp");
+        if (temp) board?.removeChild(temp);
+
+        const przemianaBoard = document.querySelectorAll(
+          ".przemianaTemp > img",
+        );
+
+        let picked;
+        function przemianaClick(e: MouseEvent) {
+          const targetValue = e.target as HTMLElement;
+          const src = targetValue.getAttribute("src");
+          picked = src;
+        }
+
+        //TODO here
+        for (let n of przemianaBoard) {
+          n.addEventListener("click", przemianaClick as EventListener);
+        }
+
+        await picked;
+        if (picked) {
+          console.log("jes");
+        }
+
+        return () => {
+          for (let n of przemianaBoard) {
+            n.removeEventListener("click", przemianaClick as EventListener);
+          }
+        };
       }
 
       function wPrzeplocie() {
@@ -294,13 +355,32 @@ export function MovingPieces() {
             const targetId = Number(target.id.slice(1));
             const top = [25, 26, 27, 28, 29, 30, 31, 32];
             const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
+            const polePrzemianyTop = [9, 10, 11, 12, 13, 14, 15, 16];
+            const polePrzemianyBottom = [49, 50, 51, 52, 53, 54, 55, 56];
             if (
               Math.abs(data.startBoardId - targetId) == 8 ||
               Math.abs(targetId - data.startBoardId) == 8
             ) {
-              //pion idzie do przodu na puste pole
-              setDubble(0);
-              legal();
+              //TODO na twardo dla białych i czarnych
+              if (
+                data.pieceId == "wp" &&
+                polePrzemianyTop.includes(data.startBoardId)
+              ) {
+                //pole przemiany góra białe
+                przemiana();
+                setDubble(0);
+              } else if (
+                data.pieceId == "bp" &&
+                polePrzemianyBottom.includes(data.startBoardId)
+              ) {
+                //pole przemiany dół czarne
+                przemiana();
+                setDubble(0);
+              } else {
+                //pion idzie do przodu na puste pole
+                setDubble(0);
+                legal();
+              }
             } else if (
               Math.abs(data.startBoardId - targetId) == 16 ||
               Math.abs(targetId - data.startBoardId) == 16
@@ -392,7 +472,6 @@ export function MovingPieces() {
       data.occupatedSquares = [];
       setFillArr(fillArr ? false : true);
     }
-
     for (let n of square) {
       n.addEventListener("mouseup", DropPicesHandler as EventListener);
     }
