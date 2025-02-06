@@ -7,6 +7,8 @@ export function MovingPieces() {
   const changedPos = useRef(false);
   const [fillArr, setFillArr] = useState(false);
   const [dubble, setDubble] = useState(0);
+  //hook dla pola przemiany
+  const przemianaClick = useRef(() => {});
 
   interface data {
     pieceId: string;
@@ -200,6 +202,7 @@ export function MovingPieces() {
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
+      //TODO czarny król nie może chodzić
       //TODO pole przemiany nie dizała po biciu
       //TODO zamiana piona na figure
       //TODO szach i mat
@@ -281,30 +284,41 @@ export function MovingPieces() {
         const temp = document.querySelector(".temp");
         if (temp) board?.removeChild(temp);
 
-        const przemianaBoard = document.querySelectorAll(
+        const przemianaBoard: NodeListOf<Element> = document.querySelectorAll(
           ".przemianaTemp > img",
         );
 
-        let picked;
-        function przemianaClick(e: MouseEvent) {
-          const targetValue = e.target as HTMLElement;
-          const src = targetValue.getAttribute("src");
-          picked = src;
+        function przemianaHandler(przemianaBoard: NodeListOf<Element>) {
+          return new Promise((res) => {
+            przemianaClick.current = () => {
+              let x = null;
+              setTimeout(() => {
+                x = 1;
+                res(x);
+              }, 20000);
+            };
+
+            for (let n of przemianaBoard) {
+              n.addEventListener(
+                "click",
+                przemianaClick.current as EventListener,
+              );
+            }
+          });
         }
+
+        przemianaHandler(przemianaBoard).then((lol) => {
+          console.log(lol);
+        });
 
         //TODO here
-        for (let n of przemianaBoard) {
-          n.addEventListener("click", przemianaClick as EventListener);
-        }
-
-        await picked;
-        if (picked) {
-          console.log("jes");
-        }
 
         return () => {
           for (let n of przemianaBoard) {
-            n.removeEventListener("click", przemianaClick as EventListener);
+            n.removeEventListener(
+              "click",
+              przemianaClick.current as EventListener,
+            );
           }
         };
       }
