@@ -202,12 +202,11 @@ export function MovingPieces() {
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
-      //TODO czarny król nie może chodzić
-      //TODO pole przemiany nie dizała po biciu
-      //TODO zamiana piona na figure
+      //TODO dodać kropeczki 
       //TODO szach i mat
       //TODO kolejność ruchu
       //TODO refresh nie resetuje planszy
+      //TODO pole przemiany nie działa dla czernego
 
       const returnData = engine(data);
 
@@ -313,19 +312,24 @@ export function MovingPieces() {
           element.setAttribute("class", "myImage");
           if (src) element.setAttribute("src", src);
 
-          const targetId = target.getAttribute("id");
+          const tagname = target.tagName;
+          let targetId;
+          if (tagname == "IMG") {
+            targetId = target.parentElement?.getAttribute("id");
+            const img = document.querySelector(`#${targetId} > img`);
+            const sqTarget = document.querySelector(`#${targetId}`);
+            if (img) sqTarget?.removeChild(img);
+          } else {
+            targetId = target.getAttribute("id");
+          }
+
           let sqTarget;
           if (targetId) sqTarget = document.querySelector(`#${targetId}`);
           const childr = sqTarget?.children;
-          console.log(childr);
-          //TODO target jest na image lol
-          // if (childr && sqTarget) sqTarget.removeChild()
           if (sqTarget) sqTarget.appendChild(element);
 
           const przemianaTemp = document.querySelector(".przemianaTemp");
           if (przemianaTemp) board?.removeChild(przemianaTemp);
-
-          // const squareTarget = document.querySelector()
         });
 
         return () => {

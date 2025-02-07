@@ -41,7 +41,11 @@ export function engine(data: {
       break;
     case "bk":
     case "wk":
-      returnData.legalSquares = ruchyKrola(data.startBoardId, true);
+      returnData.legalSquares = ruchyKrola(
+        data.startBoardId,
+        data.pieceId,
+        true,
+      );
 
       break;
     case "bp":
@@ -514,7 +518,11 @@ export function engine(data: {
     return ruchy;
   }
 
-  function ruchyKrola(pole: number, villain: boolean): number[] {
+  function ruchyKrola(
+    pole: number,
+    pieceId: string,
+    naTwardo: boolean,
+  ): number[] {
     const ruchy: number[] = [];
 
     const wiersz = Math.floor((pole - 1) / 8) + 1; // Wiersz (1-8)
@@ -550,7 +558,8 @@ export function engine(data: {
       }
     }
 
-    if (villain) {
+    if (pieceId == "wk" && naTwardo) {
+      //na twardo dla białego króla
       const lol = krolPrzeciwnika();
       if (lol) {
         const index: number = lol?.indexOf(pole);
@@ -607,7 +616,11 @@ export function engine(data: {
           }
           break;
         case "bk":
-          let temp5 = ruchyKrola(Number(Object.keys(n)[0]), false);
+          let temp5 = ruchyKrola(
+            Number(Object.keys(n)[0]),
+            data.pieceId,
+            false,
+          );
           if (!temp5) return;
           for (let n of temp5) {
             if (!polaPodOstrzalem.includes(n)) {
