@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { DetailedReactHTMLElement, useEffect, useRef, useState } from "react";
 import { engine } from "./engine";
 
 export function MovingPieces() {
@@ -8,7 +8,7 @@ export function MovingPieces() {
   const [fillArr, setFillArr] = useState(false);
   const [dubble, setDubble] = useState(0);
   //hook dla pola przemiany
-  const przemianaClick = useRef(() => {});
+  const przemianaClick = useRef((e: Event) => {});
 
   interface data {
     pieceId: string;
@@ -250,6 +250,7 @@ export function MovingPieces() {
       }
 
       async function przemiana() {
+        //przemiana piona na cieżką figurę
         const x = event.clientX;
         const y = event.clientY;
 
@@ -289,13 +290,10 @@ export function MovingPieces() {
         );
 
         function przemianaHandler(przemianaBoard: NodeListOf<Element>) {
-          return new Promise((res) => {
-            przemianaClick.current = () => {
-              let x = null;
-              setTimeout(() => {
-                x = 1;
-                res(x);
-              }, 20000);
+          return new Promise<HTMLImageElement | null>((res) => {
+            przemianaClick.current = (e) => {
+              const target = e.target as HTMLImageElement;
+              res(target);
             };
 
             for (let n of przemianaBoard) {
@@ -307,11 +305,28 @@ export function MovingPieces() {
           });
         }
 
-        przemianaHandler(przemianaBoard).then((lol) => {
-          console.log(lol);
-        });
+        przemianaHandler(przemianaBoard).then((event) => {
+          let src;
+          if (event) src = event.getAttribute("src");
 
-        //TODO here
+          const element = document.createElement("img");
+          element.setAttribute("class", "myImage");
+          if (src) element.setAttribute("src", src);
+
+          const targetId = target.getAttribute("id");
+          let sqTarget;
+          if (targetId) sqTarget = document.querySelector(`#${targetId}`);
+          const childr = sqTarget?.children;
+          console.log(childr);
+          //TODO target jest na image lol
+          // if (childr && sqTarget) sqTarget.removeChild()
+          if (sqTarget) sqTarget.appendChild(element);
+
+          const przemianaTemp = document.querySelector(".przemianaTemp");
+          if (przemianaTemp) board?.removeChild(przemianaTemp);
+
+          // const squareTarget = document.querySelector()
+        });
 
         return () => {
           for (let n of przemianaBoard) {
@@ -462,6 +477,10 @@ export function MovingPieces() {
             if (!target.parentElement) return;
             const targetId = Number(target.parentElement.id.slice(1));
 
+            const polePrzemianyTop = [9, 10, 11, 12, 13, 14, 15, 16];
+            const polePrzemianyBottom = [49, 50, 51, 52, 53, 54, 55, 56];
+
+            //TODO ustawione na twardo dla białych i czarnych
             if (
               Math.abs(data.startBoardId - targetId) == 8 ||
               Math.abs(data.startBoardId - targetId) == 16 ||
@@ -470,6 +489,18 @@ export function MovingPieces() {
             ) {
               //pionek pórbuje bić na wprost illegal
               illegal();
+            } else if (
+              data.pieceId == "wp" &&
+              polePrzemianyTop.includes(data.startBoardId)
+            ) {
+              przemiana();
+              setDubble(0);
+            } else if (
+              data.pieceId == "bp" &&
+              polePrzemianyBottom.includes(data.startBoardId)
+            ) {
+              przemiana();
+              setDubble(0);
             } else {
               //pionek bije prawidłowo na skos
               setDubble(0);
