@@ -104,10 +104,10 @@ export function Game2() {
       <div id="s15">
         <img className="myImage" src="./img/Game-2/bp.png" />
       </div>
-      <div id="s16">
+      <div id="s16" className="sq">
         <img className="myImage" src="./img/Game-2/bp.png" />
       </div>
-      <div id="s17"></div>
+      <div id="s17" className="sq"></div>
       <div id="s18"></div>
       <div id="s19"></div>
       <div id="s20"></div>

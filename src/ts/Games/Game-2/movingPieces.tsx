@@ -183,6 +183,7 @@ export function MovingPieces() {
     }
 
     function DropPicesHandler(event: MouseEvent) {
+      console.log("returnData");
       const temp = document.querySelector(".temp");
       if (!temp) return;
       const chwytak = document.querySelector(".chess-grid");
@@ -202,7 +203,7 @@ export function MovingPieces() {
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
-      //TODO dodać kropeczki 
+      //TODO dodać kropeczki
       //TODO szach i mat
       //TODO kolejność ruchu
       //TODO refresh nie resetuje planszy
