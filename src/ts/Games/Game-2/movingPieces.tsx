@@ -152,7 +152,7 @@ export function MovingPieces() {
             if (src) {
               el.src = src;
             }
-            const check = document.querySelector(`#${id} > img`);
+            const check = document.querySelector(`#${id} > .myImage`);
             if (check) {
               return;
             } else {
@@ -176,6 +176,23 @@ export function MovingPieces() {
       if (pieceId) letters = pieceId[1];
       if (letters) data.pieceId = letters;
       //koniec wyciągania id trzymanego piona
+
+      // dodawanie kropek
+      const engineData = engine(data);
+
+      const idArr = engineData.legalSquares;
+      idArr.map((n) => {
+        const sq: HTMLElement | null = document.querySelector(`#s${n}`);
+        if (sq?.children[0] == undefined) {
+          const el = document.createElement("img");
+          el.setAttribute("src", "./img/Game-2/dot.png");
+          el.style.pointerEvents = "none";
+          el.style.position = "absolute";
+          sq?.appendChild(el);
+        } else if (sq?.children[0].getAttribute("class") == "myImage") {
+          if (sq) sq.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
+        }
+      });
     }
 
     for (let n of square) {
@@ -183,7 +200,6 @@ export function MovingPieces() {
     }
 
     function DropPicesHandler(event: MouseEvent) {
-      console.log("returnData");
       const temp = document.querySelector(".temp");
       if (!temp) return;
       const chwytak = document.querySelector(".chess-grid");
@@ -263,7 +279,6 @@ export function MovingPieces() {
         div.style.display = "flex";
         div.style.backgroundColor = "#dce8e0";
         div.setAttribute("class", "przemianaTemp");
-        console.log(window.innerHeight * 0.4 + "px");
 
         const rookWhite = document.createElement("img");
         rookWhite.setAttribute("src", "./img/Game-2/wr.png");
