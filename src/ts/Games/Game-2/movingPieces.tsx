@@ -180,19 +180,47 @@ export function MovingPieces() {
       // dodawanie kropek
       const engineData = engine(data);
 
-      const idArr = engineData.legalSquares;
-      idArr.map((n) => {
-        const sq: HTMLElement | null = document.querySelector(`#s${n}`);
-        if (sq?.children[0] == undefined) {
-          const el = document.createElement("img");
-          el.setAttribute("src", "./img/Game-2/dot.png");
-          el.style.pointerEvents = "none";
-          el.style.position = "absolute";
-          sq?.appendChild(el);
-        } else if (sq?.children[0].getAttribute("class") == "myImage") {
-          if (sq) sq.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
-        }
-      });
+      if (data.pieceId == "wp" || data.pieceId == "bp") {
+        const idArr = engineData.legalSquares;
+        idArr.map((n) => {
+          if (data.startBoardId + 8 == n || data.startBoardId + 16 == n) {
+            const parent = document.querySelector(
+              `#s${n}`,
+            ) as HTMLElement | null;
+            //pione idze do przodu, sprawdzam czy trafia na img czy kratka jest pusta
+            if (parent?.children[0] == undefined) {
+              const el = document.createElement("img");
+              el.setAttribute("src", "./img/Game-2/dot.png");
+              el.style.pointerEvents = "none";
+              el.style.position = "absolute";
+              parent?.appendChild(el);
+            }
+          } else {
+            //pion idzie po skosie sprawdzam czy krakta jest pusta czy trafia na img
+            const parent = document.querySelector(`#s${n}`);
+            console.log(parent?.children[0]);
+            if (parent?.children[0] instanceof HTMLElement) {
+              if (parent instanceof HTMLElement)
+                parent.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
+            }
+          }
+        });
+        //TODO jestem tutaj dodać że jak trafia na ten sam kolor to no bueno
+      } else {
+        const idArr = engineData.legalSquares;
+        idArr.map((n) => {
+          const sq: HTMLElement | null = document.querySelector(`#s${n}`);
+          if (sq?.children[0] == undefined) {
+            const el = document.createElement("img");
+            el.setAttribute("src", "./img/Game-2/dot.png");
+            el.style.pointerEvents = "none";
+            el.style.position = "absolute";
+            sq?.appendChild(el);
+          } else if (sq?.children[0].getAttribute("class") == "myImage") {
+            if (sq) sq.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
+          }
+        });
+      }
     }
 
     for (let n of square) {
