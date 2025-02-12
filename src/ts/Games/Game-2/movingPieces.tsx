@@ -1,4 +1,4 @@
-import { DetailedReactHTMLElement, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { engine } from "./engine";
 
 export function MovingPieces() {
@@ -191,15 +191,28 @@ export function MovingPieces() {
             if (parent?.children[0] == undefined) {
               const el = document.createElement("img");
               el.setAttribute("src", "./img/Game-2/dot.png");
+              el.setAttribute("class", "dot");
               el.style.pointerEvents = "none";
               el.style.position = "absolute";
               parent?.appendChild(el);
             }
           } else {
             //pion idzie po skosie sprawdzam czy krakta jest pusta czy trafia na img
+            //TODO tutaj
+            //TODO bicie w przeplocie nie pokazuje
             const parent = document.querySelector(`#s${n}`);
-            console.log(parent?.children[0]);
-            if (parent?.children[0] instanceof HTMLElement) {
+            let src;
+            if (parent?.children[0])
+              src = parent?.children[0].getAttribute("src");
+            let pieceId;
+            if (src) pieceId = src.match(/(\w{1}).\.png$/); //maczuje w or b
+
+            if (
+              pieceId &&
+              parent?.children[0] instanceof HTMLElement &&
+              pieceId[1] != data.pieceId.slice(0, 1)
+            ) {
+              //przechodzi jeżeli w vs b || b vs w
               if (parent instanceof HTMLElement)
                 parent.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
             }
@@ -213,6 +226,7 @@ export function MovingPieces() {
           if (sq?.children[0] == undefined) {
             const el = document.createElement("img");
             el.setAttribute("src", "./img/Game-2/dot.png");
+            el.setAttribute("class", "dot");
             el.style.pointerEvents = "none";
             el.style.position = "absolute";
             sq?.appendChild(el);
@@ -559,6 +573,17 @@ export function MovingPieces() {
       } else {
         //normalny nielegalny ruch figury
         illegal();
+      }
+
+      //usuwanie tymczasowego podświetlenia możliwości ruchu
+      for (let n = 1; n <= 64; n++) {
+        const sqIMGdot = document.querySelector(`#s${n} > .dot`);
+        const parent = document.querySelector(`#s${n}`);
+        //usuwanie wszystkich inline style
+        parent?.removeAttribute("style");
+        if (sqIMGdot) {
+          parent?.removeChild(sqIMGdot);
+        }
       }
 
       changedPos.current = true;
