@@ -183,7 +183,12 @@ export function MovingPieces() {
       if (data.pieceId == "wp" || data.pieceId == "bp") {
         const idArr = engineData.legalSquares;
         idArr.map((n) => {
-          if (data.startBoardId + 8 == n || data.startBoardId + 16 == n) {
+          if (
+            data.startBoardId + 8 == n ||
+            data.startBoardId + 16 == n ||
+            data.startBoardId - 8 == n ||
+            data.startBoardId - 16 == n
+          ) {
             const parent = document.querySelector(
               `#s${n}`,
             ) as HTMLElement | null;
