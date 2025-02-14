@@ -200,6 +200,7 @@ export function MovingPieces() {
             data.startBoardId - 8 == n ||
             data.startBoardId - 16 == n
           ) {
+            //TODO nie dodawanie kropek jak jest przeszkoda
             //pione idze do przodu, sprawdzam czy trafia na img czy kratka jest pusta
             if (parent?.children[0] == undefined) {
               dot();
@@ -514,10 +515,25 @@ export function MovingPieces() {
             const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
             const polePrzemianyTop = [9, 10, 11, 12, 13, 14, 15, 16];
             const polePrzemianyBottom = [49, 50, 51, 52, 53, 54, 55, 56];
-            if (
-              Math.abs(data.startBoardId - targetId) == 8 ||
-              Math.abs(targetId - data.startBoardId) == 8
-            ) {
+
+            const przeszkodaPionkaGora = document.querySelector(
+              `#s${data.startBoardId + 8} > img`,
+            );
+            let przeszkodamPionkaChildrenTop;
+            if (przeszkodaPionkaGora) {
+              przeszkodamPionkaChildrenTop =
+                przeszkodaPionkaGora.getAttribute("class");
+            }
+
+            const przeszkodamPionkaDol = document.querySelector(
+              `#s${data.startBoardId - 8} > img`,
+            );
+            let przeszkodamPionkaChildren;
+            if (przeszkodamPionkaDol)
+              przeszkodamPionkaChildren =
+                przeszkodamPionkaDol.getAttribute("class");
+
+            if (Math.abs(data.startBoardId - targetId) == 8) {
               //TODO na twardo dla białych i czarnych
               if (
                 data.pieceId == "wp" &&
@@ -539,8 +555,32 @@ export function MovingPieces() {
                 legal();
               }
             } else if (
-              Math.abs(data.startBoardId - targetId) == 16 ||
-              Math.abs(targetId - data.startBoardId) == 16
+              Math.abs(data.startBoardId - targetId) == 16 &&
+              przeszkodamPionkaChildren &&
+              przeszkodamPionkaChildren == "myImage" &&
+              polePrzemianyBottom.includes(data.startBoardId)
+            ) {
+              illegal();
+            } else if (
+              Math.abs(data.startBoardId - targetId) == 16 &&
+              przeszkodamPionkaChildren &&
+              przeszkodamPionkaChildren != "myImage" &&
+              polePrzemianyBottom.includes(data.startBoardId)
+            ) {
+              setDubble(targetId);
+              legal();
+            } else if (
+              Math.abs(data.startBoardId - targetId) == 16 &&
+              przeszkodamPionkaChildrenTop &&
+              przeszkodamPionkaChildrenTop == "myImage" &&
+              polePrzemianyTop.includes(data.startBoardId)
+            ) {
+              illegal();
+            } else if (
+              Math.abs(data.startBoardId - targetId) == 16 &&
+              przeszkodamPionkaChildrenTop &&
+              przeszkodamPionkaChildrenTop != "myImage" &&
+              polePrzemianyTop.includes(data.startBoardId)
             ) {
               setDubble(targetId);
               legal();
