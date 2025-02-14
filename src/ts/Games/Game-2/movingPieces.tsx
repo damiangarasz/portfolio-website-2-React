@@ -182,6 +182,7 @@ export function MovingPieces() {
 
       if (data.pieceId == "wp" || data.pieceId == "bp") {
         const idArr = engineData.legalSquares;
+
         idArr.map((n) => {
           if (
             data.startBoardId + 8 == n ||
@@ -211,6 +212,8 @@ export function MovingPieces() {
               src = parent?.children[0].getAttribute("src");
             let pieceId;
             if (src) pieceId = src.match(/(\w{1}).\.png$/); //maczuje w or b
+            const top = [25, 26, 27, 28, 29, 30, 31, 32];
+            const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
 
             if (
               pieceId &&
@@ -220,6 +223,66 @@ export function MovingPieces() {
               //przechodzi jeżeli w vs b || b vs w
               if (parent instanceof HTMLElement)
                 parent.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
+            } else if (
+              data.startBoardId - 1 == dubble &&
+              top.includes(data.startBoardId)
+            ) {
+              const parent: HTMLElement | null = document.querySelector(
+                `#s${n - 9}`,
+              );
+              if (parent) {
+                const el = document.createElement("img");
+                el.setAttribute("src", "./img/Game-2/dot.png");
+                el.setAttribute("class", "dot");
+                el.style.pointerEvents = "none";
+                el.style.position = "absolute";
+                parent?.appendChild(el);
+              }
+            } else if (
+              data.startBoardId + 1 == dubble &&
+              top.includes(data.startBoardId)
+            ) {
+              const parent: HTMLElement | null = document.querySelector(
+                `#s${n - 7}`,
+              );
+              if (parent) {
+                const el = document.createElement("img");
+                el.setAttribute("src", "./img/Game-2/dot.png");
+                el.setAttribute("class", "dot");
+                el.style.pointerEvents = "none";
+                el.style.position = "absolute";
+                parent?.appendChild(el);
+              }
+            } else if (
+              data.startBoardId - 1 == dubble &&
+              bottom.includes(data.startBoardId)
+            ) {
+              const parent: HTMLElement | null = document.querySelector(
+                `#s${n + 7}`,
+              );
+              if (parent) {
+                const el = document.createElement("img");
+                el.setAttribute("src", "./img/Game-2/dot.png");
+                el.setAttribute("class", "dot");
+                el.style.pointerEvents = "none";
+                el.style.position = "absolute";
+                parent?.appendChild(el);
+              }
+            } else if (
+              data.startBoardId + 1 == dubble &&
+              bottom.includes(data.startBoardId)
+            ) {
+              const parent: HTMLElement | null = document.querySelector(
+                `#s${n + 9}`,
+              );
+              if (parent) {
+                const el = document.createElement("img");
+                el.setAttribute("src", "./img/Game-2/dot.png");
+                el.setAttribute("class", "dot");
+                el.style.pointerEvents = "none";
+                el.style.position = "absolute";
+                parent?.appendChild(el);
+              }
             }
           }
         });
@@ -266,6 +329,8 @@ export function MovingPieces() {
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
+      //TODO jak w pzreplocie to daje dota na ostatni rzad
+      //TODO pon może skakac przez figury
       //TODO dodać kropeczki
       //TODO szach i mat
       //TODO kolejność ruchu
@@ -485,25 +550,29 @@ export function MovingPieces() {
               legal();
             } else if (
               data.startBoardId - 1 == dubble &&
-              top.includes(data.startBoardId)
+              top.includes(data.startBoardId) &&
+              data.targetBoardId + 9 == data.startBoardId
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
             } else if (
               data.startBoardId + 1 == dubble &&
-              top.includes(data.startBoardId)
+              top.includes(data.startBoardId) &&
+              data.targetBoardId + 7 == data.startBoardId
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
             } else if (
               data.startBoardId - 1 == dubble &&
-              bottom.includes(data.startBoardId)
+              bottom.includes(data.startBoardId) &&
+              data.targetBoardId - 7 == data.startBoardId
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
             } else if (
               data.startBoardId + 1 == dubble &&
-              bottom.includes(data.startBoardId)
+              bottom.includes(data.startBoardId) &&
+              data.targetBoardId - 9 == data.startBoardId
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
