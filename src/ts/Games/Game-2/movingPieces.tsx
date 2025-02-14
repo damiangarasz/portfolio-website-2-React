@@ -184,28 +184,28 @@ export function MovingPieces() {
         const idArr = engineData.legalSquares;
 
         idArr.map((n) => {
+          const parent = document.querySelector(`#s${n}`) as HTMLElement | null;
+
+          function dot() {
+            const el = document.createElement("img");
+            el.setAttribute("src", "./img/Game-2/dot.png");
+            el.setAttribute("class", "dot");
+            el.style.pointerEvents = "none";
+            el.style.position = "absolute";
+            parent?.appendChild(el);
+          }
           if (
             data.startBoardId + 8 == n ||
             data.startBoardId + 16 == n ||
             data.startBoardId - 8 == n ||
             data.startBoardId - 16 == n
           ) {
-            const parent = document.querySelector(
-              `#s${n}`,
-            ) as HTMLElement | null;
             //pione idze do przodu, sprawdzam czy trafia na img czy kratka jest pusta
             if (parent?.children[0] == undefined) {
-              const el = document.createElement("img");
-              el.setAttribute("src", "./img/Game-2/dot.png");
-              el.setAttribute("class", "dot");
-              el.style.pointerEvents = "none";
-              el.style.position = "absolute";
-              parent?.appendChild(el);
+              dot();
             }
           } else {
             //pion idzie po skosie sprawdzam czy krakta jest pusta czy trafia na img
-            //TODO tutaj
-            //TODO bicie w przeplocie nie pokazuje
             const parent = document.querySelector(`#s${n}`);
             let src;
             if (parent?.children[0])
@@ -225,63 +225,47 @@ export function MovingPieces() {
                 parent.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
             } else if (
               data.startBoardId - 1 == dubble &&
-              top.includes(data.startBoardId)
+              top.includes(data.startBoardId) &&
+              n == data.startBoardId - 9
             ) {
               const parent: HTMLElement | null = document.querySelector(
-                `#s${n - 9}`,
+                `#s${n}`,
               );
               if (parent) {
-                const el = document.createElement("img");
-                el.setAttribute("src", "./img/Game-2/dot.png");
-                el.setAttribute("class", "dot");
-                el.style.pointerEvents = "none";
-                el.style.position = "absolute";
-                parent?.appendChild(el);
+                dot();
               }
             } else if (
               data.startBoardId + 1 == dubble &&
-              top.includes(data.startBoardId)
+              top.includes(data.startBoardId) &&
+              n == data.startBoardId - 7
             ) {
               const parent: HTMLElement | null = document.querySelector(
-                `#s${n - 7}`,
+                `#s${n}`,
               );
               if (parent) {
-                const el = document.createElement("img");
-                el.setAttribute("src", "./img/Game-2/dot.png");
-                el.setAttribute("class", "dot");
-                el.style.pointerEvents = "none";
-                el.style.position = "absolute";
-                parent?.appendChild(el);
+                dot();
               }
             } else if (
               data.startBoardId - 1 == dubble &&
-              bottom.includes(data.startBoardId)
+              bottom.includes(data.startBoardId) &&
+              n == data.startBoardId + 7
             ) {
               const parent: HTMLElement | null = document.querySelector(
-                `#s${n + 7}`,
+                `#s${n}`,
               );
               if (parent) {
-                const el = document.createElement("img");
-                el.setAttribute("src", "./img/Game-2/dot.png");
-                el.setAttribute("class", "dot");
-                el.style.pointerEvents = "none";
-                el.style.position = "absolute";
-                parent?.appendChild(el);
+                dot();
               }
             } else if (
               data.startBoardId + 1 == dubble &&
-              bottom.includes(data.startBoardId)
+              bottom.includes(data.startBoardId) &&
+              n == data.startBoardId + 9
             ) {
               const parent: HTMLElement | null = document.querySelector(
-                `#s${n + 9}`,
+                `#s${n}`,
               );
               if (parent) {
-                const el = document.createElement("img");
-                el.setAttribute("src", "./img/Game-2/dot.png");
-                el.setAttribute("class", "dot");
-                el.style.pointerEvents = "none";
-                el.style.position = "absolute";
-                parent?.appendChild(el);
+                dot();
               }
             }
           }
@@ -291,6 +275,14 @@ export function MovingPieces() {
         const idArr = engineData.legalSquares;
         idArr.map((n) => {
           const sq: HTMLElement | null = document.querySelector(`#s${n}`);
+
+          const parent = document.querySelector(`#s${n}`);
+          let src;
+          if (parent?.children[0])
+            src = parent?.children[0].getAttribute("src");
+          let pieceId;
+          if (src) pieceId = src.match(/(\w{1}).\.png$/);
+
           if (sq?.children[0] == undefined) {
             const el = document.createElement("img");
             el.setAttribute("src", "./img/Game-2/dot.png");
@@ -298,7 +290,13 @@ export function MovingPieces() {
             el.style.pointerEvents = "none";
             el.style.position = "absolute";
             sq?.appendChild(el);
-          } else if (sq?.children[0].getAttribute("class") == "myImage") {
+          } else if (
+            sq?.children[0] &&
+            sq?.children[0].getAttribute("class") == "myImage" &&
+            pieceId &&
+            parent?.children[0] instanceof HTMLElement &&
+            pieceId[1] != data.pieceId.slice(0, 1)
+          ) {
             if (sq) sq.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
           }
         });
@@ -329,9 +327,7 @@ export function MovingPieces() {
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
-      //TODO jak w pzreplocie to daje dota na ostatni rzad
       //TODO pon może skakac przez figury
-      //TODO dodać kropeczki
       //TODO szach i mat
       //TODO kolejność ruchu
       //TODO refresh nie resetuje planszy
