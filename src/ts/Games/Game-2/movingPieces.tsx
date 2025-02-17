@@ -75,10 +75,14 @@ export function MovingPieces() {
     }
 
     function MovingPicesHandler(event: MouseEvent) {
+      const boardX = document.querySelector(".chess-grid") as HTMLElement;
+      function right(e: MouseEvent) {
+        e.preventDefault();
+      }
+      boardX.addEventListener("contextmenu", right);
       event.preventDefault();
       changedPos.current = false;
 
-      // const target = useRef(event.target as HTMLElement);
       target.current = event.target as HTMLElement;
       const squareWidth = (window.innerWidth * 0.6) / 8;
       const sqAdj = squareWidth / 2;
@@ -194,6 +198,8 @@ export function MovingPieces() {
             el.style.position = "absolute";
             parent?.appendChild(el);
           }
+          const top = [25, 26, 27, 28, 29, 30, 31, 32];
+          const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
           if (
             data.startBoardId + 8 == n ||
             data.startBoardId + 16 == n ||
@@ -202,8 +208,28 @@ export function MovingPieces() {
           ) {
             //TODO nie dodawanie kropek jak jest przeszkoda
             //pione idze do przodu, sprawdzam czy trafia na img czy kratka jest pusta
-            if (parent?.children[0] == undefined) {
+            if (
+              parent?.children[0] == undefined &&
+              !top.includes(n) &&
+              !bottom.includes(n)
+            ) {
               dot();
+            } else {
+              if (data.startBoardId < 32) {
+                const pastParentChildren = document.querySelector(
+                  `#s${n - 8} > img`,
+                ) as HTMLElement | null;
+                const pastParentChildrenClass =
+                  pastParentChildren?.getAttribute("class");
+                if (pastParentChildrenClass == "dot") dot();
+              } else {
+                const pastParentChildren = document.querySelector(
+                  `#s${n + 8} > img`,
+                ) as HTMLElement | null;
+                const pastParentChildrenClass =
+                  pastParentChildren?.getAttribute("class");
+                if (pastParentChildrenClass == "dot") dot();
+              }
             }
           } else {
             //pion idzie po skosie sprawdzam czy krakta jest pusta czy trafia na img
@@ -213,8 +239,6 @@ export function MovingPieces() {
               src = parent?.children[0].getAttribute("src");
             let pieceId;
             if (src) pieceId = src.match(/(\w{1}).\.png$/); //maczuje w or b
-            const top = [25, 26, 27, 28, 29, 30, 31, 32];
-            const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
 
             if (
               pieceId &&
@@ -302,6 +326,10 @@ export function MovingPieces() {
           }
         });
       }
+
+      return () => {
+        boardX.removeEventListener("contextmenu", right);
+      };
     }
 
     for (let n of square) {
@@ -328,7 +356,7 @@ export function MovingPieces() {
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
-      //TODO pon może skakac przez figury
+      //TODO pon przy posunieciu o 2 ma kropke na 2 jak na 1 jest przeszkodoa
       //TODO szach i mat
       //TODO kolejność ruchu
       //TODO refresh nie resetuje planszy
