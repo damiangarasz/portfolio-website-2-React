@@ -200,37 +200,27 @@ export function MovingPieces() {
           }
           const top = [25, 26, 27, 28, 29, 30, 31, 32];
           const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
-          if (
-            data.startBoardId + 8 == n ||
-            data.startBoardId + 16 == n ||
-            data.startBoardId - 8 == n ||
-            data.startBoardId - 16 == n
-          ) {
-            //TODO nie dodawanie kropek jak jest przeszkoda
+
+          if (data.startBoardId + 16 == n || data.startBoardId - 16 == n) {
             //pione idze do przodu, sprawdzam czy trafia na img czy kratka jest pusta
-            if (
-              parent?.children[0] == undefined &&
-              !top.includes(n) &&
-              !bottom.includes(n)
-            ) {
-              dot();
+
+            if (data.startBoardId < 32) {
+              const pastParentChildren = document.querySelector(
+                `#s${n - 8} > img`,
+              ) as HTMLElement | null;
+              const pastParentChildrenClass =
+                pastParentChildren?.getAttribute("class");
+              if (pastParentChildrenClass != "myImage") dot();
             } else {
-              if (data.startBoardId < 32) {
-                const pastParentChildren = document.querySelector(
-                  `#s${n - 8} > img`,
-                ) as HTMLElement | null;
-                const pastParentChildrenClass =
-                  pastParentChildren?.getAttribute("class");
-                if (pastParentChildrenClass == "dot") dot();
-              } else {
-                const pastParentChildren = document.querySelector(
-                  `#s${n + 8} > img`,
-                ) as HTMLElement | null;
-                const pastParentChildrenClass =
-                  pastParentChildren?.getAttribute("class");
-                if (pastParentChildrenClass == "dot") dot();
-              }
+              const pastParentChildren = document.querySelector(
+                `#s${n + 8} > img`,
+              ) as HTMLElement | null;
+              const pastParentChildrenClass =
+                pastParentChildren?.getAttribute("class");
+              if (pastParentChildrenClass != "myImage") dot();
             }
+          } else if (data.startBoardId - 8 == n || data.startBoardId + 8 == n) {
+            if (parent?.children[0]?.getAttribute("class") != "myImage") dot();
           } else {
             //pion idzie po skosie sprawdzam czy krakta jest pusta czy trafia na img
             const parent = document.querySelector(`#s${n}`);
@@ -295,7 +285,6 @@ export function MovingPieces() {
             }
           }
         });
-        //TODO jestem tutaj dodać że jak trafia na ten sam kolor to no bueno
       } else {
         const idArr = engineData.legalSquares;
         idArr.map((n) => {
@@ -356,7 +345,6 @@ export function MovingPieces() {
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
-      //TODO pon przy posunieciu o 2 ma kropke na 2 jak na 1 jest przeszkodoa
       //TODO szach i mat
       //TODO kolejność ruchu
       //TODO refresh nie resetuje planszy
