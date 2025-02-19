@@ -405,19 +405,35 @@ export function MovingPieces() {
         div.style.backgroundColor = "#dce8e0";
         div.setAttribute("class", "przemianaTemp");
 
-        const rookWhite = document.createElement("img");
-        rookWhite.setAttribute("src", "./img/Game-2/wr.png");
-        const bishopWhite = document.createElement("img");
-        bishopWhite.setAttribute("src", "./img/Game-2/wb.png");
-        const knightWhite = document.createElement("img");
-        knightWhite.setAttribute("src", "./img/Game-2/wn.png");
-        const queenWhite = document.createElement("img");
-        queenWhite.setAttribute("src", "./img/Game-2/wq.png");
+        if (data.pieceId == "wp") {
+          const rookWhite = document.createElement("img");
+          rookWhite.setAttribute("src", "./img/Game-2/wr.png");
+          const bishopWhite = document.createElement("img");
+          bishopWhite.setAttribute("src", "./img/Game-2/wb.png");
+          const knightWhite = document.createElement("img");
+          knightWhite.setAttribute("src", "./img/Game-2/wn.png");
+          const queenWhite = document.createElement("img");
+          queenWhite.setAttribute("src", "./img/Game-2/wq.png");
 
-        div.appendChild(rookWhite);
-        div.appendChild(bishopWhite);
-        div.appendChild(knightWhite);
-        div.appendChild(queenWhite);
+          div.appendChild(rookWhite);
+          div.appendChild(bishopWhite);
+          div.appendChild(knightWhite);
+          div.appendChild(queenWhite);
+        } else {
+          const rookBlack = document.createElement("img");
+          rookBlack.setAttribute("src", "./img/Game-2/br.png");
+          const bishopBlack = document.createElement("img");
+          bishopBlack.setAttribute("src", "./img/Game-2/bb.png");
+          const knightBlack = document.createElement("img");
+          knightBlack.setAttribute("src", "./img/Game-2/bn.png");
+          const queenBlack = document.createElement("img");
+          queenBlack.setAttribute("src", "./img/Game-2/bq.png");
+
+          div.appendChild(rookBlack);
+          div.appendChild(bishopBlack);
+          div.appendChild(knightBlack);
+          div.appendChild(queenBlack);
+        }
 
         const board = document.querySelector(".chess-grid");
         board?.appendChild(div);
