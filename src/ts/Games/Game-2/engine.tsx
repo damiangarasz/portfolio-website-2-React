@@ -18,6 +18,8 @@ export function engine(data: {
     legalSquares: [],
   };
 
+  console.log(data.occupatedSquares);
+
   switch (data.pieceId) {
     case "br":
     case "wr":

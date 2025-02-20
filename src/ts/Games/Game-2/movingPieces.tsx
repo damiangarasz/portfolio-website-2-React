@@ -7,6 +7,7 @@ export function MovingPieces() {
   const changedPos = useRef(false);
   const [fillArr, setFillArr] = useState(false);
   const [dubble, setDubble] = useState(0);
+  const [stan, setStan] = useState<number[]>([]);
   //hook dla pola przemiany
   const przemianaClick = useRef((e: Event) => {});
 
@@ -41,6 +42,8 @@ export function MovingPieces() {
       data.occupatedSquares.push(id);
     }
   }, [fillArr]);
+
+  console.log(data.occupatedSquares);
 
   useEffect(() => {
     //pchanie pozycji i nazwy każdej figury
@@ -347,8 +350,7 @@ export function MovingPieces() {
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
       //TODO szach i mat
       //TODO kolejność ruchu
-      //TODO refresh nie resetuje planszy
-      //TODO pole przemiany nie działa dla czernego
+      //TODO refresh nie resetuje planszy sessionStorage.setItem
 
       const returnData = engine(data);
 
