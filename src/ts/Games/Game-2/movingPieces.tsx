@@ -16,6 +16,7 @@ export function MovingPieces() {
     startBoardId: number;
     targetBoardId: number;
     occupatedSquares: number[];
+    possition: Array<{ [key: string]: string } | {}>;
     collision: boolean;
     kingCollisions: {
       pieces: Record<string, string>[];
@@ -27,11 +28,88 @@ export function MovingPieces() {
     startBoardId: 0,
     targetBoardId: 0,
     occupatedSquares: [],
+    possition: [
+      { 1: "br" },
+      { 2: "bn" },
+      { 3: "bb" },
+      { 4: "bq" },
+      { 5: "bk" },
+      { 6: "bb" },
+      { 7: "bn" },
+      { 8: "br" },
+      { 9: "bp" },
+      { 10: "bp" },
+      { 11: "bp" },
+      { 12: "bp" },
+      { 13: "bp" },
+      { 14: "bp" },
+      { 15: "bp" },
+      { 16: "bp" },
+      { 17: "" },
+      { 18: "" },
+      { 19: "" },
+      { 20: "" },
+      { 21: "" },
+      { 22: "" },
+      { 23: "" },
+      { 24: "" },
+      { 25: "" },
+      { 26: "" },
+      { 27: "" },
+      { 28: "" },
+      { 29: "" },
+      { 30: "" },
+      { 31: "" },
+      { 32: "" },
+      { 32: "" },
+      { 33: "" },
+      { 34: "" },
+      { 35: "" },
+      { 36: "" },
+      { 37: "" },
+      { 38: "" },
+      { 39: "" },
+      { 40: "" },
+      { 41: "" },
+      { 42: "" },
+      { 43: "" },
+      { 44: "" },
+      { 45: "" },
+      { 46: "" },
+      { 47: "" },
+      { 48: "" },
+      { 49: "wp" },
+      { 50: "wp" },
+      { 51: "wp" },
+      { 52: "wp" },
+      { 53: "wp" },
+      { 54: "wp" },
+      { 55: "wp" },
+      { 56: "wp" },
+      { 57: "wr" },
+      { 58: "wn" },
+      { 59: "wb" },
+      { 60: "wq" },
+      { 61: "wk" },
+      { 62: "wb" },
+      { 63: "wn" },
+      { 64: "wr" },
+    ],
     collision: false,
     kingCollisions: {
       pieces: [],
     },
   };
+
+  useEffect(() => {
+    const cacheJSON = sessionStorage.getItem("value");
+    let cache;
+    if (cacheJSON) cache = JSON.parse(cacheJSON);
+    sessionStorage.setItem("value", JSON.stringify(data));
+    if (!data.possition) {
+      sessionStorage.getItem("value");
+    }
+  });
 
   useEffect(() => {
     //pchanie zajętych kwadratów
@@ -42,8 +120,6 @@ export function MovingPieces() {
       data.occupatedSquares.push(id);
     }
   }, [fillArr]);
-
-  console.log(data.occupatedSquares);
 
   useEffect(() => {
     //pchanie pozycji i nazwy każdej figury
@@ -348,6 +424,7 @@ export function MovingPieces() {
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
+      //TODO prawy nadal działa jak lewy jest trzymany, ale działa ok jak nie ma w kratce obrazka
       //TODO szach i mat
       //TODO kolejność ruchu
       //TODO refresh nie resetuje planszy sessionStorage.setItem
