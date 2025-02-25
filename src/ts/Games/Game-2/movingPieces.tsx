@@ -8,15 +8,85 @@ export function MovingPieces() {
   const [fillArr, setFillArr] = useState(false);
   const [dubble, setDubble] = useState(0);
   const [stan, setStan] = useState<number[]>([]);
+  const [posArr, setPosArr] = useState(() => {
+    const lol: Array<{ [key: string]: string }> = [
+      { 1: "br" },
+      { 2: "bn" },
+      { 3: "bb" },
+      { 4: "bq" },
+      { 5: "bk" },
+      { 6: "bb" },
+      { 7: "bn" },
+      { 8: "br" },
+      { 9: "bp" },
+      { 10: "bp" },
+      { 11: "bp" },
+      { 12: "bp" },
+      { 13: "bp" },
+      { 14: "bp" },
+      { 15: "bp" },
+      { 16: "bp" },
+      { 17: "" },
+      { 18: "" },
+      { 19: "" },
+      { 20: "" },
+      { 21: "" },
+      { 22: "" },
+      { 23: "" },
+      { 24: "" },
+      { 25: "" },
+      { 26: "" },
+      { 27: "" },
+      { 28: "" },
+      { 29: "" },
+      { 30: "" },
+      { 31: "" },
+      { 32: "" },
+      { 33: "" },
+      { 34: "" },
+      { 35: "" },
+      { 36: "" },
+      { 37: "" },
+      { 38: "" },
+      { 39: "" },
+      { 40: "" },
+      { 41: "" },
+      { 42: "" },
+      { 43: "" },
+      { 44: "" },
+      { 45: "" },
+      { 46: "" },
+      { 47: "" },
+      { 48: "" },
+      { 49: "wp" },
+      { 50: "wp" },
+      { 51: "wp" },
+      { 52: "wp" },
+      { 53: "wp" },
+      { 54: "wp" },
+      { 55: "wp" },
+      { 56: "wp" },
+      { 57: "wr" },
+      { 58: "wn" },
+      { 59: "wb" },
+      { 60: "wq" },
+      { 61: "wk" },
+      { 62: "wb" },
+      { 63: "wn" },
+      { 64: "wr" },
+    ];
+    return lol;
+  });
   //hook dla pola przemiany
   const przemianaClick = useRef((e: Event) => {});
 
   interface data {
     pieceId: string;
     startBoardId: number;
+    startBoardDivId: string;
     targetBoardId: number;
     occupatedSquares: number[];
-    possition: Array<{ [key: string]: string } | {}>;
+    possition: Array<{ [key: string]: string }>;
     collision: boolean;
     kingCollisions: {
       pieces: Record<string, string>[];
@@ -26,6 +96,7 @@ export function MovingPieces() {
   const data: data = {
     pieceId: "",
     startBoardId: 0,
+    startBoardDivId: "",
     targetBoardId: 0,
     occupatedSquares: [],
     possition: [
@@ -60,7 +131,6 @@ export function MovingPieces() {
       { 29: "" },
       { 30: "" },
       { 31: "" },
-      { 32: "" },
       { 32: "" },
       { 33: "" },
       { 34: "" },
@@ -101,15 +171,15 @@ export function MovingPieces() {
     },
   };
 
-  useEffect(() => {
-    const cacheJSON = sessionStorage.getItem("value");
-    let cache;
-    if (cacheJSON) cache = JSON.parse(cacheJSON);
-    sessionStorage.setItem("value", JSON.stringify(data));
-    if (!data.possition) {
-      sessionStorage.getItem("value");
-    }
-  });
+  // useEffect(() => {
+  //   const cacheJSON = sessionStorage.getItem("value");
+  //   let cache;
+  //   if (cacheJSON) cache = JSON.parse(cacheJSON);
+  //   sessionStorage.setItem("value", JSON.stringify(data));
+  //   if (!data.possition) {
+  //     sessionStorage.getItem("value");
+  //   }
+  // });
 
   useEffect(() => {
     //pchanie zajętych kwadratów
@@ -172,6 +242,7 @@ export function MovingPieces() {
       if (target.current.className == "myImage") {
         //dodaje do obiektu data info o początkowym id elementu
         const id = parent.current?.getAttribute("id");
+        if (id) data.startBoardDivId = id;
         if (id) {
           const temp = id.slice(1);
           data.startBoardId = Number(temp);
@@ -225,6 +296,7 @@ export function MovingPieces() {
               event.clientY > top + tableWidth) &&
             changedPos.current == false
           ) {
+            data.startBoardDivId = "";
             const tempEl = document.querySelector(".temp");
             const id = parent.current?.getAttribute("id");
             const chwytakSq = document.getElementById("" + id);
@@ -242,6 +314,17 @@ export function MovingPieces() {
               chwytakSq?.appendChild(el);
             }
             if (tempEl) chwytak?.removeChild(tempEl);
+
+            //usuwanie tymczasowego podświetlenia możliwości ruchu
+            for (let n = 1; n <= 64; n++) {
+              const sqIMGdot = document.querySelector(`#s${n} > .dot`);
+              const parent = document.querySelector(`#s${n}`);
+              //usuwanie wszystkich inline style
+              parent?.removeAttribute("style");
+              if (sqIMGdot) {
+                parent?.removeChild(sqIMGdot);
+              }
+            }
           }
         };
 
@@ -432,6 +515,25 @@ export function MovingPieces() {
       const returnData = engine(data);
 
       function legal() {
+        const startIDnumber: number = Number(data.startBoardDivId.slice(1));
+        const startIDstring: string = data.startBoardDivId.slice(1);
+
+        const endIDnumber = data.targetBoardId;
+        const endIDstring: string = data.targetBoardId.toString();
+
+        const pion = data.pieceId;
+        // data.possition[startIDnumber - 1][startIDstring] = "";
+        // data.possition[endIDnumber - 1][endIDstring] = pion;
+        setPosArr(() => {
+          const lol = posArr;
+          lol[startIDnumber - 1][startIDstring] = "";
+          lol[endIDnumber - 1][endIDstring] = pion;
+
+          return lol;
+        });
+
+        console.log(pion);
+
         if (target.tagName == "DIV") {
           //kiedy wchodzimy na puste pole
           const img = temp?.getAttribute("src");
@@ -566,6 +668,26 @@ export function MovingPieces() {
 
           const przemianaTemp = document.querySelector(".przemianaTemp");
           if (przemianaTemp) board?.removeChild(przemianaTemp);
+
+          const startIDnumber: number = Number(data.startBoardDivId.slice(1));
+          const startIDstring: string = data.startBoardDivId.slice(1);
+
+          const endIDnumber = data.targetBoardId;
+          const endIDstring: string = data.targetBoardId.toString();
+
+          let pion;
+          if (src) pion = src.match(/(\w{2})\.png$/);
+          let pionId: string = "";
+          if (pion) pionId = pion[1];
+          // data.possition[startIDnumber - 1][startIDstring] = "";
+          // data.possition[endIDnumber - 1][endIDstring] = pionId;
+          setPosArr(() => {
+            const lol = posArr;
+            lol[startIDnumber - 1][startIDstring] = "";
+            lol[endIDnumber - 1][endIDstring] = pionId;
+
+            return lol;
+          });
         });
 
         return () => {
@@ -810,6 +932,7 @@ export function MovingPieces() {
       changedPos.current = true;
       data.occupatedSquares = [];
       setFillArr(fillArr ? false : true);
+      console.log(posArr);
     }
     for (let n of square) {
       n.addEventListener("mouseup", DropPicesHandler as EventListener);
