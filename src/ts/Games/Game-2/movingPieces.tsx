@@ -77,7 +77,10 @@ export function MovingPieces() {
     ];
     return lol;
   });
-  //hook dla pola przemiany
+  useEffect(() => {
+    sessionStorage.setItem("value", JSON.stringify(posArr));
+  }, [posArr]);
+  // hook dla pola przemiany
   const przemianaClick = useRef((e: Event) => {});
 
   interface data {
@@ -108,18 +111,29 @@ export function MovingPieces() {
     const cacheJSON = sessionStorage.getItem("value");
     let cache;
     if (cacheJSON) cache = JSON.parse(cacheJSON);
+    console.log(posArr, cache);
 
-    cache.map((n: { [key: string]: string }) => {
-      const key = Object.keys(n);
-      const value = Object.values(n);
-      const square = document.querySelector(`s${key}`);
-      const attribute = square?.getAttribute("src");
-      const idArr = attribute?.match(/(\w{2}).\.png$/);
-      let id;
-      if (idArr) id = idArr[1];
-    });
+    if (cache)
+      cache.map((n: { [key: string]: string }) => {
+        const key = Object.keys(n);
+        const value = Object.values(n)[0];
+        const square = document.querySelector(`#s${key[0]}`);
+        const squareChildren = square?.children[0];
+        const attribute = squareChildren?.getAttribute("src");
+        let idArr;
+        if (attribute) idArr = attribute.match(/(\w{2})\.png$/);
+        const id = idArr && idArr[1] ? idArr[1] : "";
+        if (value != id) {
+          if (value == "") {
+            const children = document.querySelector(`#s${key[0]} > img`);
+            if (children) square?.removeChild(children);
+          } else {
+            squareChildren?.setAttribute("src", `./img/Game-2/${value}.png`);
+          }
+        }
+      });
     //TODO tutaj jestem lol
-  });
+  }, [posArr]);
 
   useEffect(() => {
     //pchanie zajętych kwadratów
@@ -466,12 +480,18 @@ export function MovingPieces() {
         const pion = data.pieceId;
         // data.possition[startIDnumber - 1][startIDstring] = "";
         // data.possition[endIDnumber - 1][endIDstring] = pion;
-        setPosArr(() => {
-          const lol = posArr;
-          lol[startIDnumber - 1][startIDstring] = "";
-          lol[endIDnumber - 1][endIDstring] = pion;
+        setPosArr((prevPosArr) => {
+          const newPosArr = [...prevPosArr]; // Tworzenie nowej kopii
+          newPosArr[startIDnumber - 1] = {
+            ...newPosArr[startIDnumber - 1],
+            [startIDstring]: "",
+          };
+          newPosArr[endIDnumber - 1] = {
+            ...newPosArr[endIDnumber - 1],
+            [endIDstring]: pion,
+          };
 
-          return lol;
+          return newPosArr;
         });
 
         if (target.tagName == "DIV") {
@@ -623,12 +643,18 @@ export function MovingPieces() {
           if (pion) pionId = pion[1];
           // data.possition[startIDnumber - 1][startIDstring] = "";
           // data.possition[endIDnumber - 1][endIDstring] = pionId;
-          setPosArr(() => {
-            const lol = posArr;
-            lol[startIDnumber - 1][startIDstring] = "";
-            lol[endIDnumber - 1][endIDstring] = pionId;
+          setPosArr((prevPosArr) => {
+            const newPosArr = [...prevPosArr]; // Tworzenie nowej kopii
+            newPosArr[startIDnumber - 1] = {
+              ...newPosArr[startIDnumber - 1],
+              [startIDstring]: "",
+            };
+            newPosArr[endIDnumber - 1] = {
+              ...newPosArr[endIDnumber - 1],
+              [endIDstring]: pionId,
+            };
 
-            return lol;
+            return newPosArr;
           });
         });
 
