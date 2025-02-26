@@ -77,7 +77,12 @@ export function MovingPieces() {
     ];
     return lol;
   });
+  const isFirstRender = useRef(true);
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     sessionStorage.setItem("value", JSON.stringify(posArr));
   }, [posArr]);
   // hook dla pola przemiany
