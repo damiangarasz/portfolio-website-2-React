@@ -77,6 +77,9 @@ export function MovingPieces() {
     ];
     return lol;
   });
+
+  //TODO może potrzeba wyczyścić cache?
+
   const isFirstRender = useRef(true);
   useEffect(() => {
     if (isFirstRender.current) {
@@ -116,27 +119,45 @@ export function MovingPieces() {
     const cacheJSON = sessionStorage.getItem("value");
     let cache;
     if (cacheJSON) cache = JSON.parse(cacheJSON);
-    console.log(posArr, cache);
 
-    if (cache)
-      cache.map((n: { [key: string]: string }) => {
-        const key = Object.keys(n);
-        const value = Object.values(n)[0];
-        const square = document.querySelector(`#s${key[0]}`);
-        const squareChildren = square?.children[0];
-        const attribute = squareChildren?.getAttribute("src");
-        let idArr;
-        if (attribute) idArr = attribute.match(/(\w{2})\.png$/);
-        const id = idArr && idArr[1] ? idArr[1] : "";
-        if (value != id) {
-          if (value == "") {
-            const children = document.querySelector(`#s${key[0]} > img`);
-            if (children) square?.removeChild(children);
-          } else {
-            squareChildren?.setAttribute("src", `./img/Game-2/${value}.png`);
-          }
+    if (cache) {
+      // cache.map((n: { [key: string]: string }) => {
+      //   const key = Object.keys(n);
+      //   const value = Object.values(n)[0];
+      //   const square = document.querySelector(`#s${key[0]}`);
+      //   const squareChildren = square?.children[0];
+      //   const attribute = squareChildren?.getAttribute("src");
+      //   let idArr;
+      //   if (attribute) idArr = attribute.match(/(\w{2})\.png$/);
+      //   const id = idArr && idArr[1] ? idArr[1] : "";
+      //   if (value != id) {
+      //     if (value == "") {
+      //       const children = document.querySelector(`#s${key[0]} > img`);
+      //       if (children) square?.removeChild(children);
+      //     } else {
+      //       squareChildren?.setAttribute("src", `./img/Game-2/${value}.png`);
+      //     }
+      //   }
+      // });
+
+      cache.map((cacheArr: { [key: string]: string }) => {
+        const number = Number(Object.keys(cacheArr));
+
+        const cell = document.querySelector(`#s${number}`);
+        if (cell && cell.children[0].tagName == "IMG") {
+          const img = document.querySelector(`#s${number} .myImage`);
+          const src = img?.getAttribute("src");
+          const id = src!.match(/(\w{2})\.png$/);
+          console.log(id);
         }
+
+        //TODO tutaj ===============================
+
+        if (cell) console.log(cell.children[0]);
       });
+    }
+
+    console.log(cache);
     //TODO tutaj jestem lol
   }, [posArr]);
 
@@ -486,15 +507,17 @@ export function MovingPieces() {
         // data.possition[startIDnumber - 1][startIDstring] = "";
         // data.possition[endIDnumber - 1][endIDstring] = pion;
         setPosArr((prevPosArr) => {
-          const newPosArr = [...prevPosArr]; // Tworzenie nowej kopii
-          newPosArr[startIDnumber - 1] = {
-            ...newPosArr[startIDnumber - 1],
-            [startIDstring]: "",
-          };
-          newPosArr[endIDnumber - 1] = {
-            ...newPosArr[endIDnumber - 1],
-            [endIDstring]: pion,
-          };
+          const newPosArr = prevPosArr.map((item) => ({ ...item })); // Tworzenie nowej kopii
+          // newPosArr[startIDnumber - 1] = {
+          //   ...newPosArr[startIDnumber - 1],
+          //   [startIDstring]: "",
+          // };
+          // newPosArr[endIDnumber - 1] = {
+          //   ...newPosArr[endIDnumber - 1],
+          //   [endIDstring]: pion,
+          // };
+          newPosArr[startIDnumber - 1][startIDstring] = "";
+          newPosArr[endIDnumber - 1][endIDstring] = pion;
 
           return newPosArr;
         });
@@ -535,7 +558,7 @@ export function MovingPieces() {
           if (piece) board?.removeChild(piece);
         }
 
-        sessionStorage.setItem("value", JSON.stringify(posArr));
+        // sessionStorage.setItem("value", JSON.stringify(posArr));
       }
 
       async function przemiana() {
@@ -649,21 +672,23 @@ export function MovingPieces() {
           // data.possition[startIDnumber - 1][startIDstring] = "";
           // data.possition[endIDnumber - 1][endIDstring] = pionId;
           setPosArr((prevPosArr) => {
-            const newPosArr = [...prevPosArr]; // Tworzenie nowej kopii
-            newPosArr[startIDnumber - 1] = {
-              ...newPosArr[startIDnumber - 1],
-              [startIDstring]: "",
-            };
-            newPosArr[endIDnumber - 1] = {
-              ...newPosArr[endIDnumber - 1],
-              [endIDstring]: pionId,
-            };
+            const newPosArr = prevPosArr.map((item) => ({ ...item })); // Tworzenie nowej kopii
+            // newPosArr[startIDnumber - 1] = {
+            //   ...newPosArr[startIDnumber - 1],
+            //   [startIDstring]: "",
+            // };
+            // newPosArr[endIDnumber - 1] = {
+            //   ...newPosArr[endIDnumber - 1],
+            //   [endIDstring]: pion,
+            // };
+            newPosArr[startIDnumber - 1][startIDstring] = "";
+            newPosArr[endIDnumber - 1][endIDstring] = pionId;
 
             return newPosArr;
           });
         });
 
-        sessionStorage.setItem("value", JSON.stringify(posArr));
+        // sessionStorage.setItem("value", JSON.stringify(posArr));
 
         return () => {
           for (let n of przemianaBoard) {
