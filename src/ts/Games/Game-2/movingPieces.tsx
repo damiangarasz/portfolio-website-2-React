@@ -142,22 +142,50 @@ export function MovingPieces() {
 
       cache.map((cacheArr: { [key: string]: string }) => {
         const number = Number(Object.keys(cacheArr));
+        const pieceId = Object.values(cacheArr)[0];
 
         const cell = document.querySelector(`#s${number}`);
-        if (cell && cell.children[0].tagName == "IMG") {
+        const tagName =
+          cell && cell.children[0] && cell.children[0].tagName
+            ? cell.children[0].tagName
+            : "";
+
+        if (cell && tagName == "IMG") {
           const img = document.querySelector(`#s${number} .myImage`);
           const src = img?.getAttribute("src");
-          const id = src!.match(/(\w{2})\.png$/);
-          console.log(id);
+          const idArr =
+            src && src.match(/(\w{2})\.png$/) ? src.match(/(\w{2})\.png$/) : "";
+
+          const id = idArr && idArr[1] ? idArr[1] : "";
+
+          if (img && pieceId != id && pieceId != "") {
+            cell.removeChild(img);
+
+            const el = document.createElement("img");
+            el.setAttribute("src", `./img/Game-2/${pieceId}.png`);
+            el.setAttribute("class", "myImage");
+
+            cell.appendChild(el);
+          } else if (img && pieceId == "") {
+            cell.removeChild(img);
+          }
+          // console.log("cache:", pieceId, "aktualny:", id);
+        } else if (cell && tagName == "" && pieceId != "") {
+          const el = document.createElement("img");
+          el.setAttribute("src", `./img/Game-2/${pieceId}.png`);
+          el.setAttribute("class", "myImage");
+
+          cell.appendChild(el);
+        } else if (cell && tagName.length >= 1 && pieceId == "") {
+          const child = document.querySelector(`#s${number} .myImage`);
+          if (child) cell.removeChild(child);
+          console.log("number");
         }
 
         //TODO tutaj ===============================
-
-        if (cell) console.log(cell.children[0]);
       });
     }
 
-    console.log(cache);
     //TODO tutaj jestem lol
   }, [posArr]);
 
