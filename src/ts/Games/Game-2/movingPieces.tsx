@@ -116,30 +116,12 @@ export function MovingPieces() {
   };
 
   useEffect(() => {
+    //pobieranie ustawienia pionów z cacha przed refreshem
     const cacheJSON = sessionStorage.getItem("value");
     let cache;
     if (cacheJSON) cache = JSON.parse(cacheJSON);
 
     if (cache) {
-      // cache.map((n: { [key: string]: string }) => {
-      //   const key = Object.keys(n);
-      //   const value = Object.values(n)[0];
-      //   const square = document.querySelector(`#s${key[0]}`);
-      //   const squareChildren = square?.children[0];
-      //   const attribute = squareChildren?.getAttribute("src");
-      //   let idArr;
-      //   if (attribute) idArr = attribute.match(/(\w{2})\.png$/);
-      //   const id = idArr && idArr[1] ? idArr[1] : "";
-      //   if (value != id) {
-      //     if (value == "") {
-      //       const children = document.querySelector(`#s${key[0]} > img`);
-      //       if (children) square?.removeChild(children);
-      //     } else {
-      //       squareChildren?.setAttribute("src", `./img/Game-2/${value}.png`);
-      //     }
-      //   }
-      // });
-
       cache.map((cacheArr: { [key: string]: string }) => {
         const number = Number(Object.keys(cacheArr));
         const pieceId = Object.values(cacheArr)[0];
@@ -169,7 +151,6 @@ export function MovingPieces() {
           } else if (img && pieceId == "") {
             cell.removeChild(img);
           }
-          // console.log("cache:", pieceId, "aktualny:", id);
         } else if (cell && tagName == "" && pieceId != "") {
           const el = document.createElement("img");
           el.setAttribute("src", `./img/Game-2/${pieceId}.png`);
@@ -179,14 +160,9 @@ export function MovingPieces() {
         } else if (cell && tagName.length >= 1 && pieceId == "") {
           const child = document.querySelector(`#s${number} .myImage`);
           if (child) cell.removeChild(child);
-          console.log("number");
         }
-
-        //TODO tutaj ===============================
       });
     }
-
-    //TODO tutaj jestem lol
   }, [posArr]);
 
   useEffect(() => {
@@ -520,7 +496,6 @@ export function MovingPieces() {
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
       //TODO szach i mat
       //TODO kolejność ruchu
-      //TODO refresh nie resetuje planszy sessionStorage.setItem
 
       const returnData = engine(data);
 
@@ -532,18 +507,18 @@ export function MovingPieces() {
         const endIDstring: string = data.targetBoardId.toString();
 
         const pion = data.pieceId;
-        // data.possition[startIDnumber - 1][startIDstring] = "";
-        // data.possition[endIDnumber - 1][endIDstring] = pion;
         setPosArr((prevPosArr) => {
-          const newPosArr = prevPosArr.map((item) => ({ ...item })); // Tworzenie nowej kopii
-          // newPosArr[startIDnumber - 1] = {
-          //   ...newPosArr[startIDnumber - 1],
-          //   [startIDstring]: "",
-          // };
-          // newPosArr[endIDnumber - 1] = {
-          //   ...newPosArr[endIDnumber - 1],
-          //   [endIDstring]: pion,
-          // };
+          const pastDataString = sessionStorage.getItem("value");
+          const pastDataObj =
+            pastDataString && JSON.parse(pastDataString)
+              ? JSON.parse(pastDataString)
+              : "";
+          let newPosArr;
+          if (pastDataObj) {
+            newPosArr = pastDataObj;
+          } else {
+            newPosArr = prevPosArr.map((item) => ({ ...item }));
+          }
           newPosArr[startIDnumber - 1][startIDstring] = "";
           newPosArr[endIDnumber - 1][endIDstring] = pion;
 
@@ -697,18 +672,19 @@ export function MovingPieces() {
           if (src) pion = src.match(/(\w{2})\.png$/);
           let pionId: string = "";
           if (pion) pionId = pion[1];
-          // data.possition[startIDnumber - 1][startIDstring] = "";
-          // data.possition[endIDnumber - 1][endIDstring] = pionId;
+
           setPosArr((prevPosArr) => {
-            const newPosArr = prevPosArr.map((item) => ({ ...item })); // Tworzenie nowej kopii
-            // newPosArr[startIDnumber - 1] = {
-            //   ...newPosArr[startIDnumber - 1],
-            //   [startIDstring]: "",
-            // };
-            // newPosArr[endIDnumber - 1] = {
-            //   ...newPosArr[endIDnumber - 1],
-            //   [endIDstring]: pion,
-            // };
+            const pastDataString = sessionStorage.getItem("value");
+            const pastDataObj =
+              pastDataString && JSON.parse(pastDataString)
+                ? JSON.parse(pastDataString)
+                : "";
+            let newPosArr;
+            if (pastDataObj) {
+              newPosArr = pastDataObj;
+            } else {
+              newPosArr = prevPosArr.map((item) => ({ ...item }));
+            }
             newPosArr[startIDnumber - 1][startIDstring] = "";
             newPosArr[endIDnumber - 1][endIDstring] = pionId;
 
