@@ -77,8 +77,27 @@ export function MovingPieces() {
     ];
     return lol;
   });
+  const [didKingMove, setDidKingMove] = useState(() => {
+    return false;
+  });
 
-  //TODO może potrzeba wyczyścić cache?
+  useEffect(() => {
+    //czyta czy king sie ruszył
+    const pastKingMoveString = sessionStorage.getItem("king");
+    const pastKingMoveJson =
+      pastKingMoveString && JSON.parse(pastKingMoveString)
+        ? JSON.parse(pastKingMoveString)
+        : "";
+    if (pastKingMoveJson) {
+      setDidKingMove(pastKingMoveJson);
+    }
+  }, []);
+
+  useEffect(() => {
+    //ustawianie w historii czy king ruszył
+    const doesKing = didKingMove.toString();
+    sessionStorage.setItem("king", doesKing);
+  }, [didKingMove]);
 
   const isFirstRender = useRef(true);
   useEffect(() => {
@@ -101,6 +120,7 @@ export function MovingPieces() {
     kingCollisions: {
       pieces: Record<string, string>[];
     };
+    isKingMove: boolean;
   }
 
   const data: data = {
@@ -113,6 +133,7 @@ export function MovingPieces() {
     kingCollisions: {
       pieces: [],
     },
+    isKingMove: didKingMove,
   };
 
   useEffect(() => {
@@ -500,11 +521,23 @@ export function MovingPieces() {
       const returnData = engine(data);
 
       function legal() {
+        //TODO tutaj zrób logike roszady lol
         const startIDnumber: number = Number(data.startBoardDivId.slice(1));
         const startIDstring: string = data.startBoardDivId.slice(1);
 
         const endIDnumber = data.targetBoardId;
         const endIDstring: string = data.targetBoardId.toString();
+
+        if (data.pieceId == "wk" && startIDnumber != endIDnumber) {
+          setDidKingMove((x) => {
+            console.log(x);
+            if (x == false) {
+              return true;
+            } else {
+              return true;
+            }
+          });
+        }
 
         const pion = data.pieceId;
         setPosArr((prevPosArr) => {

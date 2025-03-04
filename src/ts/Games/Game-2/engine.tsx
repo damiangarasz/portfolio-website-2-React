@@ -7,6 +7,7 @@ export function engine(data: {
   kingCollisions: {
     pieces: Record<string, string>[];
   };
+  isKingMove: boolean;
 }) {
   interface returnData {
     isLegal: boolean;
@@ -45,6 +46,7 @@ export function engine(data: {
         data.startBoardId,
         data.pieceId,
         true,
+        data.isKingMove,
       );
 
       break;
@@ -522,6 +524,7 @@ export function engine(data: {
     pole: number,
     pieceId: string,
     naTwardo: boolean,
+    doesItMove: boolean,
   ): number[] {
     const ruchy: number[] = [];
 
@@ -542,6 +545,11 @@ export function engine(data: {
       { r: 1, k: 1 }, // Dół-prawo
     ];
 
+    const roszady = [
+      { r: 0, k: -2 }, // roszada lewo
+      { r: 0, k: 2 }, // roszada prawo
+    ];
+
     // Iteracja po możliwych przesunięciach
     for (const przesuniecie of przesuniecia) {
       const nowyWiersz = wiersz + przesuniecie.r;
@@ -553,6 +561,23 @@ export function engine(data: {
         nowyWiersz <= 8 &&
         nowaKolumna >= 1 &&
         nowaKolumna <= 8
+      ) {
+        ruchy.push((nowyWiersz - 1) * 8 + nowaKolumna);
+      }
+    }
+
+    for (const roszada of roszady) {
+      const nowyWiersz = wiersz + roszada.r;
+      const nowaKolumna = kolumna + roszada.k;
+
+      // Sprawdzanie, czy nowa pozycja jest na planszy
+      if (
+        nowyWiersz >= 1 &&
+        nowyWiersz <= 8 &&
+        nowaKolumna >= 1 &&
+        nowaKolumna <= 8 &&
+        data.isKingMove == false &&
+        data.startBoardId == 61
       ) {
         ruchy.push((nowyWiersz - 1) * 8 + nowaKolumna);
       }
@@ -620,6 +645,7 @@ export function engine(data: {
             Number(Object.keys(n)[0]),
             data.pieceId,
             false,
+            data.isKingMove,
           );
           if (!temp5) return;
           for (let n of temp5) {
