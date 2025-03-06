@@ -7,7 +7,8 @@ export function engine(data: {
   kingCollisions: {
     pieces: Record<string, string>[];
   };
-  isKingMove: boolean;
+  doesItMove: { [key: string]: boolean };
+  doesItFree: { [key: string]: boolean };
 }) {
   interface returnData {
     isLegal: boolean;
@@ -46,7 +47,8 @@ export function engine(data: {
         data.startBoardId,
         data.pieceId,
         true,
-        data.isKingMove,
+        data.doesItMove,
+        data.doesItFree,
       );
 
       break;
@@ -524,7 +526,8 @@ export function engine(data: {
     pole: number,
     pieceId: string,
     naTwardo: boolean,
-    doesItMove: boolean,
+    doesItMove: { [key: string]: boolean },
+    doesItFree: { [key: string]: boolean },
   ): number[] {
     const ruchy: number[] = [];
 
@@ -566,18 +569,33 @@ export function engine(data: {
       }
     }
 
+    console.log(doesItFree.left);
+
     for (const roszada of roszady) {
       const nowyWiersz = wiersz + roszada.r;
       const nowaKolumna = kolumna + roszada.k;
-
+      //TODO tu nie działa
       // Sprawdzanie, czy nowa pozycja jest na planszy
       if (
         nowyWiersz >= 1 &&
         nowyWiersz <= 8 &&
         nowaKolumna >= 1 &&
         nowaKolumna <= 8 &&
-        data.isKingMove == false &&
-        data.startBoardId == 61
+        doesItMove.king == false &&
+        data.startBoardId == 61 &&
+        (nowyWiersz - 1) * 8 + nowaKolumna == 59 &&
+        doesItFree.left
+      ) {
+        ruchy.push((nowyWiersz - 1) * 8 + nowaKolumna);
+      } else if (
+        nowyWiersz >= 1 &&
+        nowyWiersz <= 8 &&
+        nowaKolumna >= 1 &&
+        nowaKolumna <= 8 &&
+        data.doesItMove.king == false &&
+        data.startBoardId == 61 &&
+        (nowyWiersz - 1) * 8 + nowaKolumna == 63 &&
+        doesItFree.right
       ) {
         ruchy.push((nowyWiersz - 1) * 8 + nowaKolumna);
       }
@@ -599,6 +617,8 @@ export function engine(data: {
         }
       }
     }
+
+    console.log("ruchy w engine:", ruchy);
     return ruchy ? ruchy : [0];
   }
 
@@ -645,7 +665,8 @@ export function engine(data: {
             Number(Object.keys(n)[0]),
             data.pieceId,
             false,
-            data.isKingMove,
+            data.doesItMove,
+            data.doesItFree,
           );
           if (!temp5) return;
           for (let n of temp5) {
@@ -703,6 +724,8 @@ export function engine(data: {
         ruchy.push((nowyWiersz - 1) * 8 + nowaKolumna); // Pole do ataku
       }
     }
+
+    console.log(data.startBoardId);
 
     return ruchy;
   }

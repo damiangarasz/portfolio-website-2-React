@@ -80,6 +80,18 @@ export function MovingPieces() {
   const [didKingMove, setDidKingMove] = useState(() => {
     return false;
   });
+  const [didLeftRookMove, setDidLeftRookMove] = useState(() => {
+    return false;
+  });
+  const [didRightRookMove, setDidRightRookMove] = useState(() => {
+    return false;
+  });
+  const [doesItFreeLeft, setDoesItFreeLeft] = useState(() => {
+    return false;
+  });
+  const [doesItFreeRight, setDoesItFreeRight] = useState(() => {
+    return false;
+  });
 
   useEffect(() => {
     //czyta czy king sie ruszył
@@ -95,7 +107,7 @@ export function MovingPieces() {
 
   useEffect(() => {
     //ustawianie w historii czy king ruszył
-    const doesKing = didKingMove.toString();
+    const doesKing = JSON.stringify(didKingMove);
     sessionStorage.setItem("king", doesKing);
   }, [didKingMove]);
 
@@ -120,7 +132,8 @@ export function MovingPieces() {
     kingCollisions: {
       pieces: Record<string, string>[];
     };
-    isKingMove: boolean;
+    doesItMove: { [key: string]: boolean };
+    doesItFree: { [key: string]: boolean };
   }
 
   const data: data = {
@@ -133,7 +146,15 @@ export function MovingPieces() {
     kingCollisions: {
       pieces: [],
     },
-    isKingMove: didKingMove,
+    doesItMove: {
+      king: didKingMove,
+      leftRook: didLeftRookMove,
+      rightRook: didRightRookMove,
+    },
+    doesItFree: {
+      left: doesItFreeLeft,
+      right: doesItFreeRight,
+    },
   };
 
   useEffect(() => {
@@ -351,6 +372,37 @@ export function MovingPieces() {
       if (letters) data.pieceId = letters;
       //koniec wyciągania id trzymanego piona
 
+      //sprawdzanie czy można roszade czy jest przeszkoda
+      if (data.pieceId == "wk" && data.startBoardId == 61) {
+        const left = document.querySelector("#s60");
+        const right = document.querySelector("#s62");
+
+        if (
+          (left && left.children[0] == undefined) ||
+          (left &&
+            left.children[0] &&
+            left.children[0].getAttribute("class") != "myImage")
+        ) {
+          setDoesItFreeLeft(() => {
+            return true;
+          });
+        }
+
+        if (
+          (right && right.children[0] == undefined) ||
+          (right &&
+            right.children[0] &&
+            right.children[0].getAttribute("class") != "myImage")
+        ) {
+          setDoesItFreeRight(() => {
+            return true;
+          });
+        }
+      }
+
+      console.log(data);
+      //TODO tu jest problem??
+
       // dodawanie kropek
       const engineData = engine(data);
 
@@ -520,6 +572,8 @@ export function MovingPieces() {
 
       const returnData = engine(data);
 
+      console.log("ruchy z engine: ", returnData);
+
       function legal() {
         //TODO tutaj zrób logike roszady lol
         const startIDnumber: number = Number(data.startBoardDivId.slice(1));
@@ -530,7 +584,6 @@ export function MovingPieces() {
 
         if (data.pieceId == "wk" && startIDnumber != endIDnumber) {
           setDidKingMove((x) => {
-            console.log(x);
             if (x == false) {
               return true;
             } else {
@@ -557,6 +610,38 @@ export function MovingPieces() {
 
           return newPosArr;
         });
+
+        //roszada na twardo dla białych
+
+        function leftSpace() {
+          const arr = [];
+          for (let n = 58; n <= 60; n++) {
+            const el = document.querySelector(`#s${n}`);
+            arr.push(el);
+          }
+          for (let arrr of arr) {
+            if (
+              arrr &&
+              arrr.children[0] &&
+              arrr.children[0].getAttribute("class") == "myImage"
+            ) {
+              return false;
+            } else {
+              return true;
+            }
+          }
+        }
+
+        //TODO tu cos robie ale nie wiem co
+        // if (
+        //   data.pieceId == "wk" &&
+        //   data.startBoardId - 2 == data.targetBoardId &&
+        //   didKingMove == false &&
+        //   didLeftRookMove == false &&
+        //   leftSpace()
+        // ) {
+        //   console.log("lol");
+        // }
 
         if (target.tagName == "DIV") {
           //kiedy wchodzimy na puste pole
