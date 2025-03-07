@@ -94,6 +94,7 @@ export function MovingPieces() {
   });
 
   useEffect(() => {
+    setDoesItFreeLeft(true);
     //czyta czy king sie ruszył
     const pastKingMoveString = sessionStorage.getItem("king");
     const pastKingMoveJson =
@@ -121,6 +122,27 @@ export function MovingPieces() {
   }, [posArr]);
   // hook dla pola przemiany
   const przemianaClick = useRef((e: Event) => {});
+
+  const [dataObj, setDataObj] = useState({
+    pieceId: "",
+    startBoardId: 0,
+    startBoardDivId: "",
+    targetBoardId: 0,
+    occupatedSquares: [],
+    collision: false,
+    kingCollisions: {
+      pieces: [],
+    },
+    doesItMove: {
+      king: didKingMove,
+      leftRook: didLeftRookMove,
+      rightRook: didRightRookMove,
+    },
+    doesItFree: {
+      left: doesItFreeLeft,
+      right: doesItFreeRight,
+    },
+  })
 
   interface data {
     pieceId: string;
@@ -162,6 +184,7 @@ export function MovingPieces() {
     const cacheJSON = sessionStorage.getItem("value");
     let cache;
     if (cacheJSON) cache = JSON.parse(cacheJSON);
+    
 
     if (cache) {
       cache.map((cacheArr: { [key: string]: string }) => {
@@ -372,7 +395,7 @@ export function MovingPieces() {
       if (letters) data.pieceId = letters;
       //koniec wyciągania id trzymanego piona
 
-      //sprawdzanie czy można roszade czy jest przeszkoda
+      // sprawdzanie czy można roszade czy jest przeszkoda
       if (data.pieceId == "wk" && data.startBoardId == 61) {
         const left = document.querySelector("#s60");
         const right = document.querySelector("#s62");
@@ -383,9 +406,7 @@ export function MovingPieces() {
             left.children[0] &&
             left.children[0].getAttribute("class") != "myImage")
         ) {
-          setDoesItFreeLeft(() => {
-            return true;
-          });
+          setDoesItFreeLeft(true);
         }
 
         if (
@@ -394,17 +415,15 @@ export function MovingPieces() {
             right.children[0] &&
             right.children[0].getAttribute("class") != "myImage")
         ) {
-          setDoesItFreeRight(() => {
-            return true;
-          });
+          setDoesItFreeRight(true);
         }
       }
 
-      console.log(data);
       //TODO tu jest problem??
 
       // dodawanie kropek
       const engineData = engine(data);
+      
 
       if (data.pieceId == "wp" || data.pieceId == "bp") {
         const idArr = engineData.legalSquares;
@@ -572,8 +591,7 @@ export function MovingPieces() {
 
       const returnData = engine(data);
 
-      console.log("ruchy z engine: ", returnData);
-
+      console.log(returnData);
       function legal() {
         //TODO tutaj zrób logike roszady lol
         const startIDnumber: number = Number(data.startBoardDivId.slice(1));
@@ -600,6 +618,13 @@ export function MovingPieces() {
               ? JSON.parse(pastDataString)
               : "";
           let newPosArr;
+          console.log(
+            "start id number:",
+            startIDnumber,
+            "startIds string: ",
+            startIDstring,
+          );
+          //TODO grzebie tutaj
           if (pastDataObj) {
             newPosArr = pastDataObj;
           } else {
@@ -640,7 +665,6 @@ export function MovingPieces() {
         //   didLeftRookMove == false &&
         //   leftSpace()
         // ) {
-        //   console.log("lol");
         // }
 
         if (target.tagName == "DIV") {

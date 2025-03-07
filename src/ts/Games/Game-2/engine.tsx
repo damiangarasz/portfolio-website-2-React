@@ -20,6 +20,8 @@ export function engine(data: {
     legalSquares: [],
   };
 
+  console.log(data);
+
   switch (data.pieceId) {
     case "br":
     case "wr":
@@ -569,8 +571,6 @@ export function engine(data: {
       }
     }
 
-    console.log(doesItFree.left);
-
     for (const roszada of roszady) {
       const nowyWiersz = wiersz + roszada.r;
       const nowaKolumna = kolumna + roszada.k;
@@ -618,7 +618,6 @@ export function engine(data: {
       }
     }
 
-    console.log("ruchy w engine:", ruchy);
     return ruchy ? ruchy : [0];
   }
 
@@ -724,8 +723,6 @@ export function engine(data: {
         ruchy.push((nowyWiersz - 1) * 8 + nowaKolumna); // Pole do ataku
       }
     }
-
-    console.log(data.startBoardId);
 
     return ruchy;
   }
