@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { engine } from "./engine";
+import { cloneDeep } from "lodash";
 
 export function MovingPieces() {
   const target = useRef<HTMLElement | null>(null);
@@ -107,6 +108,10 @@ export function MovingPieces() {
   }, []);
 
   useEffect(() => {
+    //dodawanie kropek
+  });
+
+  useEffect(() => {
     //ustawianie w historii czy king ruszył
     const doesKing = JSON.stringify(didKingMove);
     sessionStorage.setItem("king", doesKing);
@@ -123,28 +128,7 @@ export function MovingPieces() {
   // hook dla pola przemiany
   const przemianaClick = useRef((e: Event) => {});
 
-  const [dataObj, setDataObj] = useState({
-    pieceId: "",
-    startBoardId: 0,
-    startBoardDivId: "",
-    targetBoardId: 0,
-    occupatedSquares: [],
-    collision: false,
-    kingCollisions: {
-      pieces: [],
-    },
-    doesItMove: {
-      king: didKingMove,
-      leftRook: didLeftRookMove,
-      rightRook: didRightRookMove,
-    },
-    doesItFree: {
-      left: doesItFreeLeft,
-      right: doesItFreeRight,
-    },
-  })
-
-  interface data {
+  const [dataObj, setDataObj] = useState<{
     pieceId: string;
     startBoardId: number;
     startBoardDivId: string;
@@ -156,9 +140,7 @@ export function MovingPieces() {
     };
     doesItMove: { [key: string]: boolean };
     doesItFree: { [key: string]: boolean };
-  }
-
-  const data: data = {
+  }>({
     pieceId: "",
     startBoardId: 0,
     startBoardDivId: "",
@@ -177,14 +159,48 @@ export function MovingPieces() {
       left: doesItFreeLeft,
       right: doesItFreeRight,
     },
-  };
+  });
+
+  // interface data {
+  //   pieceId: string;
+  //   startBoardId: number;
+  //   startBoardDivId: string;
+  //   targetBoardId: number;
+  //   occupatedSquares: number[];
+  //   collision: boolean;
+  //   kingCollisions: {
+  //     pieces: Record<string, string>[];
+  //   };
+  //   doesItMove: { [key: string]: boolean };
+  //   doesItFree: { [key: string]: boolean };
+  // }
+
+  // const data: data = {
+  //   pieceId: "",
+  //   startBoardId: 0,
+  //   startBoardDivId: "",
+  //   targetBoardId: 0,
+  //   occupatedSquares: [],
+  //   collision: false,
+  //   kingCollisions: {
+  //     pieces: [],
+  //   },
+  //   doesItMove: {
+  //     king: didKingMove,
+  //     leftRook: didLeftRookMove,
+  //     rightRook: didRightRookMove,
+  //   },
+  //   doesItFree: {
+  //     left: doesItFreeLeft,
+  //     right: doesItFreeRight,
+  //   },
+  // };
 
   useEffect(() => {
     //pobieranie ustawienia pionów z cacha przed refreshem
     const cacheJSON = sessionStorage.getItem("value");
     let cache;
     if (cacheJSON) cache = JSON.parse(cacheJSON);
-    
 
     if (cache) {
       cache.map((cacheArr: { [key: string]: string }) => {
@@ -236,7 +252,14 @@ export function MovingPieces() {
     for (let n of imgSquare) {
       const parent = n.parentElement;
       const id = Number(parent?.id.slice(1));
-      data.occupatedSquares.push(id);
+
+      setDataObj((data) => {
+        const newState = cloneDeep(data);
+        newState.occupatedSquares.push(id);
+        return newState;
+      });
+      // data.occupatedSquares.push(id);
+      //TODO zmiana
     }
   }, [fillArr]);
 
@@ -263,8 +286,15 @@ export function MovingPieces() {
         figures.push(n);
       }
     });
-    data.kingCollisions.pieces = figures;
-  });
+
+    setDataObj((data) => {
+      const newState = cloneDeep(data);
+      newState.kingCollisions.pieces = figures;
+      return newState;
+    });
+    // data.kingCollisions.pieces = figures;
+    //TODO zmiana
+  }, []);
 
   useEffect(() => {
     const square = document.querySelectorAll(".chess-grid > div");
@@ -294,11 +324,28 @@ export function MovingPieces() {
       if (target.current.className == "myImage") {
         //dodaje do obiektu data info o początkowym id elementu
         const id = parent.current?.getAttribute("id");
-        if (id) data.startBoardDivId = id;
-        if (id) {
-          const temp = id.slice(1);
-          data.startBoardId = Number(temp);
-        }
+
+        setDataObj((data) => {
+          const newState = cloneDeep(data);
+          if (id) newState.startBoardDivId = id;
+          return newState;
+        });
+
+        setDataObj((data) => {
+          const newState = cloneDeep(data);
+          if (id) {
+            const temp = id.slice(1);
+            newState.startBoardId = Number(temp);
+          }
+          return newState;
+        });
+
+        // if (id) data.startBoardDivId = id;
+        // if (id) {
+        //   const temp = id.slice(1);
+        //   data.startBoardId = Number(temp);
+        // }
+        //TODO zmiana
 
         // usuwanie oobrazka z diva
         if (parent.current) parent.current.innerHTML = "";
@@ -348,7 +395,17 @@ export function MovingPieces() {
               event.clientY > top + tableWidth) &&
             changedPos.current == false
           ) {
-            data.startBoardDivId = "";
+            setDataObj((data) => {
+              const newState = cloneDeep(data);
+
+              newState.startBoardDivId = "";
+
+              return newState;
+            });
+
+            // data.startBoardDivId = "";
+            //TODO zmiana
+
             const tempEl = document.querySelector(".temp");
             const id = parent.current?.getAttribute("id");
             const chwytakSq = document.getElementById("" + id);
@@ -390,13 +447,24 @@ export function MovingPieces() {
       if (pieceSrc) {
         pieceId = pieceSrc.match(/(\w{2})\.png$/);
       }
-      let letters;
+      let letters: string;
       if (pieceId) letters = pieceId[1];
-      if (letters) data.pieceId = letters;
+
+      setDataObj((data) => {
+        const newState = cloneDeep(data);
+
+        if (letters) newState.pieceId = letters;
+
+        return newState;
+      });
+
+      // if (letters) data.pieceId = letters;
+      //TODO zmiana
+
       //koniec wyciągania id trzymanego piona
 
       // sprawdzanie czy można roszade czy jest przeszkoda
-      if (data.pieceId == "wk" && data.startBoardId == 61) {
+      if (dataObj.pieceId == "wk" && dataObj.startBoardId == 61) {
         const left = document.querySelector("#s60");
         const right = document.querySelector("#s62");
 
@@ -422,10 +490,9 @@ export function MovingPieces() {
       //TODO tu jest problem??
 
       // dodawanie kropek
-      const engineData = engine(data);
-      
+      const engineData = engine(dataObj);
 
-      if (data.pieceId == "wp" || data.pieceId == "bp") {
+      if (dataObj.pieceId == "wp" || dataObj.pieceId == "bp") {
         const idArr = engineData.legalSquares;
 
         idArr.map((n) => {
@@ -442,10 +509,13 @@ export function MovingPieces() {
           const top = [25, 26, 27, 28, 29, 30, 31, 32];
           const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
 
-          if (data.startBoardId + 16 == n || data.startBoardId - 16 == n) {
+          if (
+            dataObj.startBoardId + 16 == n ||
+            dataObj.startBoardId - 16 == n
+          ) {
             //pione idze do przodu, sprawdzam czy trafia na img czy kratka jest pusta
 
-            if (data.startBoardId < 32) {
+            if (dataObj.startBoardId < 32) {
               const pastParentChildren = document.querySelector(
                 `#s${n - 8} > img`,
               ) as HTMLElement | null;
@@ -460,7 +530,10 @@ export function MovingPieces() {
                 pastParentChildren?.getAttribute("class");
               if (pastParentChildrenClass != "myImage") dot();
             }
-          } else if (data.startBoardId - 8 == n || data.startBoardId + 8 == n) {
+          } else if (
+            dataObj.startBoardId - 8 == n ||
+            dataObj.startBoardId + 8 == n
+          ) {
             if (parent?.children[0]?.getAttribute("class") != "myImage") dot();
           } else {
             //pion idzie po skosie sprawdzam czy krakta jest pusta czy trafia na img
@@ -474,15 +547,15 @@ export function MovingPieces() {
             if (
               pieceId &&
               parent?.children[0] instanceof HTMLElement &&
-              pieceId[1] != data.pieceId.slice(0, 1)
+              pieceId[1] != dataObj.pieceId.slice(0, 1)
             ) {
               //przechodzi jeżeli w vs b || b vs w
               if (parent instanceof HTMLElement)
                 parent.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
             } else if (
-              data.startBoardId - 1 == dubble &&
-              top.includes(data.startBoardId) &&
-              n == data.startBoardId - 9
+              dataObj.startBoardId - 1 == dubble &&
+              top.includes(dataObj.startBoardId) &&
+              n == dataObj.startBoardId - 9
             ) {
               const parent: HTMLElement | null = document.querySelector(
                 `#s${n}`,
@@ -491,9 +564,9 @@ export function MovingPieces() {
                 dot();
               }
             } else if (
-              data.startBoardId + 1 == dubble &&
-              top.includes(data.startBoardId) &&
-              n == data.startBoardId - 7
+              dataObj.startBoardId + 1 == dubble &&
+              top.includes(dataObj.startBoardId) &&
+              n == dataObj.startBoardId - 7
             ) {
               const parent: HTMLElement | null = document.querySelector(
                 `#s${n}`,
@@ -502,9 +575,9 @@ export function MovingPieces() {
                 dot();
               }
             } else if (
-              data.startBoardId - 1 == dubble &&
-              bottom.includes(data.startBoardId) &&
-              n == data.startBoardId + 7
+              dataObj.startBoardId - 1 == dubble &&
+              bottom.includes(dataObj.startBoardId) &&
+              n == dataObj.startBoardId + 7
             ) {
               const parent: HTMLElement | null = document.querySelector(
                 `#s${n}`,
@@ -513,9 +586,9 @@ export function MovingPieces() {
                 dot();
               }
             } else if (
-              data.startBoardId + 1 == dubble &&
-              bottom.includes(data.startBoardId) &&
-              n == data.startBoardId + 9
+              dataObj.startBoardId + 1 == dubble &&
+              bottom.includes(dataObj.startBoardId) &&
+              n == dataObj.startBoardId + 9
             ) {
               const parent: HTMLElement | null = document.querySelector(
                 `#s${n}`,
@@ -550,7 +623,7 @@ export function MovingPieces() {
             sq?.children[0].getAttribute("class") == "myImage" &&
             pieceId &&
             parent?.children[0] instanceof HTMLElement &&
-            pieceId[1] != data.pieceId.slice(0, 1)
+            pieceId[1] != dataObj.pieceId.slice(0, 1)
           ) {
             if (sq) sq.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
           }
@@ -579,28 +652,28 @@ export function MovingPieces() {
       //dodawanie do data targetowanego id
       if (div) {
         const temp = div.slice(1);
-        data.targetBoardId = Number(temp);
+        dataObj.targetBoardId = Number(temp);
       } else if (parentDivId) {
         const temp = parentDivId.slice(1);
-        data.targetBoardId = Number(temp);
+        dataObj.targetBoardId = Number(temp);
       }
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
       //TODO szach i mat
       //TODO kolejność ruchu
 
-      const returnData = engine(data);
+      const returnData = engine(dataObj);
 
       console.log(returnData);
       function legal() {
         //TODO tutaj zrób logike roszady lol
-        const startIDnumber: number = Number(data.startBoardDivId.slice(1));
-        const startIDstring: string = data.startBoardDivId.slice(1);
+        const startIDnumber: number = Number(dataObj.startBoardDivId.slice(1));
+        const startIDstring: string = dataObj.startBoardDivId.slice(1);
 
-        const endIDnumber = data.targetBoardId;
-        const endIDstring: string = data.targetBoardId.toString();
+        const endIDnumber = dataObj.targetBoardId;
+        const endIDstring: string = dataObj.targetBoardId.toString();
 
-        if (data.pieceId == "wk" && startIDnumber != endIDnumber) {
+        if (dataObj.pieceId == "wk" && startIDnumber != endIDnumber) {
           setDidKingMove((x) => {
             if (x == false) {
               return true;
@@ -610,7 +683,7 @@ export function MovingPieces() {
           });
         }
 
-        const pion = data.pieceId;
+        const pion = dataObj.pieceId;
         setPosArr((prevPosArr) => {
           const pastDataString = sessionStorage.getItem("value");
           const pastDataObj =
@@ -721,7 +794,7 @@ export function MovingPieces() {
         div.style.backgroundColor = "#dce8e0";
         div.setAttribute("class", "przemianaTemp");
 
-        if (data.pieceId == "wp") {
+        if (dataObj.pieceId == "wp") {
           const rookWhite = document.createElement("img");
           rookWhite.setAttribute("src", "./img/Game-2/wr.png");
           const bishopWhite = document.createElement("img");
@@ -804,11 +877,13 @@ export function MovingPieces() {
           const przemianaTemp = document.querySelector(".przemianaTemp");
           if (przemianaTemp) board?.removeChild(przemianaTemp);
 
-          const startIDnumber: number = Number(data.startBoardDivId.slice(1));
-          const startIDstring: string = data.startBoardDivId.slice(1);
+          const startIDnumber: number = Number(
+            dataObj.startBoardDivId.slice(1),
+          );
+          const startIDstring: string = dataObj.startBoardDivId.slice(1);
 
-          const endIDnumber = data.targetBoardId;
-          const endIDstring: string = data.targetBoardId.toString();
+          const endIDnumber = dataObj.targetBoardId;
+          const endIDstring: string = dataObj.targetBoardId.toString();
 
           let pion;
           if (src) pion = src.match(/(\w{2})\.png$/);
@@ -877,7 +952,7 @@ export function MovingPieces() {
         el.setAttribute("src", pieceSrc);
         el.className = "myImage";
 
-        const startId = "#s" + data.startBoardId;
+        const startId = "#s" + dataObj.startBoardId;
         const target = document.querySelector(startId);
         target?.appendChild(el);
 
@@ -888,7 +963,7 @@ export function MovingPieces() {
 
       if (returnData.isLegal) {
         if (target.tagName == "DIV") {
-          if (data.pieceId == "wp" || data.pieceId == "bp") {
+          if (dataObj.pieceId == "wp" || dataObj.pieceId == "bp") {
             const targetId = Number(target.id.slice(1));
             const top = [25, 26, 27, 28, 29, 30, 31, 32];
             const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
@@ -896,7 +971,7 @@ export function MovingPieces() {
             const polePrzemianyBottom = [49, 50, 51, 52, 53, 54, 55, 56];
 
             const przeszkodaPionkaGora = document.querySelector(
-              `#s${data.startBoardId + 8} > img`,
+              `#s${dataObj.startBoardId + 8} > img`,
             );
             let przeszkodamPionkaChildrenTop;
             if (przeszkodaPionkaGora) {
@@ -905,25 +980,25 @@ export function MovingPieces() {
             }
 
             const przeszkodamPionkaDol = document.querySelector(
-              `#s${data.startBoardId - 8} > img`,
+              `#s${dataObj.startBoardId - 8} > img`,
             );
             let przeszkodamPionkaChildren;
             if (przeszkodamPionkaDol)
               przeszkodamPionkaChildren =
                 przeszkodamPionkaDol.getAttribute("class");
 
-            if (Math.abs(data.startBoardId - targetId) == 8) {
+            if (Math.abs(dataObj.startBoardId - targetId) == 8) {
               //TODO na twardo dla białych i czarnych
               if (
-                data.pieceId == "wp" &&
-                polePrzemianyTop.includes(data.startBoardId)
+                dataObj.pieceId == "wp" &&
+                polePrzemianyTop.includes(dataObj.startBoardId)
               ) {
                 //pole przemiany góra białe
                 przemiana();
                 setDubble(0);
               } else if (
-                data.pieceId == "bp" &&
-                polePrzemianyBottom.includes(data.startBoardId)
+                dataObj.pieceId == "bp" &&
+                polePrzemianyBottom.includes(dataObj.startBoardId)
               ) {
                 //pole przemiany dół czarne
                 przemiana();
@@ -934,60 +1009,60 @@ export function MovingPieces() {
                 legal();
               }
             } else if (
-              Math.abs(data.startBoardId - targetId) == 16 &&
+              Math.abs(dataObj.startBoardId - targetId) == 16 &&
               przeszkodamPionkaChildren &&
               przeszkodamPionkaChildren == "myImage" &&
-              polePrzemianyBottom.includes(data.startBoardId)
+              polePrzemianyBottom.includes(dataObj.startBoardId)
             ) {
               illegal();
             } else if (
-              Math.abs(data.startBoardId - targetId) == 16 &&
+              Math.abs(dataObj.startBoardId - targetId) == 16 &&
               przeszkodamPionkaChildren &&
               przeszkodamPionkaChildren != "myImage" &&
-              polePrzemianyBottom.includes(data.startBoardId)
+              polePrzemianyBottom.includes(dataObj.startBoardId)
             ) {
               setDubble(targetId);
               legal();
             } else if (
-              Math.abs(data.startBoardId - targetId) == 16 &&
+              Math.abs(dataObj.startBoardId - targetId) == 16 &&
               przeszkodamPionkaChildrenTop &&
               przeszkodamPionkaChildrenTop == "myImage" &&
-              polePrzemianyTop.includes(data.startBoardId)
+              polePrzemianyTop.includes(dataObj.startBoardId)
             ) {
               illegal();
             } else if (
-              Math.abs(data.startBoardId - targetId) == 16 &&
+              Math.abs(dataObj.startBoardId - targetId) == 16 &&
               przeszkodamPionkaChildrenTop &&
               przeszkodamPionkaChildrenTop != "myImage" &&
-              polePrzemianyTop.includes(data.startBoardId)
+              polePrzemianyTop.includes(dataObj.startBoardId)
             ) {
               setDubble(targetId);
               legal();
             } else if (
-              data.startBoardId - 1 == dubble &&
-              top.includes(data.startBoardId) &&
-              data.targetBoardId + 9 == data.startBoardId
+              dataObj.startBoardId - 1 == dubble &&
+              top.includes(dataObj.startBoardId) &&
+              dataObj.targetBoardId + 9 == dataObj.startBoardId
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
             } else if (
-              data.startBoardId + 1 == dubble &&
-              top.includes(data.startBoardId) &&
-              data.targetBoardId + 7 == data.startBoardId
+              dataObj.startBoardId + 1 == dubble &&
+              top.includes(dataObj.startBoardId) &&
+              dataObj.targetBoardId + 7 == dataObj.startBoardId
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
             } else if (
-              data.startBoardId - 1 == dubble &&
-              bottom.includes(data.startBoardId) &&
-              data.targetBoardId - 7 == data.startBoardId
+              dataObj.startBoardId - 1 == dubble &&
+              bottom.includes(dataObj.startBoardId) &&
+              dataObj.targetBoardId - 7 == dataObj.startBoardId
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
             } else if (
-              data.startBoardId + 1 == dubble &&
-              bottom.includes(data.startBoardId) &&
-              data.targetBoardId - 9 == data.startBoardId
+              dataObj.startBoardId + 1 == dubble &&
+              bottom.includes(dataObj.startBoardId) &&
+              dataObj.targetBoardId - 9 == dataObj.startBoardId
             ) {
               //pion bije w przeplocie
               wPrzeplocie();
@@ -1002,7 +1077,7 @@ export function MovingPieces() {
           }
         } else {
           //tutaj figura trafia na inną figurę
-          let srcTag = data.pieceId;
+          let srcTag = dataObj.pieceId;
           const ogTag = srcTag;
           let targetTag;
 
@@ -1033,22 +1108,22 @@ export function MovingPieces() {
 
             //TODO ustawione na twardo dla białych i czarnych
             if (
-              Math.abs(data.startBoardId - targetId) == 8 ||
-              Math.abs(data.startBoardId - targetId) == 16 ||
-              Math.abs(targetId - data.startBoardId) == 16 ||
-              Math.abs(targetId - data.startBoardId) == 8
+              Math.abs(dataObj.startBoardId - targetId) == 8 ||
+              Math.abs(dataObj.startBoardId - targetId) == 16 ||
+              Math.abs(targetId - dataObj.startBoardId) == 16 ||
+              Math.abs(targetId - dataObj.startBoardId) == 8
             ) {
               //pionek pórbuje bić na wprost illegal
               illegal();
             } else if (
-              data.pieceId == "wp" &&
-              polePrzemianyTop.includes(data.startBoardId)
+              dataObj.pieceId == "wp" &&
+              polePrzemianyTop.includes(dataObj.startBoardId)
             ) {
               przemiana();
               setDubble(0);
             } else if (
-              data.pieceId == "bp" &&
-              polePrzemianyBottom.includes(data.startBoardId)
+              dataObj.pieceId == "bp" &&
+              polePrzemianyBottom.includes(dataObj.startBoardId)
             ) {
               przemiana();
               setDubble(0);
@@ -1076,7 +1151,24 @@ export function MovingPieces() {
       }
 
       changedPos.current = true;
-      data.occupatedSquares = [];
+      setDataObj((data) => {
+        const newState = cloneDeep(data);
+        // newState.occupatedSquares = [];
+
+        (newState.pieceId = ""),
+          (newState.startBoardId = 0),
+          (newState.startBoardDivId = ""),
+          (newState.targetBoardId = 0),
+          (newState.occupatedSquares = []),
+          (newState.collision = false),
+          (newState.kingCollisions = {
+            pieces: [],
+          });
+
+        return newState;
+      });
+      // data.occupatedSquares = [];
+      //TODO zmiana
       setFillArr(fillArr ? false : true);
     }
     for (let n of square) {
