@@ -20,8 +20,6 @@ export function engine(data: {
     legalSquares: [],
   };
 
-  console.log(data);
-
   switch (data.pieceId) {
     case "br":
     case "wr":
@@ -581,21 +579,7 @@ export function engine(data: {
         nowyWiersz <= 8 &&
         nowaKolumna >= 1 &&
         nowaKolumna <= 8 &&
-        doesItMove.king == false &&
-        data.startBoardId == 61 &&
-        (nowyWiersz - 1) * 8 + nowaKolumna == 59 &&
-        doesItFree.left
-      ) {
-        ruchy.push((nowyWiersz - 1) * 8 + nowaKolumna);
-      } else if (
-        nowyWiersz >= 1 &&
-        nowyWiersz <= 8 &&
-        nowaKolumna >= 1 &&
-        nowaKolumna <= 8 &&
-        data.doesItMove.king == false &&
-        data.startBoardId == 61 &&
-        (nowyWiersz - 1) * 8 + nowaKolumna == 63 &&
-        doesItFree.right
+        data.startBoardId == 61
       ) {
         ruchy.push((nowyWiersz - 1) * 8 + nowaKolumna);
       }

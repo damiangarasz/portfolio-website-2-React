@@ -8,7 +8,6 @@ export function MovingPieces() {
   const changedPos = useRef(false);
   const [fillArr, setFillArr] = useState(false);
   const [dubble, setDubble] = useState(0);
-  const [stan, setStan] = useState<number[]>([]);
   const [posArr, setPosArr] = useState(() => {
     const lol: Array<{ [key: string]: string }> = [
       { 1: "br" },
@@ -94,6 +93,46 @@ export function MovingPieces() {
     return false;
   });
 
+  function leftSpace(): boolean | Error {
+    const arr = [];
+    for (let n = 58; n <= 60; n++) {
+      const el = document.querySelector(`#s${n}`);
+      arr.push(el);
+    }
+    for (let arrr of arr) {
+      if (
+        arrr &&
+        arrr.children[0] &&
+        arrr.children[0].getAttribute("class") == "myImage"
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    return new Error("lol");
+  }
+
+  function rightSpace(): boolean | Error {
+    const arr = [];
+    for (let n = 62; n <= 63; n++) {
+      const el = document.querySelector(`#s${n}`);
+      arr.push(el);
+    }
+    for (let arrr of arr) {
+      if (
+        arrr &&
+        arrr.children[0] &&
+        arrr.children[0].getAttribute("class") == "myImage"
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    return new Error("lol");
+  }
+
   useEffect(() => {
     setDoesItFreeLeft(true);
     //czyta czy king sie ruszył
@@ -106,10 +145,6 @@ export function MovingPieces() {
       setDidKingMove(pastKingMoveJson);
     }
   }, []);
-
-  useEffect(() => {
-    //dodawanie kropek
-  });
 
   useEffect(() => {
     //ustawianie w historii czy king ruszył
@@ -161,40 +196,162 @@ export function MovingPieces() {
     },
   });
 
-  // interface data {
-  //   pieceId: string;
-  //   startBoardId: number;
-  //   startBoardDivId: string;
-  //   targetBoardId: number;
-  //   occupatedSquares: number[];
-  //   collision: boolean;
-  //   kingCollisions: {
-  //     pieces: Record<string, string>[];
-  //   };
-  //   doesItMove: { [key: string]: boolean };
-  //   doesItFree: { [key: string]: boolean };
-  // }
+  useEffect(() => {
+    //dodawanie kropek
+    const engineData = engine(dataObj);
 
-  // const data: data = {
-  //   pieceId: "",
-  //   startBoardId: 0,
-  //   startBoardDivId: "",
-  //   targetBoardId: 0,
-  //   occupatedSquares: [],
-  //   collision: false,
-  //   kingCollisions: {
-  //     pieces: [],
-  //   },
-  //   doesItMove: {
-  //     king: didKingMove,
-  //     leftRook: didLeftRookMove,
-  //     rightRook: didRightRookMove,
-  //   },
-  //   doesItFree: {
-  //     left: doesItFreeLeft,
-  //     right: doesItFreeRight,
-  //   },
-  // };
+    if (dataObj.pieceId == "wp" || dataObj.pieceId == "bp") {
+      const idArr = engineData.legalSquares;
+
+      idArr.map((n) => {
+        const parent = document.querySelector(`#s${n}`) as HTMLElement | null;
+
+        function dot() {
+          const el = document.createElement("img");
+          el.setAttribute("src", "./img/Game-2/dot.png");
+          el.setAttribute("class", "dot");
+          el.style.pointerEvents = "none";
+          el.style.position = "absolute";
+          parent?.appendChild(el);
+        }
+        const top = [25, 26, 27, 28, 29, 30, 31, 32];
+        const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
+
+        if (dataObj.startBoardId + 16 == n || dataObj.startBoardId - 16 == n) {
+          //pione idze do przodu, sprawdzam czy trafia na img czy kratka jest pusta
+
+          if (dataObj.startBoardId < 32) {
+            const pastParentChildren = document.querySelector(
+              `#s${n - 8} > img`,
+            ) as HTMLElement | null;
+            const pastParentChildrenClass =
+              pastParentChildren?.getAttribute("class");
+            if (pastParentChildrenClass != "myImage") dot();
+          } else {
+            const pastParentChildren = document.querySelector(
+              `#s${n + 8} > img`,
+            ) as HTMLElement | null;
+            const pastParentChildrenClass =
+              pastParentChildren?.getAttribute("class");
+            if (pastParentChildrenClass != "myImage") dot();
+          }
+        } else if (
+          dataObj.startBoardId - 8 == n ||
+          dataObj.startBoardId + 8 == n
+        ) {
+          if (parent?.children[0]?.getAttribute("class") != "myImage") dot();
+        } else {
+          //pion idzie po skosie sprawdzam czy krakta jest pusta czy trafia na img
+          const parent = document.querySelector(`#s${n}`);
+          let src;
+          if (parent?.children[0])
+            src = parent?.children[0].getAttribute("src");
+          let pieceId;
+          if (src) pieceId = src.match(/(\w{1}).\.png$/); //maczuje w or b
+
+          if (
+            pieceId &&
+            parent?.children[0] instanceof HTMLElement &&
+            pieceId[1] != dataObj.pieceId.slice(0, 1)
+          ) {
+            //przechodzi jeżeli w vs b || b vs w
+            if (parent instanceof HTMLElement)
+              parent.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
+          } else if (
+            dataObj.startBoardId - 1 == dubble &&
+            top.includes(dataObj.startBoardId) &&
+            n == dataObj.startBoardId - 9
+          ) {
+            const parent: HTMLElement | null = document.querySelector(`#s${n}`);
+            if (parent) {
+              dot();
+            }
+          } else if (
+            dataObj.startBoardId + 1 == dubble &&
+            top.includes(dataObj.startBoardId) &&
+            n == dataObj.startBoardId - 7
+          ) {
+            const parent: HTMLElement | null = document.querySelector(`#s${n}`);
+            if (parent) {
+              dot();
+            }
+          } else if (
+            dataObj.startBoardId - 1 == dubble &&
+            bottom.includes(dataObj.startBoardId) &&
+            n == dataObj.startBoardId + 7
+          ) {
+            const parent: HTMLElement | null = document.querySelector(`#s${n}`);
+            if (parent) {
+              dot();
+            }
+          } else if (
+            dataObj.startBoardId + 1 == dubble &&
+            bottom.includes(dataObj.startBoardId) &&
+            n == dataObj.startBoardId + 9
+          ) {
+            const parent: HTMLElement | null = document.querySelector(`#s${n}`);
+            if (parent) {
+              dot();
+            }
+          }
+        }
+      });
+    } else {
+      if (
+        dataObj.pieceId == "wk" &&
+        didKingMove == false &&
+        didLeftRookMove == false &&
+        leftSpace() &&
+        didRightRookMove == false &&
+        rightSpace()
+      ) {
+        engineData.legalSquares.push(59, 63);
+      } else if (
+        dataObj.pieceId == "wk" &&
+        didKingMove == false &&
+        didLeftRookMove == false &&
+        leftSpace()
+      ) {
+        engineData.legalSquares.push(59);
+        //dodaje kropke do roszady
+      } else if (
+        dataObj.pieceId == "wk" &&
+        didKingMove == false &&
+        didRightRookMove == false &&
+        rightSpace()
+      ) {
+        engineData.legalSquares.push(63);
+        //dodaje kropke do roszady
+      }
+      const idArr = engineData.legalSquares;
+      idArr.map((n) => {
+        const sq: HTMLElement | null = document.querySelector(`#s${n}`);
+
+        const parent = document.querySelector(`#s${n}`);
+        let src;
+        if (parent?.children[0]) src = parent?.children[0].getAttribute("src");
+        let pieceId;
+        if (src) pieceId = src.match(/(\w{1}).\.png$/);
+
+        if (sq?.children[0] == undefined) {
+          const el = document.createElement("img");
+          el.setAttribute("src", "./img/Game-2/dot.png");
+          el.setAttribute("class", "dot");
+          el.style.pointerEvents = "none";
+          el.style.position = "absolute";
+          sq?.appendChild(el);
+        } else if (
+          sq?.children[0] &&
+          sq?.children[0].getAttribute("class") == "myImage" &&
+          pieceId &&
+          parent?.children[0] instanceof HTMLElement &&
+          pieceId[1] != dataObj.pieceId.slice(0, 1)
+        ) {
+          if (sq) sq.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
+        }
+      });
+    }
+  }, [dataObj]);
 
   useEffect(() => {
     //pobieranie ustawienia pionów z cacha przed refreshem
@@ -258,8 +415,6 @@ export function MovingPieces() {
         newState.occupatedSquares.push(id);
         return newState;
       });
-      // data.occupatedSquares.push(id);
-      //TODO zmiana
     }
   }, [fillArr]);
 
@@ -292,8 +447,6 @@ export function MovingPieces() {
       newState.kingCollisions.pieces = figures;
       return newState;
     });
-    // data.kingCollisions.pieces = figures;
-    //TODO zmiana
   }, []);
 
   useEffect(() => {
@@ -339,13 +492,6 @@ export function MovingPieces() {
           }
           return newState;
         });
-
-        // if (id) data.startBoardDivId = id;
-        // if (id) {
-        //   const temp = id.slice(1);
-        //   data.startBoardId = Number(temp);
-        // }
-        //TODO zmiana
 
         // usuwanie oobrazka z diva
         if (parent.current) parent.current.innerHTML = "";
@@ -403,9 +549,6 @@ export function MovingPieces() {
               return newState;
             });
 
-            // data.startBoardDivId = "";
-            //TODO zmiana
-
             const tempEl = document.querySelector(".temp");
             const id = parent.current?.getAttribute("id");
             const chwytakSq = document.getElementById("" + id);
@@ -457,12 +600,9 @@ export function MovingPieces() {
 
         return newState;
       });
-
-      // if (letters) data.pieceId = letters;
-      //TODO zmiana
-
       //koniec wyciągania id trzymanego piona
 
+      //TODO lol
       // sprawdzanie czy można roszade czy jest przeszkoda
       if (dataObj.pieceId == "wk" && dataObj.startBoardId == 61) {
         const left = document.querySelector("#s60");
@@ -485,149 +625,7 @@ export function MovingPieces() {
         ) {
           setDoesItFreeRight(true);
         }
-      }
-
-      //TODO tu jest problem??
-
-      // dodawanie kropek
-      const engineData = engine(dataObj);
-
-      if (dataObj.pieceId == "wp" || dataObj.pieceId == "bp") {
-        const idArr = engineData.legalSquares;
-
-        idArr.map((n) => {
-          const parent = document.querySelector(`#s${n}`) as HTMLElement | null;
-
-          function dot() {
-            const el = document.createElement("img");
-            el.setAttribute("src", "./img/Game-2/dot.png");
-            el.setAttribute("class", "dot");
-            el.style.pointerEvents = "none";
-            el.style.position = "absolute";
-            parent?.appendChild(el);
-          }
-          const top = [25, 26, 27, 28, 29, 30, 31, 32];
-          const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
-
-          if (
-            dataObj.startBoardId + 16 == n ||
-            dataObj.startBoardId - 16 == n
-          ) {
-            //pione idze do przodu, sprawdzam czy trafia na img czy kratka jest pusta
-
-            if (dataObj.startBoardId < 32) {
-              const pastParentChildren = document.querySelector(
-                `#s${n - 8} > img`,
-              ) as HTMLElement | null;
-              const pastParentChildrenClass =
-                pastParentChildren?.getAttribute("class");
-              if (pastParentChildrenClass != "myImage") dot();
-            } else {
-              const pastParentChildren = document.querySelector(
-                `#s${n + 8} > img`,
-              ) as HTMLElement | null;
-              const pastParentChildrenClass =
-                pastParentChildren?.getAttribute("class");
-              if (pastParentChildrenClass != "myImage") dot();
-            }
-          } else if (
-            dataObj.startBoardId - 8 == n ||
-            dataObj.startBoardId + 8 == n
-          ) {
-            if (parent?.children[0]?.getAttribute("class") != "myImage") dot();
-          } else {
-            //pion idzie po skosie sprawdzam czy krakta jest pusta czy trafia na img
-            const parent = document.querySelector(`#s${n}`);
-            let src;
-            if (parent?.children[0])
-              src = parent?.children[0].getAttribute("src");
-            let pieceId;
-            if (src) pieceId = src.match(/(\w{1}).\.png$/); //maczuje w or b
-
-            if (
-              pieceId &&
-              parent?.children[0] instanceof HTMLElement &&
-              pieceId[1] != dataObj.pieceId.slice(0, 1)
-            ) {
-              //przechodzi jeżeli w vs b || b vs w
-              if (parent instanceof HTMLElement)
-                parent.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
-            } else if (
-              dataObj.startBoardId - 1 == dubble &&
-              top.includes(dataObj.startBoardId) &&
-              n == dataObj.startBoardId - 9
-            ) {
-              const parent: HTMLElement | null = document.querySelector(
-                `#s${n}`,
-              );
-              if (parent) {
-                dot();
-              }
-            } else if (
-              dataObj.startBoardId + 1 == dubble &&
-              top.includes(dataObj.startBoardId) &&
-              n == dataObj.startBoardId - 7
-            ) {
-              const parent: HTMLElement | null = document.querySelector(
-                `#s${n}`,
-              );
-              if (parent) {
-                dot();
-              }
-            } else if (
-              dataObj.startBoardId - 1 == dubble &&
-              bottom.includes(dataObj.startBoardId) &&
-              n == dataObj.startBoardId + 7
-            ) {
-              const parent: HTMLElement | null = document.querySelector(
-                `#s${n}`,
-              );
-              if (parent) {
-                dot();
-              }
-            } else if (
-              dataObj.startBoardId + 1 == dubble &&
-              bottom.includes(dataObj.startBoardId) &&
-              n == dataObj.startBoardId + 9
-            ) {
-              const parent: HTMLElement | null = document.querySelector(
-                `#s${n}`,
-              );
-              if (parent) {
-                dot();
-              }
-            }
-          }
-        });
-      } else {
-        const idArr = engineData.legalSquares;
-        idArr.map((n) => {
-          const sq: HTMLElement | null = document.querySelector(`#s${n}`);
-
-          const parent = document.querySelector(`#s${n}`);
-          let src;
-          if (parent?.children[0])
-            src = parent?.children[0].getAttribute("src");
-          let pieceId;
-          if (src) pieceId = src.match(/(\w{1}).\.png$/);
-
-          if (sq?.children[0] == undefined) {
-            const el = document.createElement("img");
-            el.setAttribute("src", "./img/Game-2/dot.png");
-            el.setAttribute("class", "dot");
-            el.style.pointerEvents = "none";
-            el.style.position = "absolute";
-            sq?.appendChild(el);
-          } else if (
-            sq?.children[0] &&
-            sq?.children[0].getAttribute("class") == "myImage" &&
-            pieceId &&
-            parent?.children[0] instanceof HTMLElement &&
-            pieceId[1] != dataObj.pieceId.slice(0, 1)
-          ) {
-            if (sq) sq.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
-          }
-        });
+        //TODO trzeba ustawić też false
       }
 
       return () => {
@@ -664,9 +662,7 @@ export function MovingPieces() {
 
       const returnData = engine(dataObj);
 
-      console.log(returnData);
       function legal() {
-        //TODO tutaj zrób logike roszady lol
         const startIDnumber: number = Number(dataObj.startBoardDivId.slice(1));
         const startIDstring: string = dataObj.startBoardDivId.slice(1);
 
@@ -691,13 +687,7 @@ export function MovingPieces() {
               ? JSON.parse(pastDataString)
               : "";
           let newPosArr;
-          console.log(
-            "start id number:",
-            startIDnumber,
-            "startIds string: ",
-            startIDstring,
-          );
-          //TODO grzebie tutaj
+
           if (pastDataObj) {
             newPosArr = pastDataObj;
           } else {
@@ -708,37 +698,6 @@ export function MovingPieces() {
 
           return newPosArr;
         });
-
-        //roszada na twardo dla białych
-
-        function leftSpace() {
-          const arr = [];
-          for (let n = 58; n <= 60; n++) {
-            const el = document.querySelector(`#s${n}`);
-            arr.push(el);
-          }
-          for (let arrr of arr) {
-            if (
-              arrr &&
-              arrr.children[0] &&
-              arrr.children[0].getAttribute("class") == "myImage"
-            ) {
-              return false;
-            } else {
-              return true;
-            }
-          }
-        }
-
-        //TODO tu cos robie ale nie wiem co
-        // if (
-        //   data.pieceId == "wk" &&
-        //   data.startBoardId - 2 == data.targetBoardId &&
-        //   didKingMove == false &&
-        //   didLeftRookMove == false &&
-        //   leftSpace()
-        // ) {
-        // }
 
         if (target.tagName == "DIV") {
           //kiedy wchodzimy na puste pole
@@ -942,6 +901,33 @@ export function MovingPieces() {
         const childrenId = document.querySelector(`${targetId} > img`);
         const square = document.querySelector(targetId);
         if (childrenId) square?.removeChild(childrenId);
+
+        const startIDnumber: number = Number(dataObj.startBoardDivId.slice(1));
+        const startIDstring: string = dataObj.startBoardDivId.slice(1);
+
+        const endIDnumber = dataObj.targetBoardId;
+        const endIDstring: string = dataObj.targetBoardId.toString();
+
+        const pion = dataObj.pieceId;
+        setPosArr((prevPosArr) => {
+          const pastDataString = sessionStorage.getItem("value");
+          const pastDataObj =
+            pastDataString && JSON.parse(pastDataString)
+              ? JSON.parse(pastDataString)
+              : "";
+          let newPosArr;
+
+          //TODO grzebie tutaj
+          if (pastDataObj) {
+            newPosArr = pastDataObj;
+          } else {
+            newPosArr = prevPosArr.map((item) => ({ ...item }));
+          }
+          newPosArr[startIDnumber - 1][startIDstring] = "";
+          newPosArr[endIDnumber - 1][endIDstring] = pion;
+
+          return newPosArr;
+        });
       }
 
       function illegal() {
@@ -959,6 +945,95 @@ export function MovingPieces() {
         const parent = document.querySelector(".chess-grid");
         if (!piece) return;
         parent?.removeChild(piece);
+      }
+
+      function roszada(strona: string) {
+        console.log(strona);
+        if (strona == "lewa") {
+          debugger;
+          const oldRookSq = document.querySelector("#s57");
+          const oldRookImg = document.querySelector("#s57 .myImage");
+          if (oldRookImg) oldRookSq?.removeChild(oldRookImg);
+
+          const newRookSq = document.querySelector("#s60");
+          const newRookImg = document.createElement("img");
+          newRookImg.setAttribute("src", "./img/Game-2/wr.png");
+          newRookImg.setAttribute("class", "myImage");
+          newRookSq?.appendChild(newRookImg);
+
+          const oldKingSq = document.querySelector("#s61");
+          const oldKingImg = document.querySelector("#s61 .myImage");
+          if (oldKingImg) oldKingSq?.removeChild(oldKingImg);
+
+          const newKingSq = document.querySelector("#s59");
+          const newKingImg = document.createElement("img");
+          newKingImg.setAttribute("src", "./img/Game-2/wk.png");
+          newKingImg.setAttribute("class", "myImage");
+          newKingSq?.appendChild(newKingImg);
+
+          const board = document.querySelector(".chess-grid");
+          const temp = document.querySelector(".temp");
+          if (temp) board?.removeChild(temp);
+        } else if (strona == "prawa") {
+          const oldRookSq = document.querySelector("#s64");
+          const oldRookImg = document.querySelector("#s64 .myImage");
+          if (oldRookImg) oldRookSq?.removeChild(oldRookImg);
+
+          const newRookSq = document.querySelector("#s62");
+          const newRookImg = document.createElement("img");
+          newRookImg.setAttribute("src", "./img/Game-2/wr.png");
+          newRookImg.setAttribute("class", "myImage");
+          newRookSq?.appendChild(newRookImg);
+
+          const oldKingSq = document.querySelector("#s61");
+          const oldKingImg = document.querySelector("#s61 .myImage");
+          if (oldKingImg) oldKingSq?.removeChild(oldKingImg);
+
+          const newKingSq = document.querySelector("#s63");
+          const newKingImg = document.createElement("img");
+          newKingImg.setAttribute("src", "./img/Game-2/wk.png");
+          newKingImg.setAttribute("class", "myImage");
+          newKingSq?.appendChild(newKingImg);
+
+          const board = document.querySelector(".chess-grid");
+          const temp = document.querySelector(".temp");
+          if (temp) board?.removeChild(temp);
+        }
+        const startIDnumber: number = Number(dataObj.startBoardDivId.slice(1));
+        const startIDstring: string = dataObj.startBoardDivId.slice(1);
+
+        const endIDnumber = dataObj.targetBoardId;
+        const endIDstring: string = dataObj.targetBoardId.toString();
+
+        const pion = dataObj.pieceId;
+        setPosArr((prevPosArr) => {
+          const pastDataString = sessionStorage.getItem("value");
+          const pastDataObj =
+            pastDataString && JSON.parse(pastDataString)
+              ? JSON.parse(pastDataString)
+              : "";
+          let newPosArr;
+
+          if (pastDataObj) {
+            newPosArr = pastDataObj;
+          } else {
+            newPosArr = prevPosArr.map((item) => ({ ...item }));
+          }
+          newPosArr[startIDnumber - 1][startIDstring] = "";
+          newPosArr[endIDnumber - 1][endIDstring] = pion;
+
+          if (strona == "lewa") {
+            newPosArr[56]["57"] = "";
+            newPosArr[59]["60"] = "wr";
+          } else if (strona == "prawa") {
+            newPosArr[63]["64"] = "";
+            newPosArr[61]["62"] = "wr";
+          } else {
+            throw new Error("roszada no bueno");
+          }
+
+          return newPosArr;
+        });
       }
 
       if (returnData.isLegal) {
@@ -1070,7 +1145,30 @@ export function MovingPieces() {
               //pion chce zagrać po skosie na puste pole
               illegal();
             }
+          } else if (
+            dataObj.pieceId == "wk" &&
+            dataObj.targetBoardId == 59 &&
+            didKingMove == false &&
+            didLeftRookMove == false &&
+            leftSpace()
+          ) {
+            setDubble(0);
+            returnData.legalSquares.push(59);
+            console.log("roszada lewa");
+            roszada("lewa");
+          } else if (
+            dataObj.pieceId == "wk" &&
+            dataObj.targetBoardId == 63 &&
+            didKingMove == false &&
+            didRightRookMove == false &&
+            rightSpace()
+          ) {
+            console.log("roszada prawa");
+            setDubble(0);
+            returnData.legalSquares.push(59);
+            roszada("prawa");
           } else {
+            console.log("tutaj else");
             setDubble(0);
             //każda inna figura zagrywa na puste pole już po sprawdzeniu czy legal
             legal();
@@ -1160,10 +1258,10 @@ export function MovingPieces() {
           (newState.startBoardDivId = ""),
           (newState.targetBoardId = 0),
           (newState.occupatedSquares = []),
-          (newState.collision = false),
-          (newState.kingCollisions = {
-            pieces: [],
-          });
+          (newState.collision = false);
+        // (newState.kingCollisions = {
+        //   pieces: [],
+        // });
 
         return newState;
       });
