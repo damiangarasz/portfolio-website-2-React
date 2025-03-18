@@ -146,6 +146,8 @@ export function MovingPieces() {
     }
   }, []);
 
+  const [whoseMove, setWhoseMove] = useState("white");
+
   useEffect(() => {
     //ustawianie w historii czy king ruszył
     const doesKing = JSON.stringify(didKingMove);
@@ -297,32 +299,33 @@ export function MovingPieces() {
         }
       });
     } else {
-      if (
-        dataObj.pieceId == "wk" &&
-        didKingMove == false &&
-        didLeftRookMove == false &&
-        leftSpace() &&
-        didRightRookMove == false &&
-        rightSpace()
-      ) {
-        engineData.legalSquares.push(59, 63);
-      } else if (
-        dataObj.pieceId == "wk" &&
-        didKingMove == false &&
-        didLeftRookMove == false &&
-        leftSpace()
-      ) {
-        engineData.legalSquares.push(59);
-        //dodaje kropke do roszady
-      } else if (
-        dataObj.pieceId == "wk" &&
-        didKingMove == false &&
-        didRightRookMove == false &&
-        rightSpace()
-      ) {
-        engineData.legalSquares.push(63);
-        //dodaje kropke do roszady
-      }
+      // if (
+      //   dataObj.pieceId == "wk" &&
+      //   didKingMove == false &&
+      //   didLeftRookMove == false &&
+      //   leftSpace() &&
+      //   didRightRookMove == false &&
+      //   rightSpace()
+      // ) {
+      //   console.log("lol");
+      //   engineData.legalSquares.push(59, 63);
+      // } else if (
+      //   dataObj.pieceId == "wk" &&
+      //   didKingMove == false &&
+      //   didLeftRookMove == false &&
+      //   leftSpace()
+      // ) {
+      //   engineData.legalSquares.push(59);
+      //   //dodaje kropke do roszady
+      // } else if (
+      //   dataObj.pieceId == "wk" &&
+      //   didKingMove == false &&
+      //   didRightRookMove == false &&
+      //   rightSpace()
+      // ) {
+      //   engineData.legalSquares.push(63);
+      //   //dodaje kropke do roszady
+      // }
       const idArr = engineData.legalSquares;
       idArr.map((n) => {
         const sq: HTMLElement | null = document.querySelector(`#s${n}`);
@@ -456,6 +459,11 @@ export function MovingPieces() {
     }
 
     function MovingPicesHandler(event: MouseEvent) {
+      event.preventDefault();
+
+      // if (whoseMove != "white") return;
+      //TODO tutaj
+
       const boardX = document.querySelector(".chess-grid") as HTMLElement;
       function right(e: MouseEvent) {
         e.preventDefault();
@@ -464,7 +472,7 @@ export function MovingPieces() {
       if (event.button !== 0) {
         return;
       }
-      event.preventDefault();
+
       changedPos.current = false;
 
       target.current = event.target as HTMLElement;
@@ -590,8 +598,10 @@ export function MovingPieces() {
       if (pieceSrc) {
         pieceId = pieceSrc.match(/(\w{2})\.png$/);
       }
-      let letters: string;
+      let letters: string = "";
       if (pieceId) letters = pieceId[1];
+
+      if (letters[0] == "b") return;
 
       setDataObj((data) => {
         const newState = cloneDeep(data);
@@ -735,6 +745,14 @@ export function MovingPieces() {
           if (piece) board?.removeChild(piece);
         }
 
+        setWhoseMove((x): "black" | "error" => {
+          if (x == "white") {
+            return "black";
+          } else {
+            return "error";
+          }
+        });
+
         // sessionStorage.setItem("value", JSON.stringify(posArr));
       }
 
@@ -870,6 +888,14 @@ export function MovingPieces() {
 
         // sessionStorage.setItem("value", JSON.stringify(posArr));
 
+        setWhoseMove((x): "black" | "error" => {
+          if (x == "white") {
+            return "black";
+          } else {
+            return "error";
+          }
+        });
+
         return () => {
           for (let n of przemianaBoard) {
             n.removeEventListener(
@@ -926,7 +952,20 @@ export function MovingPieces() {
           newPosArr[startIDnumber - 1][startIDstring] = "";
           newPosArr[endIDnumber - 1][endIDstring] = pion;
 
+          if (dataObj.pieceId == "wp") {
+            newPosArr[endIDnumber + 7]["bp"] = "";
+          } else if (dataObj.pieceId == "bp") {
+            newPosArr[endIDnumber - 9]["bp"] = "";
+          }
+
           return newPosArr;
+        });
+        setWhoseMove((x): "black" | "error" => {
+          if (x == "white") {
+            return "black";
+          } else {
+            return "error";
+          }
         });
       }
 
@@ -948,9 +987,7 @@ export function MovingPieces() {
       }
 
       function roszada(strona: string) {
-        console.log(strona);
         if (strona == "lewa") {
-          debugger;
           const oldRookSq = document.querySelector("#s57");
           const oldRookImg = document.querySelector("#s57 .myImage");
           if (oldRookImg) oldRookSq?.removeChild(oldRookImg);
@@ -1033,6 +1070,14 @@ export function MovingPieces() {
           }
 
           return newPosArr;
+        });
+
+        setWhoseMove((x): "black" | "error" => {
+          if (x == "white") {
+            return "black";
+          } else {
+            return "error";
+          }
         });
       }
 
