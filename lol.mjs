@@ -2,7 +2,7 @@ import OpenAI from "openai";
 const client = new OpenAI();
 
 const completion = await client.chat.completions.create({
-  model: "gpt-4o",
+  model: "gpt-4o-mini",
   messages: [
     {
       role: "user",

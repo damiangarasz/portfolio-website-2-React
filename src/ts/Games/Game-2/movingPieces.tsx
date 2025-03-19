@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { engine } from "./engine";
 import { cloneDeep } from "lodash";
+import { AiRes } from "./AiRes";
 
 export function MovingPieces() {
   const target = useRef<HTMLElement | null>(null);
@@ -299,33 +300,6 @@ export function MovingPieces() {
         }
       });
     } else {
-      // if (
-      //   dataObj.pieceId == "wk" &&
-      //   didKingMove == false &&
-      //   didLeftRookMove == false &&
-      //   leftSpace() &&
-      //   didRightRookMove == false &&
-      //   rightSpace()
-      // ) {
-      //   console.log("lol");
-      //   engineData.legalSquares.push(59, 63);
-      // } else if (
-      //   dataObj.pieceId == "wk" &&
-      //   didKingMove == false &&
-      //   didLeftRookMove == false &&
-      //   leftSpace()
-      // ) {
-      //   engineData.legalSquares.push(59);
-      //   //dodaje kropke do roszady
-      // } else if (
-      //   dataObj.pieceId == "wk" &&
-      //   didKingMove == false &&
-      //   didRightRookMove == false &&
-      //   rightSpace()
-      // ) {
-      //   engineData.legalSquares.push(63);
-      //   //dodaje kropke do roszady
-      // }
       const idArr = engineData.legalSquares;
       idArr.map((n) => {
         const sq: HTMLElement | null = document.querySelector(`#s${n}`);
