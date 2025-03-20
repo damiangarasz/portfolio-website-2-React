@@ -6,7 +6,7 @@ const completion = await client.chat.completions.create({
   messages: [
     {
       role: "user",
-      content: "Write a one-sentence bedtime story about a unicorn.",
+      content: "what strong is gpt-4o-mini in chess?",
     },
   ],
 });

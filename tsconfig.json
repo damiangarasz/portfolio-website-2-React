@@ -9,7 +9,7 @@
     "skipLibCheck": true, // Pomija sprawdzanie typów w bibliotekach
     "resolveJsonModule": true,
     "outDir": "./src/js",
-    "types": ["react", "react-dom", "node"]
+    "types": ["react", "react-dom", "node", "vite/client"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
