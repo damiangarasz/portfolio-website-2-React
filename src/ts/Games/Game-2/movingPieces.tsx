@@ -164,7 +164,11 @@ export function MovingPieces() {
     sessionStorage.setItem("value", JSON.stringify(posArr));
     async function ejaj() {
       const lol = await AiRes(JSON.stringify(posArr));
-      console.log(lol);
+      if (!lol) return;
+      const from = Number(lol[0]);
+      const to = Number(lol[1]);
+      console.log(from, to);
+      //TODO TUTAJ
     }
     ejaj();
   }, [posArr]);
