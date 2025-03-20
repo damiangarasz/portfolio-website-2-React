@@ -162,6 +162,11 @@ export function MovingPieces() {
       return;
     }
     sessionStorage.setItem("value", JSON.stringify(posArr));
+    async function ejaj() {
+      const lol = await AiRes(JSON.stringify(posArr));
+      console.log(lol);
+    }
+    ejaj();
   }, [posArr]);
   // hook dla pola przemiany
   const przemianaClick = useRef((e: Event) => {});

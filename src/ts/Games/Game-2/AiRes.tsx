@@ -1,12 +1,16 @@
 import OpenAI from "openai";
 
-export async function AiRes(state: Array<{ [key: string]: string }>) {
-  const client = new OpenAI();
+export async function AiRes(state: string) {
+  console.log(import.meta.env);
 
-  const prompt = [
-    {
-      role: "user",
-      content: `We play chess, 
+  const client = new OpenAI({ apiKey: import.meta.env.VITE_OPENAI_API_KEY });
+
+  const lol = await client.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [
+      {
+        role: "user",
+        content: `We play chess, 
                 you play black, 
                 you can not play castling, 
                 chess board is numered from 1 to 64, 
@@ -20,9 +24,11 @@ export async function AiRes(state: Array<{ [key: string]: string }>) {
                 bp = black pawn, wp = white pawn, 
                 I have make a moove, thats how board looks like now: ${state}, 
                 for making a move just simply say for example [9, 17] which means 9 goes to 17 nothing more nothing less`,
-    },
-  ];
-  const lol = await client.responses.create({});
+      },
+    ],
+  });
 
-  return;
+  const response = lol.choices[0].message.content;
+  console.log(response);
+  return response;
 }
