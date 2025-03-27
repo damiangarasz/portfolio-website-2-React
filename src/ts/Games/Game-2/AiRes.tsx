@@ -40,6 +40,5 @@ export async function AiRes(state: string) {
   const response = lol.choices[0].message.content;
   let numbers;
   if (response) numbers = response.match(/\d+/g);
-  console.log(numbers);
   return numbers;
 }

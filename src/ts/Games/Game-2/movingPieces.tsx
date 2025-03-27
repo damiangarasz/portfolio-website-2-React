@@ -161,16 +161,48 @@ export function MovingPieces() {
       isFirstRender.current = false;
       return;
     }
+
     sessionStorage.setItem("value", JSON.stringify(posArr));
-    async function ejaj() {
-      const lol = await AiRes(JSON.stringify(posArr));
-      if (!lol) return;
-      const from = Number(lol[0]);
-      const to = Number(lol[1]);
-      console.log(from, to);
-      //TODO TUTAJ
+    if (whoseMove == "white") {
+      return;
+    } else if (whoseMove == "black") {
+      async function ejaj() {
+        console.log(posArr);
+        const lol = await AiRes(JSON.stringify(posArr));
+        if (!lol) return;
+        const from = Number(lol[0]);
+        const to = Number(lol[1]);
+        console.log("from:", from, "to:", to);
+
+        //TODO jestem tutaj lol
+
+        setPosArr((prevPosArr) => {
+          const pastDataString = sessionStorage.getItem("value");
+          const pastDataObj =
+            pastDataString && JSON.parse(pastDataString)
+              ? JSON.parse(pastDataString)
+              : "";
+          let newPosArr;
+
+          if (pastDataObj) {
+            newPosArr = pastDataObj;
+          } else {
+            newPosArr = prevPosArr.map((item) => ({ ...item }));
+          }
+
+          const pion = newPosArr[from - 1][from.toString()];
+          if (pion == "") newPosArr[from - 1][from.toString()] = "";
+          newPosArr[to - 1][to.toString()] = pion;
+
+          sessionStorage.setItem("value", JSON.stringify(newPosArr));
+
+          return newPosArr;
+        });
+
+        setWhoseMove("white");
+      }
+      ejaj();
     }
-    ejaj();
   }, [posArr]);
   // hook dla pola przemiany
   const przemianaClick = useRef((e: Event) => {});
@@ -651,7 +683,6 @@ export function MovingPieces() {
 
       //~~~~~~~~~KOMUMIKACJA Z ENGINE LOL~~~~~~~~~~
       //TODO szach i mat
-      //TODO kolejność ruchu
 
       const returnData = engine(dataObj);
 
@@ -728,13 +759,7 @@ export function MovingPieces() {
           if (piece) board?.removeChild(piece);
         }
 
-        setWhoseMove((x): "black" | "error" => {
-          if (x == "white") {
-            return "black";
-          } else {
-            return "error";
-          }
-        });
+        setWhoseMove("black");
 
         // sessionStorage.setItem("value", JSON.stringify(posArr));
       }
@@ -871,13 +896,7 @@ export function MovingPieces() {
 
         // sessionStorage.setItem("value", JSON.stringify(posArr));
 
-        setWhoseMove((x): "black" | "error" => {
-          if (x == "white") {
-            return "black";
-          } else {
-            return "error";
-          }
-        });
+        setWhoseMove("black");
 
         return () => {
           for (let n of przemianaBoard) {
@@ -943,13 +962,7 @@ export function MovingPieces() {
 
           return newPosArr;
         });
-        setWhoseMove((x): "black" | "error" => {
-          if (x == "white") {
-            return "black";
-          } else {
-            return "error";
-          }
-        });
+        setWhoseMove("black");
       }
 
       function illegal() {
@@ -1055,13 +1068,7 @@ export function MovingPieces() {
           return newPosArr;
         });
 
-        setWhoseMove((x): "black" | "error" => {
-          if (x == "white") {
-            return "black";
-          } else {
-            return "error";
-          }
-        });
+        setWhoseMove("black");
       }
 
       if (returnData.isLegal) {
@@ -1182,7 +1189,6 @@ export function MovingPieces() {
           ) {
             setDubble(0);
             returnData.legalSquares.push(59);
-            console.log("roszada lewa");
             roszada("lewa");
           } else if (
             dataObj.pieceId == "wk" &&
@@ -1191,12 +1197,13 @@ export function MovingPieces() {
             didRightRookMove == false &&
             rightSpace()
           ) {
-            console.log("roszada prawa");
             setDubble(0);
             returnData.legalSquares.push(59);
             roszada("prawa");
+          } else if (dataObj.startBoardId == dataObj.targetBoardId) {
+            setDubble(0);
+            illegal();
           } else {
-            console.log("tutaj else");
             setDubble(0);
             //każda inna figura zagrywa na puste pole już po sprawdzeniu czy legal
             legal();
@@ -1293,8 +1300,6 @@ export function MovingPieces() {
 
         return newState;
       });
-      // data.occupatedSquares = [];
-      //TODO zmiana
       setFillArr(fillArr ? false : true);
     }
     for (let n of square) {
