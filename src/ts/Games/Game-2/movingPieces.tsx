@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { engine } from "./engine";
-import { cloneDeep } from "lodash";
+import { clone, cloneDeep } from "lodash";
 import { AiRes } from "./AiRes";
 
 export function MovingPieces() {
@@ -155,55 +155,6 @@ export function MovingPieces() {
     sessionStorage.setItem("king", doesKing);
   }, [didKingMove]);
 
-  const isFirstRender = useRef(true);
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
-    sessionStorage.setItem("value", JSON.stringify(posArr));
-    if (whoseMove == "white") {
-      return;
-    } else if (whoseMove == "black") {
-      async function ejaj() {
-        console.log(posArr);
-        const lol = await AiRes(JSON.stringify(posArr));
-        if (!lol) return;
-        const from = Number(lol[0]);
-        const to = Number(lol[1]);
-        console.log("from:", from, "to:", to);
-
-        //TODO jestem tutaj lol
-
-        setPosArr((prevPosArr) => {
-          const pastDataString = sessionStorage.getItem("value");
-          const pastDataObj =
-            pastDataString && JSON.parse(pastDataString)
-              ? JSON.parse(pastDataString)
-              : "";
-          let newPosArr;
-
-          if (pastDataObj) {
-            newPosArr = pastDataObj;
-          } else {
-            newPosArr = prevPosArr.map((item) => ({ ...item }));
-          }
-
-          const pion = newPosArr[from - 1][from.toString()];
-          if (pion == "") newPosArr[from - 1][from.toString()] = "";
-          newPosArr[to - 1][to.toString()] = pion;
-
-          sessionStorage.setItem("value", JSON.stringify(newPosArr));
-
-          return newPosArr;
-        });
-
-        setWhoseMove("white");
-      }
-      ejaj();
-    }
-  }, [posArr]);
   // hook dla pola przemiany
   const przemianaClick = useRef((e: Event) => {});
 
@@ -239,6 +190,89 @@ export function MovingPieces() {
       right: doesItFreeRight,
     },
   });
+
+  const [switch1, setSwitch1] = useState(false);
+
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    sessionStorage.setItem("value", JSON.stringify(posArr));
+    if (whoseMove == "white") {
+      return;
+    } else if (whoseMove == "black") {
+      async function ejaj() {
+        const lol = await AiRes(JSON.stringify(posArr));
+        if (!lol) return;
+        const from = Number(lol[0]);
+        const to = Number(lol[1]);
+        console.log("from:", from, "to:", to);
+
+        if (
+          posArr[from - 1][from.toString()] == "" ||
+          posArr[from - 1][from.toString()][0] == "w"
+        ) {
+          ejaj();
+        } else {
+          const newState = cloneDeep(dataObj);
+          newState.startBoardId = from;
+          newState.targetBoardId = to;
+          newState.pieceId = posArr[from - 1][from.toString()];
+
+          //pchanie zajętych kwadratów
+          const imgSquare = document.querySelectorAll(".myImage");
+          for (let n of imgSquare) {
+            const parent = n.parentElement;
+            const id = Number(parent?.id.slice(1));
+
+            newState.occupatedSquares.push(id);
+          }
+
+          const lol = engine(newState);
+          console.log(lol);
+
+          if (lol.isLegal && lol.legalSquares.includes(to)) {
+            //TODO logika przenoszenia piona
+          }
+
+          // setDataObj((data) => {
+          //   const newState = cloneDeep(data);
+          //   newState.startBoardId = from;
+          //   newState.targetBoardId = to;
+          //   newState.pieceId = posArr[from - 1][from.toString()];
+
+          //   //pchanie zajętych kwadratów
+          //   const imgSquare = document.querySelectorAll(".myImage");
+          //   for (let n of imgSquare) {
+          //     const parent = n.parentElement;
+          //     const id = Number(parent?.id.slice(1));
+
+          //     newState.occupatedSquares.push(id);
+          //   }
+
+          //   return newState;
+          // });
+        }
+      }
+      ejaj();
+    }
+  }, [whoseMove]);
+
+  // useEffect(() => {
+  //   //AI turn
+  //   console.log(whoseMove);
+  //   if (whoseMove == "black") {
+  //     // console.log(dataObj);
+
+  //     const lol = engine(dataObj);
+  //     console.log(lol);
+
+  //     setWhoseMove("white");
+  //   }
+  // }, [dataObj]);
 
   useEffect(() => {
     //dodawanie kropek
@@ -476,7 +510,7 @@ export function MovingPieces() {
     function MovingPicesHandler(event: MouseEvent) {
       event.preventDefault();
 
-      // if (whoseMove != "white") return;
+      if (whoseMove == "black") return;
       //TODO tutaj
 
       const boardX = document.querySelector(".chess-grid") as HTMLElement;
@@ -665,6 +699,7 @@ export function MovingPieces() {
     function DropPicesHandler(event: MouseEvent) {
       const temp = document.querySelector(".temp");
       if (!temp) return;
+      if (whoseMove == "black") return;
       const chwytak = document.querySelector(".chess-grid");
 
       const target = event.target as HTMLElement;
@@ -894,9 +929,9 @@ export function MovingPieces() {
           });
         });
 
-        // sessionStorage.setItem("value", JSON.stringify(posArr));
-
         setWhoseMove("black");
+
+        // sessionStorage.setItem("value", JSON.stringify(posArr));
 
         return () => {
           for (let n of przemianaBoard) {
@@ -962,6 +997,7 @@ export function MovingPieces() {
 
           return newPosArr;
         });
+
         setWhoseMove("black");
       }
 
