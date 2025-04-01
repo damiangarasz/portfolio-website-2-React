@@ -206,6 +206,8 @@ export function MovingPieces() {
     } else if (whoseMove == "black") {
       async function ejaj() {
         const lol = await AiRes(JSON.stringify(posArr));
+        // const lol = [9, 17];
+
         if (!lol) return;
         const from = Number(lol[0]);
         const to = Number(lol[1]);
@@ -234,45 +236,64 @@ export function MovingPieces() {
           const lol = engine(newState);
           console.log(lol);
 
-          if (lol.isLegal && lol.legalSquares.includes(to)) {
-            //TODO logika przenoszenia piona
+          function legalAI() {
+            setPosArr((data) => {
+              const newState = cloneDeep(data);
+
+              newState[from - 1][from.toString()] = "";
+              newState[to - 1][to.toString()] =
+                posArr[from - 1][from.toString()];
+
+              sessionStorage.setItem("value", JSON.stringify(newState));
+              setWhoseMove("white");
+
+              return newState;
+            });
+          }
+          function illegalIA() {
+            ejaj();
           }
 
-          // setDataObj((data) => {
-          //   const newState = cloneDeep(data);
-          //   newState.startBoardId = from;
-          //   newState.targetBoardId = to;
-          //   newState.pieceId = posArr[from - 1][from.toString()];
-
-          //   //pchanie zajętych kwadratów
-          //   const imgSquare = document.querySelectorAll(".myImage");
-          //   for (let n of imgSquare) {
-          //     const parent = n.parentElement;
-          //     const id = Number(parent?.id.slice(1));
-
-          //     newState.occupatedSquares.push(id);
-          //   }
-
-          //   return newState;
-          // });
+          //TODO TUTAJ
+          if (lol.isLegal && lol.legalSquares.includes(to)) {
+            if (Object.values(posArr)[from - 1][from] == "bp") {
+              if (
+                (to - 9 == from || to - 7 == from) &&
+                Object.values(posArr)[to - 1][to].slice(0, 1) == "w"
+              ) {
+                //jeżeli gra po przekątnych i trafia na przeciwnika to legal
+                legalAI();
+              } else if (
+                to - 8 == from &&
+                Object.values(posArr)[to - 1][to] == ""
+              ) {
+                console.log("tutaj ");
+                //jeżeli jedzie jedno do przodu i nic nie ma legal
+                legalAI();
+              } else if (
+                to - 16 == from &&
+                Object.values(posArr)[to - 1][to] == "" &&
+                Object.values(posArr)[to - 9][to - 8] == ""
+              ) {
+                //jezeli gra o 2 i nie ma przeszkody
+                legalAI();
+              } else {
+                console.log(Object.values(posArr)[to - 1][to].slice(0, 1));
+                illegalIA();
+              }
+            } else if (Object.values(posArr)[to - 1][to].slice(0, 1) == "b") {
+              illegalIA();
+            } else {
+              legalAI();
+            }
+          } else if (lol.isLegal == false) {
+            ejaj();
+          }
         }
       }
       ejaj();
     }
   }, [whoseMove]);
-
-  // useEffect(() => {
-  //   //AI turn
-  //   console.log(whoseMove);
-  //   if (whoseMove == "black") {
-  //     // console.log(dataObj);
-
-  //     const lol = engine(dataObj);
-  //     console.log(lol);
-
-  //     setWhoseMove("white");
-  //   }
-  // }, [dataObj]);
 
   useEffect(() => {
     //dodawanie kropek
