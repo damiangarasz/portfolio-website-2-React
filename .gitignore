@@ -5,3 +5,4 @@ coverage/
 .vscode/
 .zshrc
 .env
+.vite-env.d.ts

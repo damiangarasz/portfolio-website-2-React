@@ -1,10 +1,7 @@
 import OpenAI from "openai";
 
 export async function AiRes(state: string) {
-  const client = new OpenAI({
-    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
+  const client = new OpenAI();
 
   const lol = await client.chat.completions.create({
     model: "gpt-4o",
