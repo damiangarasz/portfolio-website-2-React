@@ -307,7 +307,7 @@ export function MovingPieces() {
 
         function dot() {
           const el = document.createElement("img");
-          el.setAttribute("src", "./img/Game-2/dot.png");
+          el.setAttribute("src", "/img/Game-2/dot.png");
           el.setAttribute("class", "dot");
           el.style.pointerEvents = "none";
           el.style.position = "absolute";
@@ -408,7 +408,7 @@ export function MovingPieces() {
 
         if (sq?.children[0] == undefined) {
           const el = document.createElement("img");
-          el.setAttribute("src", "./img/Game-2/dot.png");
+          el.setAttribute("src", "/img/Game-2/dot.png");
           el.setAttribute("class", "dot");
           el.style.pointerEvents = "none";
           el.style.position = "absolute";
@@ -455,7 +455,7 @@ export function MovingPieces() {
             cell.removeChild(img);
 
             const el = document.createElement("img");
-            el.setAttribute("src", `./img/Game-2/${pieceId}.png`);
+            el.setAttribute("src", `/img/Game-2/${pieceId}.png`);
             el.setAttribute("class", "myImage");
 
             cell.appendChild(el);
@@ -464,7 +464,7 @@ export function MovingPieces() {
           }
         } else if (cell && tagName == "" && pieceId != "") {
           const el = document.createElement("img");
-          el.setAttribute("src", `./img/Game-2/${pieceId}.png`);
+          el.setAttribute("src", `/img/Game-2/${pieceId}.png`);
           el.setAttribute("class", "myImage");
 
           cell.appendChild(el);
@@ -837,13 +837,13 @@ export function MovingPieces() {
 
         if (dataObj.pieceId == "wp") {
           const rookWhite = document.createElement("img");
-          rookWhite.setAttribute("src", "./img/Game-2/wr.png");
+          rookWhite.setAttribute("src", "/img/Game-2/wr.png");
           const bishopWhite = document.createElement("img");
-          bishopWhite.setAttribute("src", "./img/Game-2/wb.png");
+          bishopWhite.setAttribute("src", "/img/Game-2/wb.png");
           const knightWhite = document.createElement("img");
-          knightWhite.setAttribute("src", "./img/Game-2/wn.png");
+          knightWhite.setAttribute("src", "/img/Game-2/wn.png");
           const queenWhite = document.createElement("img");
-          queenWhite.setAttribute("src", "./img/Game-2/wq.png");
+          queenWhite.setAttribute("src", "/img/Game-2/wq.png");
 
           div.appendChild(rookWhite);
           div.appendChild(bishopWhite);
@@ -851,13 +851,13 @@ export function MovingPieces() {
           div.appendChild(queenWhite);
         } else {
           const rookBlack = document.createElement("img");
-          rookBlack.setAttribute("src", "./img/Game-2/br.png");
+          rookBlack.setAttribute("src", "/img/Game-2/br.png");
           const bishopBlack = document.createElement("img");
-          bishopBlack.setAttribute("src", "./img/Game-2/bb.png");
+          bishopBlack.setAttribute("src", "/img/Game-2/bb.png");
           const knightBlack = document.createElement("img");
-          knightBlack.setAttribute("src", "./img/Game-2/bn.png");
+          knightBlack.setAttribute("src", "/img/Game-2/bn.png");
           const queenBlack = document.createElement("img");
-          queenBlack.setAttribute("src", "./img/Game-2/bq.png");
+          queenBlack.setAttribute("src", "/img/Game-2/bq.png");
 
           div.appendChild(rookBlack);
           div.appendChild(bishopBlack);
@@ -1047,7 +1047,7 @@ export function MovingPieces() {
 
           const newRookSq = document.querySelector("#s60");
           const newRookImg = document.createElement("img");
-          newRookImg.setAttribute("src", "./img/Game-2/wr.png");
+          newRookImg.setAttribute("src", "/img/Game-2/wr.png");
           newRookImg.setAttribute("class", "myImage");
           newRookSq?.appendChild(newRookImg);
 
@@ -1057,7 +1057,7 @@ export function MovingPieces() {
 
           const newKingSq = document.querySelector("#s59");
           const newKingImg = document.createElement("img");
-          newKingImg.setAttribute("src", "./img/Game-2/wk.png");
+          newKingImg.setAttribute("src", "/img/Game-2/wk.png");
           newKingImg.setAttribute("class", "myImage");
           newKingSq?.appendChild(newKingImg);
 
@@ -1071,7 +1071,7 @@ export function MovingPieces() {
 
           const newRookSq = document.querySelector("#s62");
           const newRookImg = document.createElement("img");
-          newRookImg.setAttribute("src", "./img/Game-2/wr.png");
+          newRookImg.setAttribute("src", "/img/Game-2/wr.png");
           newRookImg.setAttribute("class", "myImage");
           newRookSq?.appendChild(newRookImg);
 
@@ -1081,7 +1081,7 @@ export function MovingPieces() {
 
           const newKingSq = document.querySelector("#s63");
           const newKingImg = document.createElement("img");
-          newKingImg.setAttribute("src", "./img/Game-2/wk.png");
+          newKingImg.setAttribute("src", "/img/Game-2/wk.png");
           newKingImg.setAttribute("class", "myImage");
           newKingSq?.appendChild(newKingImg);
 
