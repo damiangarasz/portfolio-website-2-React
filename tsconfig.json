@@ -11,6 +11,6 @@
     "outDir": "./src/js",
     "types": ["react", "react-dom", "node", "vite/client"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "docs/assets"],
   "exclude": ["node_modules", "dist"]
 }
