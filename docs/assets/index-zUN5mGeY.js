@@ -24509,7 +24509,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/br.png",
+            src: "./img/Game-2/br.png",
           }),
         }),
         b.jsx("div", {
@@ -24517,7 +24517,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bn.png",
+            src: "./img/Game-2/bn.png",
           }),
         }),
         b.jsx("div", {
@@ -24525,7 +24525,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bb.png",
+            src: "./img/Game-2/bb.png",
           }),
         }),
         b.jsx("div", {
@@ -24533,7 +24533,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bq.png",
+            src: "./img/Game-2/bq.png",
           }),
         }),
         b.jsx("div", {
@@ -24541,7 +24541,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bk.png",
+            src: "./img/Game-2/bk.png",
           }),
         }),
         b.jsx("div", {
@@ -24549,7 +24549,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bb.png",
+            src: "./img/Game-2/bb.png",
           }),
         }),
         b.jsx("div", {
@@ -24557,7 +24557,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bn.png",
+            src: "./img/Game-2/bn.png",
           }),
         }),
         b.jsx("div", {
@@ -24565,7 +24565,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/br.png",
+            src: "./img/Game-2/br.png",
           }),
         }),
         b.jsx("div", {
@@ -24573,7 +24573,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bp.png",
+            src: "./img/Game-2/bp.png",
           }),
         }),
         b.jsx("div", {
@@ -24581,7 +24581,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bp.png",
+            src: "./img/Game-2/bp.png",
           }),
         }),
         b.jsx("div", {
@@ -24589,7 +24589,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bp.png",
+            src: "./img/Game-2/bp.png",
           }),
         }),
         b.jsx("div", {
@@ -24597,7 +24597,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bp.png",
+            src: "./img/Game-2/bp.png",
           }),
         }),
         b.jsx("div", {
@@ -24605,7 +24605,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bp.png",
+            src: "./img/Game-2/bp.png",
           }),
         }),
         b.jsx("div", {
@@ -24613,7 +24613,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bp.png",
+            src: "./img/Game-2/bp.png",
           }),
         }),
         b.jsx("div", {
@@ -24621,7 +24621,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bp.png",
+            src: "./img/Game-2/bp.png",
           }),
         }),
         b.jsx("div", {
@@ -24629,7 +24629,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/bp.png",
+            src: "./img/Game-2/bp.png",
           }),
         }),
         b.jsx("div", { id: "s17", className: "relative" }),
@@ -24669,7 +24669,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wp.png",
+            src: "./img/Game-2/wp.png",
           }),
         }),
         b.jsx("div", {
@@ -24677,7 +24677,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wp.png",
+            src: "./img/Game-2/wp.png",
           }),
         }),
         b.jsx("div", {
@@ -24685,7 +24685,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wp.png",
+            src: "./img/Game-2/wp.png",
           }),
         }),
         b.jsx("div", {
@@ -24693,7 +24693,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wp.png",
+            src: "./img/Game-2/wp.png",
           }),
         }),
         b.jsx("div", {
@@ -24701,7 +24701,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wp.png",
+            src: "./img/Game-2/wp.png",
           }),
         }),
         b.jsx("div", {
@@ -24709,7 +24709,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wp.png",
+            src: "./img/Game-2/wp.png",
           }),
         }),
         b.jsx("div", {
@@ -24717,7 +24717,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wp.png",
+            src: "./img/Game-2/wp.png",
           }),
         }),
         b.jsx("div", {
@@ -24725,7 +24725,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wp.png",
+            src: "./img/Game-2/wp.png",
           }),
         }),
         b.jsx("div", {
@@ -24733,7 +24733,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wr.png",
+            src: "./img/Game-2/wr.png",
           }),
         }),
         b.jsx("div", {
@@ -24741,7 +24741,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wn.png",
+            src: "./img/Game-2/wn.png",
           }),
         }),
         b.jsx("div", {
@@ -24749,7 +24749,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wb.png",
+            src: "./img/Game-2/wb.png",
           }),
         }),
         b.jsx("div", {
@@ -24757,7 +24757,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wq.png",
+            src: "./img/Game-2/wq.png",
           }),
         }),
         b.jsx("div", {
@@ -24765,7 +24765,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wk.png",
+            src: "./img/Game-2/wk.png",
           }),
         }),
         b.jsx("div", {
@@ -24773,7 +24773,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wb.png",
+            src: "./img/Game-2/wb.png",
           }),
         }),
         b.jsx("div", {
@@ -24781,7 +24781,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wn.png",
+            src: "./img/Game-2/wn.png",
           }),
         }),
         b.jsx("div", {
@@ -24789,7 +24789,7 @@ function qx() {
           className: "relative",
           children: b.jsx("img", {
             className: "myImage",
-            src: "/img/Game-2/wr.png",
+            src: "./img/Game-2/wr.png",
           }),
         }),
       ],
