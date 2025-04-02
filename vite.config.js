@@ -11,12 +11,9 @@ export default defineConfig(({ mode }) => {
     define: {
       "process.env": { ...process.env, ...env }, // Dodajemy zmienne środowiskowe
     },
+    base: "./", // Zapewnia poprawne odniesienia do plików statycznych
     build: {
-      rollupOptions: {
-        output: {
-          manualChunks: undefined, // Dla uproszczenia budowania
-        },
-      },
+      outDir: "../docs",
     },
     server: {
       open: true,
