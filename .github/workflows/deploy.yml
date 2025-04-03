@@ -3,7 +3,7 @@ name: Deploy Vite App to GitHub Pages
 on:
   push:
     branches:
-      - main # Lub inny branch, na którym pracujesz
+      - main
 
 permissions:
   contents: read
@@ -33,7 +33,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: docs # Jeśli Vite generuje do `docs/`, inaczej zmień na `dist/`
+          path: docs # Jeśli używasz `docs/` jako folderu
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
