@@ -3,7 +3,7 @@ name: Deploy Vite App to GitHub Pages
 on:
   push:
     branches:
-      - main # Zmień na odpowiednią nazwę swojej gałęzi
+      - gh-pages # Zmień na odpowiednią nazwę swojej gałęzi
 
 permissions:
   contents: read
