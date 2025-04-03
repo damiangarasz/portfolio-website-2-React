@@ -3,7 +3,7 @@ name: Deploy Vite App to GitHub Pages
 on:
   push:
     branches:
-      - main # Zmiana na main lub inny branch, na którym pracujesz
+      - main # Lub inny branch, na którym pracujesz
 
 permissions:
   contents: read
@@ -18,15 +18,22 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Install and Build
-        run: |
-          npm install
-          npm run build
+      - name: Setup Node.js
+        uses: actions/setup-node@v18
+        with:
+          node-version: 18
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: docs # Katalog, w którym Vite generuje stronę
+          path: docs # Jeśli Vite generuje do `docs/`, inaczej zmień na `dist/`
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
