@@ -1,0 +1,32 @@
+name: Deploy Vite App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Zmiana na main lub inny branch, na którym pracujesz
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: docs # Katalog, w którym Vite generuje stronę
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
