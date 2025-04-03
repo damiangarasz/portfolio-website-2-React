@@ -8,13 +8,11 @@ export default defineConfig(({ mode }) => {
 
   return {
     root: "src",
-    plugins: [
-      react(),
-    ],
+    plugins: [react()],
     define: {
       "process.env": { ...process.env, ...env }, // Dodajemy zmienne środowiskowe
     },
-    base: "./", // Zapewnia poprawne odniesienia do plików statycznych
+    base: "/portfolio-website-2-React/", // Zapewnia poprawne odniesienia do plików statycznych
     build: {
       outDir: "../docs",
       emptyOutDir: true,
