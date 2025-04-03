@@ -36,7 +36,7 @@ jobs:
       - name: Upload artifact to Pages
         uses: actions/upload-pages-artifact@v1.0.4
         with:
-          path: docs # Jeśli twój folder wyjściowy to 'docs'
+          path: docs # Jeśli twój folder wyjściowy to 'docs' lol
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
