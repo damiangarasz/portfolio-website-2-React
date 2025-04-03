@@ -31,7 +31,7 @@ jobs:
         run: npm run build
 
       - name: Upload artifact to Pages
-        uses: upload-pages-artifact
+        uses: upload-pages-artifact@v1
         with:
           path: docs # Jeśli twój folder wyjściowy to 'docs'
 
