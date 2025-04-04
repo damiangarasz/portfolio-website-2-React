@@ -33,7 +33,6 @@ jobs:
       - name: Upload artifact to Pages
         uses: actions/upload-pages-artifact@v1.0.4
         with:
-          name: github-pages
           path: docs # Jeśli twój folder wyjściowy to 'docs' lol
 
       - name: Configure GitHub Pages
