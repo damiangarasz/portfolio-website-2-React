@@ -21,6 +21,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - name: cofanie do innego folderu
+        uses: cd ..
+
       - name: Install dependencies
         run: npm install
 
@@ -34,3 +37,6 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
+        with:
+          name: github-pages
+          path: docs
