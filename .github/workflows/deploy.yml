@@ -41,6 +41,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
+          name: github-pages
           path: docs # 🔹 Dopasuj do ścieżki budowy
 
       - name: List all available artifacts
