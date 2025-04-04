@@ -21,7 +21,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: cofanie do innego folderu
+      - name: Change directory
         uses: cd ..
 
       - name: Install dependencies
