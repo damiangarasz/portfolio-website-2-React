@@ -49,5 +49,3 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
-        with:
-          token: ${{ secrets.GH_TOKEN }}
