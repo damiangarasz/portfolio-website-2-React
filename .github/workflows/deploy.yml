@@ -21,8 +21,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      # - name: cofanie do innego folderu
-      #   uses: cd ..
+      - name: cofanie do innego folderu
+        uses: cd ..
 
       - name: Install dependencies
         run: npm install
