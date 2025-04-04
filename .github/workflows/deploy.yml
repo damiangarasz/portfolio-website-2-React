@@ -38,17 +38,13 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v3
 
-      - name: Sprawdź pliki w katalogu builda
-        run: ls -la docs
-
-      - name: List artifacts
-        run: ls -la /home/runner/work/_temp
-
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: github-pages
           path: docs # 🔹 Dopasuj do ścieżki budowy
+
+      - name: List all available artifacts
+        run: ls -la /home/runner/work/_temp
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
