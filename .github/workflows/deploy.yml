@@ -1,51 +1,51 @@
-# name: Deploy Vite App to GitHub Pages
+name: Deploy Vite App to GitHub Pages
 
-# on:
-#   push:
-#     branches:
-#       - gh-pages # Zmień na odpowiednią nazwę swojej gałęzi
+on:
+  push:
+    branches:
+      - gh-pages # Zmień na odpowiednią nazwę swojej gałęzi
 
-# permissions:
-#   contents: read
-#   pages: write
-#   id-token: write
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
-# jobs:
-#   build-and-deploy:
-#     runs-on: ubuntu-latest
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Clear npm cache
-#         run: npm cache clean --force
+    steps:
+      - name: Clear npm cache
+        run: npm cache clean --force
 
-#       - name: Checkout repo
-#         uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-#       - name: Change directory
-#         run: cd ..
+      - name: Change directory
+        run: cd ..
 
-#       - name: Install dependencies
-#         run: npm install
+      - name: Install dependencies
+        run: npm install
 
-#       - name: Build project
-#         run: npm run build
+      - name: Build project
+        run: npm run build
 
-#       - name: Upload artifact to Pages
-#         uses: actions/upload-pages-artifact@v1.0.4
-#         with:
-#           path: docs # Jeśli twój folder wyjściowy to 'docs' lol
+      - name: Upload artifact to Pages
+        uses: actions/upload-pages-artifact@v1.0.4
+        with:
+          path: docs # Jeśli twój folder wyjściowy to 'docs' lol
 
-#       - name: Configure GitHub Pages
-#         uses: actions/configure-pages@v3
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v3
 
-#       - name: Download artifact
-#         uses: actions/download-artifact@v4
-#         with:
-#           name: github-pages
-#           path: docs # 🔹 Dopasuj do ścieżki budowy
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: docs # 🔹 Dopasuj do ścieżki budowyx
 
-#       - name: List all available artifacts
-#         run: ls -la /home/runner/work/_temp
+      - name: List all available artifacts
+        run: ls -la /home/runner/work/_temp
 
-#       - name: Deploy to GitHub Pages
-#         uses: actions/deploy-pages@v1
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
