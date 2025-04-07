@@ -60,6 +60,7 @@ permissions:
   pages: write
   id-token: write
   actions: read
+  checks: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
