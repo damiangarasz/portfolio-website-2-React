@@ -1,7 +1,9 @@
 import OpenAI from "openai";
 
 export async function AiRes(state: string) {
-  const client = new OpenAI({ apiKey: "OPENAI_API_KEY" });
+  const client = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
 
   const lol = await client.chat.completions.create({
     model: "gpt-4o",
