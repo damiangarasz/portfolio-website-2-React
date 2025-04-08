@@ -52,24 +52,44 @@
 # xxx
 
 name: Deploy Vite App to GitHub Pages
+
 on:
+  # Uruchom przy pushu do głównej gałęzi (zmień 'main' jeśli używasz innej nazwy)
   push:
     branches:
-      - gh-pages
+      - gh-pages # <<< ZMIANA
+
+  # Pozwala uruchomić przepływ ręcznie z zakładki Actions na GitHub
+  workflow_dispatch:
+
+# Ustaw uprawnienia GITHUB_TOKEN, aby umożliwić wdrożenie na GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
-  actions: read
+  actions: read # Dodano dla pewności, chociaż często nie jest wymagane
+
+# Zezwól tylko na jedno równoczesne wdrożenie, anulując poprzednie uruchomienia
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }} # Ustawienie środowiska dla Pages
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Użyj nowszej wersji checkout
+        # fetch-depth: 0 # Zwykle niepotrzebne przy budowaniu statycznej strony
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4 # Dobra praktyka: zdefiniuj wersję Node.js
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
+          node-version: "20" # lub inna wersja, której używasz
+          cache: "npm" # Włącz cache dla npm
 
       - name: Install dependencies
         run: npm install
@@ -77,20 +97,18 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Upload artifact to Pages
-        uses: actions/upload-pages-artifact@v1.0.4
-        with:
-          path: docs
-          retention-days: 30
+      - name: Setup Pages # Ten krok konfiguruje Pages do użycia Actions
+        uses: actions/configure-pages@v4 # Użyj nowszej wersji
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v3
+      - name: Upload artifact to Pages
+        uses: actions/upload-pages-artifact@v3 # Użyj nowszej wersji
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          enablement: true # To jest kluczowa zmiana
+          # Ścieżka do katalogu z zbudowaną aplikacją
+          path: ./docs # <<< ZMIANA (upewnij się, że to 'dist' lub poprawny katalog)
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
         id: deployment
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/deploy-pages@v4 # Użyj nowszej wersji
+        # Token GITHUB_TOKEN jest domyślnie przekazywany, nie trzeba go jawnie podawać
+        # with:
+        #  token: ${{ secrets.GITHUB_TOKEN }}
