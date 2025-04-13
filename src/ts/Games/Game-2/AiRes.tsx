@@ -1,6 +1,11 @@
 import OpenAI from "openai";
 
 export async function AiRes(state: string) {
+  const framework = require("@google-cloud/functions-framework");
+
+  framework.http("openAIProxy", async (req, res) => {
+    console.log(req, res);
+  });
   const client = new OpenAI();
 
   const lol = await client.chat.completions.create({
