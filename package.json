@@ -43,6 +43,7 @@
     "vitest": "^2.1.6"
   },
   "dependencies": {
+    "@google-cloud/functions-framework": "^3.5.1",
     "@tanstack/react-query": "^5.62.2",
     "@vitejs/plugin-react": "^4.3.4",
     "lodash": "^4.17.21",
