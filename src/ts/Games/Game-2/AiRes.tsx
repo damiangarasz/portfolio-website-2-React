@@ -1,13 +1,19 @@
 import OpenAI from "openai";
+const framework = require("@google-cloud/functions-framework");
 
 export async function AiRes(state: string) {
-  const framework = require("@google-cloud/functions-framework");
-
-  framework.http("openAIProxy", async (req, res) => {
-    console.log(req, res);
-  });
-  const client = new OpenAI();
-
+  let client;
+  try {
+    client = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY, // Pobieramy klucz ze zmiennej środowiskowej
+    });
+  } catch (e) {
+    console.error(
+      "Failed to initialize OpenAI client. Ensure OPENAI_API_KEY is set.",
+      e,
+    );
+    // Client remains undefined or null, will be checked later
+  }
   const lol = await client.chat.completions.create({
     model: "gpt-4o",
     messages: [
