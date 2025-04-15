@@ -45,8 +45,8 @@ export async function AiRes(state: string) {
     let numbers;
     if (data) numbers = data.match(/\d+/g);
     return numbers;
-  } catch {
-    console.error("Błąd podczas komunikacji z funkcją:", Error);
+  } catch (error) {
+    console.error("Błąd podczas komunikacji z funkcją:", error);
   }
 
   // const response = "";
