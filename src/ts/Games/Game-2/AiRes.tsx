@@ -51,6 +51,6 @@ export async function AiRes(state: string) {
 
   // const response = "";
   // let numbers;
-  // if (response) numbers = response.match(/\d+/g);
+  // if (response) numbers = response.match(/\d+/g); lol
   // return numbers;
 }
