@@ -42,16 +42,10 @@ export async function AiRes(state: string) {
       body: JSON.stringify(prompt),
     });
     const data = await response.json();
-    console.log(await response.json());
     let numbers;
     if (data) numbers = data.response.match(/\d+/g);
     return numbers;
   } catch (error) {
     console.error("Błąd podczas komunikacji z funkcją:", error);
   }
-
-  // const response = "";
-  // let numbers;
-  // if (response) numbers = response.match(/\d+/g); lol
-  // return numbers;
 }
