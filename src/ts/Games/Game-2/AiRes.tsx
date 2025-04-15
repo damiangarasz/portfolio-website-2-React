@@ -41,9 +41,10 @@ export async function AiRes(state: string) {
       },
       body: JSON.stringify(prompt),
     });
-    console.log("prompt", JSON.stringify(prompt));
     const data = await response.json();
-    console.log(data);
+    let numbers;
+    if (data) numbers = data.match(/\d+/g);
+    return numbers;
   } catch {
     console.error("Błąd podczas komunikacji z funkcją:", Error);
   }
