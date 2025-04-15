@@ -32,6 +32,7 @@ export async function AiRes(state: string) {
       },
     ],
   };
+  console.log("wtf");
 
   try {
     const response = await fetch(cloudFunctionUrl, {
