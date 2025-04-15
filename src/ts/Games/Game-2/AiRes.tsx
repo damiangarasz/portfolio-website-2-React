@@ -43,7 +43,7 @@ export async function AiRes(state: string) {
     });
     const data = await response.json();
     let numbers;
-    if (data) numbers = data.match(/\d+/g);
+    if (data) numbers = data.response.match(/\d+/g);
     return numbers;
   } catch (error) {
     console.error("Błąd podczas komunikacji z funkcją:", error);
