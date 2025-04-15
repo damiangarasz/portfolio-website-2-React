@@ -41,6 +41,7 @@ export async function AiRes(state: string) {
       },
       body: JSON.stringify(prompt),
     });
+    console.log("prompt", JSON.stringify(prompt));
     const data = await response.json();
     console.log(data);
   } catch {
