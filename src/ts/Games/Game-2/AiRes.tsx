@@ -1,20 +1,8 @@
-import OpenAI from "openai";
-const framework = require("@google-cloud/functions-framework");
-
 export async function AiRes(state: string) {
-  let client;
-  try {
-    client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY, // Pobieramy klucz ze zmiennej środowiskowej
-    });
-  } catch (e) {
-    console.error(
-      "Failed to initialize OpenAI client. Ensure OPENAI_API_KEY is set.",
-      e,
-    );
-    // Client remains undefined or null, will be checked later
-  }
-  const lol = await client.chat.completions.create({
+  const cloudFunctionUrl =
+    "https://europe-west1-spatial-box-456215-j3.cloudfunctions.net/moj-openai-proxy";
+
+  const prompt = {
     model: "gpt-4o",
     messages: [
       {
@@ -43,10 +31,24 @@ export async function AiRes(state: string) {
                 for making a move just simply say for example [9, 17] which means 9 goes to 17 nothing more nothing less; dont write anything but numbers in []`,
       },
     ],
-  });
+  };
 
-  const response = lol.choices[0].message.content;
-  let numbers;
-  if (response) numbers = response.match(/\d+/g);
-  return numbers;
+  try {
+    const response = await fetch(cloudFunctionUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        body: JSON.stringify(prompt),
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  } catch {
+    console.error("Błąd podczas komunikacji z funkcją:", Error);
+  }
+
+  // const response = "";
+  // let numbers;
+  // if (response) numbers = response.match(/\d+/g);
+  // return numbers;
 }
