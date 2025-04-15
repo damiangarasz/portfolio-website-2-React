@@ -32,15 +32,14 @@ export async function AiRes(state: string) {
       },
     ],
   };
-  console.log("wtf");
 
   try {
     const response = await fetch(cloudFunctionUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        body: JSON.stringify(prompt),
       },
+      body: JSON.stringify(prompt),
     });
     const data = await response.json();
     console.log(data);
