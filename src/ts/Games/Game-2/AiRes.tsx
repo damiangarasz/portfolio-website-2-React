@@ -42,7 +42,7 @@ export async function AiRes(state: string) {
       body: JSON.stringify(prompt),
     });
     const data = await response.json();
-    console.log(data);
+    console.log(await response.json());
     let numbers;
     if (data) numbers = data.response.match(/\d+/g);
     return numbers;
