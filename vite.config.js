@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
 
   return {
-    root: "src",
+    // root: "src",
     plugins: [react()],
     define: {
       "process.env": { ...process.env, ...env }, // Dodajemy zmienne środowiskowe
