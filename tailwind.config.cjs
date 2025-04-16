@@ -1,9 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,ts,tsx,tsx,html}"],
+  content: [
+    "./index.html", // Jeśli używasz Vite/plain HTML
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     fontFamily: {
-    "form": []
+      form: [],
     },
     extend: {
       colors: {
