@@ -72,7 +72,7 @@ const Menu = () => {
         </svg>
       </div>
       <nav aria-label="main menu hover:color" aria-expanded="false">
-        <ol className="main-menu flex cursor-pointer space-x-5">
+        <ol className="main-menu max-md:flex-col flex cursor-pointer space-x-5">
           <li>
             <span className="dot">•</span>
             Home
