@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 const Header = () => {
   return (
     <header className="relative mx-10 mt-7 flex justify-between font-medium">
-      <div className="flex w-[150px]">
+      <div className="lol flex w-[150px] max-md:text-blue-600 md:text-red-600">
         <svg
           className="w-6"
           viewBox="0 0 16 16"
