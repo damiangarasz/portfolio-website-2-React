@@ -29,9 +29,7 @@ const Header = () => {
             ></path>
           </g>
         </svg>
-        <span className="lol max-md:text-blue-600 md:text-red-600">
-          Damian Garasz
-        </span>
+        <span className="lol max-md:text-blue-600 md:text-red-600">DUPA</span>
       </div>
       <Menu />
       <SearchBar />
