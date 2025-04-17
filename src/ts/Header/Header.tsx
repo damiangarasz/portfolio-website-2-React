@@ -29,7 +29,9 @@ const Header = () => {
             ></path>
           </g>
         </svg>
-        <span>Damian Garasz</span>
+        <span className="max-md:text-blue-600 md:text-red-600">
+          Damian Garasz
+        </span>
       </div>
       <Menu />
       <SearchBar />
