@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from "vite";
+import path from "path";
 import react from "@vitejs/plugin-react";
 import postcss from "./postcss.config.cjs";
 
@@ -14,7 +15,7 @@ export default defineConfig(({ mode }) => {
     },
     base: "/portfolio-website-2-React/", // Zapewnia poprawne odniesienia do plików statycznych
     build: {
-      outDir: "../docs",
+      outDir: path.resolve(__dirname, "docs"),
       emptyOutDir: true,
     },
     server: {
