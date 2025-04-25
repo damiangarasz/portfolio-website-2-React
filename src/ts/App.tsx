@@ -4,6 +4,7 @@ import Header from "./Header/Header";
 import { Form } from "./Sing-in/Form";
 import { Game1 } from "./Games/Game-1/Game-1";
 import { Game2 } from "./Games/Game-2/Game-2";
+import { Blog } from "./Blog/Blog";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -23,6 +24,9 @@ const App = () => {
           </Routes>
           <Routes>
             <Route path="/game-2" element={<Game2 />}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/blog" element={<Blog />}></Route>
           </Routes>
         </QueryClientProvider>
       </BrowserRouter>

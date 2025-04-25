@@ -75,7 +75,7 @@ const Menu = () => {
         <ol className="main-menu cursor-pointer space-x-5 max-md:hidden md:flex">
           <li>
             <span className="dot max-md:text-xs">•</span>
-            Home
+            <Link to="/">Home</Link>
           </li>
           <li className="learn relative">
             <span className="dot">•</span>Games<span>⯆</span>
@@ -89,13 +89,8 @@ const Menu = () => {
             </ul>
           </li>
           <li>
-            <span className="dot">•</span>Help
-          </li>
-          <li>
-            <span className="dot">•</span>Blog
-          </li>
-          <li>
-            <span className="dot">•</span>About
+            <span className="dot">•</span>
+            <Link to="/blog">Blog</Link>
           </li>
         </ol>
       </nav>
