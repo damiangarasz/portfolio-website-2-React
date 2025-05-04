@@ -62,7 +62,7 @@ export function Game2() {
       <div id="s1" className="relative">
         <img
           className="myImage"
-          src="https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/br.png"
+          src="/img/Game-2/br.png"
         />
       </div>
       <div id="s2" className="relative">
