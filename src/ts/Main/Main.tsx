@@ -19,7 +19,7 @@ export function Main() {
 
   return (
     <main className="kontener mx-auto grid w-[832px] grid-cols-2">
-      <div className="col-span-2 px-12 py-7 text-center">
+      <div className="col-span-2 px-40 py-7 text-center">
         <span>{intro}</span>
       </div>
       <div className="mx-auto flex w-[333px] items-center px-2 py-4 text-justify">
@@ -52,43 +52,43 @@ export function Main() {
         </a>
       </div>
       <div className="mx-auto w-[400px] px-2 py-4">
-        <Link to="https://codepen.io/DamianGarasz">
+        <a href="https://codepen.io/DamianGarasz" target="_blank">
           <img src="img/main/codepen.png"></img>
-        </Link>
+        </a>
       </div>
       <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
-        <Link to="https://damiangarasz.github.io/ImbaProfit/">
+        <a href="https://damiangarasz.github.io/ImbaProfit/" target="_blank">
           <video autoPlay muted loop>
             <source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source>
           </video>
-        </Link>
+        </a>
       </div>
       <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
-        <Link to="https://damiangarasz.github.io/ImbaProfit/">
+        <a href="https://damiangarasz.github.io/ImbaProfit/" target="_blank">
           <span>{textImba}</span>
-        </Link>
+        </a>
       </div>
       <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
-        <Link to="https://frontendmasters.com/u/Garik/">
+        <a href="https://frontendmasters.com/u/Garik/" target="_blank">
           <span>{frontendmasters}</span>
-        </Link>
+        </a>
       </div>
       <div className="mx-auto w-[400px] px-2 py-4">
-        <Link to="https://frontendmasters.com/u/Garik/">
+        <a href="https://frontendmasters.com/u/Garik/" target="_blank">
           <img src="img/main/front.png"></img>
-        </Link>
+        </a>
       </div>
       <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
-        <Link to="https://www.quasarhud.com/">
+        <a href="https://www.quasarhud.com/" target="_blank">
           <video autoPlay muted loop>
             <source src="img/main/quasarhud.mp4" type="video/mp4"></source>
           </video>
-        </Link>
+        </a>
       </div>
       <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
-        <Link to="https://www.quasarhud.com/">
+        <a href="https://www.quasarhud.com/" target="_blank">
           <span>{quasar}</span>
-        </Link>
+        </a>
       </div>
     </main>
   );
