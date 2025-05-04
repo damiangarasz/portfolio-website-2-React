@@ -76,12 +76,12 @@ const Menu = () => {
           <li>
             <span className="dot max-md:text-xs">•</span>
             <Link to="/">
-              <span className="text-lg">Home</span>
+              <span className="text-xl">Home</span>
             </Link>
           </li>
           <li className="learn relative">
             <span className="dot">•</span>
-            <span className="text-lg">Games</span>
+            <span className="text-xl">Games</span>
             <span>⯆</span>
             <ul className="drop-menu absolute top-4 hidden hover:block">
               <li className="text-black">
@@ -95,7 +95,7 @@ const Menu = () => {
           <li>
             <span className="dot">•</span>
             <Link to="/blog">
-              <span className="span-lg">Blog</span>
+              <span className="text-xl">Blog</span>
             </Link>
           </li>
         </ol>

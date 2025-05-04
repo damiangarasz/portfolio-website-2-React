@@ -30,7 +30,7 @@ const Header = () => {
           </g>
         </svg>
         <Link to="/">
-          <span className="text-2xl">Damian Garasz</span>
+          <span className="text-xl">Damian Garasz</span>
         </Link>
       </div>
       <Menu />
