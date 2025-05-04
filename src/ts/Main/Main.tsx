@@ -20,19 +20,19 @@ export function Main() {
     
 
     return (
-        <main className="kontener grid grid-cols-2 w-[666px] mx-auto pt-8 gap-4">
+        <main className="kontener grid grid-cols-2 w-[666px] mx-auto pt-12 gap-4">
             <div className="w-[333px] text-justify flex items-center" ><span>{textSzachy}</span></div>
-            <div className="w-[333px] justify-center items-center"><video autoPlay muted><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
-            <div className="w-[333px]"><video autoPlay muted><source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source></video></div>
+            <div className="w-[333px] justify-center items-center"><video autoPlay muted loop><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
+            <div className="w-[333px]"><video autoPlay muted loop><source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source></video></div>
             <div className="w-[333px] text-justify flex items-center"><span>{textArcade}</span></div>
-            <div className="w-[333px]"><span>{textCodePen}</span></div>
+            <div className="w-[333px] text-justify flex items-center"><span>{textCodePen}</span></div>
             <div className="w-[333px]"><img src="img/main/codepen.png"></img></div>
-            <div className="w-[333px]"><span>{textImba}</span></div>
-            <div className="w-[333px]"><video autoPlay muted><source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source></video></div>
+            <div className="w-[333px]"><video autoPlay muted loop><source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source></video></div>
+            <div className="w-[333px] text-justify flex items-center"><span>{textImba}</span></div>
+            <div className="w-[333px] text-justify flex items-center"><span>{frontendmasters}</span></div>
             <div className="w-[333px]"><img src="img/main/front.png"></img></div>
-            <div className="w-[333px]"><span>{frontendmasters}</span></div>
-            <div className="w-[333px]"><span>{quasar}</span></div>
-            <div className="w-[333px]"><video autoPlay muted><source src="img/main/quasarhud.mp4" type="video/mp4"></source></video></div>
+            <div className="w-[333px]"><video autoPlay muted loop><source src="img/main/quasarhud.mp4" type="video/mp4"></source></video></div>
+            <div className="w-[333px] text-justify flex items-center"><span>{quasar}</span></div>
 
         </main>
     );
