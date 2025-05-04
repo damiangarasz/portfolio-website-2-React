@@ -16,7 +16,7 @@ export function Main() {
   const placeholder = "1";
 
   return (
-    <main className="kontener mx-auto grid w-[816px] grid-cols-2">
+    <main className="kontener mx-auto grid w-[832px] grid-cols-2">
       <div className="mx-auto flex w-[333px] items-center px-2 py-4 text-justify">
         <span>{textSzachy}</span>
       </div>
@@ -30,7 +30,7 @@ export function Main() {
           <source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source>
         </video>
       </div>
-      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify">
+      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
         <span>{textArcade}</span>
       </div>
       <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
@@ -44,7 +44,7 @@ export function Main() {
           <source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source>
         </video>
       </div>
-      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify">
+      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
         <span>{textImba}</span>
       </div>
       <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
@@ -58,7 +58,7 @@ export function Main() {
           <source src="img/main/quasarhud.mp4" type="video/mp4"></source>
         </video>
       </div>
-      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify">
+      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
         <span>{quasar}</span>
       </div>
     </main>
