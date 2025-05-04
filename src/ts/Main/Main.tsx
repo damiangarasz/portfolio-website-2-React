@@ -16,49 +16,49 @@ export function Main() {
   const placeholder = "1";
 
   return (
-    <main className="kontener mx-auto grid w-[666px] grid-cols-2 gap-4 gap-y-9 pt-12">
-      <div className="flex w-[333px] items-center bg-black text-justify">
+    <main className="kontener mx-auto grid w-[800px] grid-cols-2">
+      <div className="flex w-[333px] items-center px-2 py-4 text-justify">
         <span>{textSzachy}</span>
       </div>
-      <div className="w-[333px] items-center justify-center bg-black">
+      <div className="w-[400px] items-center justify-center">
         <video autoPlay muted loop>
           <source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source>
         </video>
       </div>
-      <div className="w-[333px]">
+      <div className="w-[400px]">
         <video autoPlay muted loop>
           <source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source>
         </video>
       </div>
-      <div className="flex w-[333px] items-center text-justify">
+      <div className="flex w-[400px] items-center text-justify">
         <span>{textArcade}</span>
       </div>
-      <div className="flex w-[333px] items-center bg-black bg-opacity-50 text-justify">
+      <div className="flex w-[400px] items-center text-justify">
         <span>{textCodePen}</span>
       </div>
-      <div className="w-[333px] bg-black bg-opacity-50">
+      <div className="w-[400px]">
         <img src="img/main/codepen.png"></img>
       </div>
-      <div className="w-[333px]">
+      <div className="w-[400px]">
         <video autoPlay muted loop>
           <source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source>
         </video>
       </div>
-      <div className="flex w-[333px] items-center text-justify">
+      <div className="flex w-[400px] items-center text-justify">
         <span>{textImba}</span>
       </div>
-      <div className="flex w-[333px] items-center text-justify">
+      <div className="flex w-[400px] items-center text-justify">
         <span>{frontendmasters}</span>
       </div>
-      <div className="w-[333px]">
+      <div className="w-[400px]">
         <img src="img/main/front.png"></img>
       </div>
-      <div className="w-[333px]">
+      <div className="w-[400px]">
         <video autoPlay muted loop>
           <source src="img/main/quasarhud.mp4" type="video/mp4"></source>
         </video>
       </div>
-      <div className="flex w-[333px] items-center text-justify">
+      <div className="flex w-[400px] items-center text-justify">
         <span>{quasar}</span>
       </div>
     </main>
