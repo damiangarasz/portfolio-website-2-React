@@ -19,10 +19,8 @@ export function Main() {
 
   return (
     <main className="kontener mx-auto grid w-[832px] grid-cols-2">
-      <div className="col-span-2 p-7">
-        <Link to="/Game-2">
-          <span>{intro}</span>
-        </Link>
+      <div className="col-span-2 px-12 py-7 text-center">
+        <span>{intro}</span>
       </div>
       <div className="mx-auto flex w-[333px] items-center px-2 py-4 text-justify">
         <Link className="block" to="/Game-2">
@@ -30,45 +28,67 @@ export function Main() {
         </Link>
       </div>
       <div className="mx-auto w-[400px] items-center justify-center px-2 py-4">
-        <video autoPlay muted loop>
-          <source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source>
-        </video>
+        <Link to="/Game-2">
+          <video autoPlay muted loop>
+            <source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source>
+          </video>
+        </Link>
       </div>
       <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
-        <video autoPlay muted loop>
-          <source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source>
-        </video>
+        <Link to="/Game-1">
+          <video autoPlay muted loop>
+            <source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source>
+          </video>
+        </Link>
       </div>
       <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
-        <span>{textArcade}</span>
+        <Link to="/Game-1">
+          <span>{textArcade}</span>
+        </Link>
       </div>
       <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
-        <span>{textCodePen}</span>
+        <Link to="https://codepen.io/DamianGarasz">
+          <span>{textCodePen}</span>
+        </Link>
       </div>
       <div className="mx-auto w-[400px] px-2 py-4">
-        <img src="img/main/codepen.png"></img>
+        <Link to="https://codepen.io/DamianGarasz">
+          <img src="img/main/codepen.png"></img>
+        </Link>
       </div>
       <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
-        <video autoPlay muted loop>
-          <source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source>
-        </video>
+        <Link to="https://damiangarasz.github.io/ImbaProfit/">
+          <video autoPlay muted loop>
+            <source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source>
+          </video>
+        </Link>
       </div>
       <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
-        <span>{textImba}</span>
+        <Link to="https://damiangarasz.github.io/ImbaProfit/">
+          <span>{textImba}</span>
+        </Link>
       </div>
       <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
-        <span>{frontendmasters}</span>
+        <Link to="https://frontendmasters.com/u/Garik/">
+          <span>{frontendmasters}</span>
+        </Link>
       </div>
       <div className="mx-auto w-[400px] px-2 py-4">
-        <img src="img/main/front.png"></img>
+        <Link to="https://frontendmasters.com/u/Garik/">
+          <img src="img/main/front.png"></img>
+        </Link>
       </div>
       <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
-        <video autoPlay muted loop>
-          <source src="img/main/quasarhud.mp4" type="video/mp4"></source>
-        </video>
+        <Link to="https://www.quasarhud.com/">
+          <video autoPlay muted loop>
+            <source src="img/main/quasarhud.mp4" type="video/mp4"></source>
+          </video>
+        </Link>
       </div>
       <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
-        <span>{quasar}</span>
+        <Link to="https://www.quasarhud.com/">
+          <span>{quasar}</span>
+        </Link>
       </div>
     </main>
   );
