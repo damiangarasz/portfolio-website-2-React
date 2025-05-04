@@ -20,7 +20,7 @@ export function Main() {
     
 
     return (
-        <main className="kontener grid grid-cols-2 w-auto pt-8">
+        <main className="kontener grid grid-cols-2 w-[666px] my-auto pt-8 gap-1.5">
             <div className="w-[333px] justify-center items-center" ><span>{textSzachy}</span></div>
             <div className="w-[333px] justify-center items-center"><video autoPlay muted><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
             <div className="w-[333px]"><video autoPlay muted><source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source></video></div>
@@ -31,7 +31,7 @@ export function Main() {
             <div className="w-[333px]"><video autoPlay muted><source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source></video></div>
             <div className="w-[333px]"><img src="img/main/front.png"></img></div>
             <div className="w-[333px]"><span>{frontendmasters}</span></div>
-            <div className="w-[333px]"><span>{quasar}</span></div>\
+            <div className="w-[333px]"><span>{quasar}</span></div>
             <div className="w-[333px]"><video autoPlay muted><source src="img/main/quasarhud.mp4" type="video/mp4"></source></video></div>
 
         </main>
