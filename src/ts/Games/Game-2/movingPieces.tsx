@@ -309,7 +309,7 @@ export function MovingPieces() {
           const el = document.createElement("img");
           el.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/dot.png",
+            "img/Game-2/dot.png",
           );
           el.setAttribute("class", "dot");
           el.style.pointerEvents = "none";
@@ -413,7 +413,7 @@ export function MovingPieces() {
           const el = document.createElement("img");
           el.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/dot.png",
+            "img/Game-2/dot.png",
           );
           el.setAttribute("class", "dot");
           el.style.pointerEvents = "none";
@@ -463,7 +463,7 @@ export function MovingPieces() {
             const el = document.createElement("img");
             el.setAttribute(
               "src",
-              `https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/${pieceId}.png`,
+              `img/Game-2/${pieceId}.png`,
             );
             el.setAttribute("class", "myImage");
 
@@ -475,7 +475,7 @@ export function MovingPieces() {
           const el = document.createElement("img");
           el.setAttribute(
             "src",
-            `https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/${pieceId}.png`,
+            `img/Game-2/${pieceId}.png`,
           );
           el.setAttribute("class", "myImage");
 
@@ -851,22 +851,22 @@ export function MovingPieces() {
           const rookWhite = document.createElement("img");
           rookWhite.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/wr.png",
+            "img/Game-2/wr.png",
           );
           const bishopWhite = document.createElement("img");
           bishopWhite.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/wb.png",
+            "img/Game-2/wb.png",
           );
           const knightWhite = document.createElement("img");
           knightWhite.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/wn.png",
+            "img/Game-2/wn.png",
           );
           const queenWhite = document.createElement("img");
           queenWhite.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/wq.png",
+            "img/Game-2/wq.png",
           );
 
           div.appendChild(rookWhite);
@@ -877,22 +877,22 @@ export function MovingPieces() {
           const rookBlack = document.createElement("img");
           rookBlack.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/br.png",
+            "img/Game-2/br.png",
           );
           const bishopBlack = document.createElement("img");
           bishopBlack.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/bb.png",
+            "img/Game-2/bb.png",
           );
           const knightBlack = document.createElement("img");
           knightBlack.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/bn.png",
+            "img/Game-2/bn.png",
           );
           const queenBlack = document.createElement("img");
           queenBlack.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/bq.png",
+            "img/Game-2/bq.png",
           );
 
           div.appendChild(rookBlack);
@@ -1085,7 +1085,7 @@ export function MovingPieces() {
           const newRookImg = document.createElement("img");
           newRookImg.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/wr.png",
+            "img/Game-2/wr.png",
           );
           newRookImg.setAttribute("class", "myImage");
           newRookSq?.appendChild(newRookImg);
@@ -1098,7 +1098,7 @@ export function MovingPieces() {
           const newKingImg = document.createElement("img");
           newKingImg.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/wk.png",
+            "img/Game-2/wk.png",
           );
           newKingImg.setAttribute("class", "myImage");
           newKingSq?.appendChild(newKingImg);
@@ -1115,7 +1115,7 @@ export function MovingPieces() {
           const newRookImg = document.createElement("img");
           newRookImg.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/wr.png",
+            "img/Game-2/wr.png",
           );
           newRookImg.setAttribute("class", "myImage");
           newRookSq?.appendChild(newRookImg);
@@ -1128,7 +1128,7 @@ export function MovingPieces() {
           const newKingImg = document.createElement("img");
           newKingImg.setAttribute(
             "src",
-            "https://raw.githubusercontent.com/damiangarasz/portfolio-website-2-React/refs/heads/main/docs/img/Game-2/wk.png",
+            "img/Game-2/wk.png",
           );
           newKingImg.setAttribute("class", "myImage");
           newKingSq?.appendChild(newKingImg);
