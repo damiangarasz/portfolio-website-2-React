@@ -18,7 +18,7 @@ export function Main() {
     
 
     return (
-        <main className="kontener flex-wrap flex-row w-auto">
+        <main className="kontener flex-row w-auto">
             <div className="w-[333px]" ><span>{textSzachy}</span></div>
             <div className="w-[333px]"><video autoPlay muted><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
             <div className="w-[333px]"><video autoPlay muted><source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source></video></div>
