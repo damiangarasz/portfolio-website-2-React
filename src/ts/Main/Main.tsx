@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 export function Main() {
   const textSzachy = `Mój najnowszy projekt to samodzielnie zakodowana aplikacja szachowa. Opracowałem dla niej autorski, podstawowy silnik, który zarządza mechaniką gry, uwzględniając specjalne ruchy (roszada, bicie w przelocie) i kontrolujący legalność posunięć. Wykorzystałem API ChatGPT jako AI przeciwnika, który gra czarnymi`;
@@ -19,11 +19,15 @@ export function Main() {
 
   return (
     <main className="kontener mx-auto grid w-[832px] grid-cols-2">
-      <div className="col-span-2">
-        <span>{intro}</span>
+      <div className="col-span-2 p-7">
+        <Link to="/Game-2">
+          <span>{intro}</span>
+        </Link>
       </div>
       <div className="mx-auto flex w-[333px] items-center px-2 py-4 text-justify">
-        <span>{textSzachy}</span>
+        <Link className="block" to="/Game-2">
+          <span>{textSzachy}</span>
+        </Link>
       </div>
       <div className="mx-auto w-[400px] items-center justify-center px-2 py-4">
         <video autoPlay muted loop>
