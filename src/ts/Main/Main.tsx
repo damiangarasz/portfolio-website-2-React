@@ -15,10 +15,12 @@ export function Main() {
     
     const quasar = `Stworzenie pierwszej strony internetowej w technologii no-code na platformie Wix. Wszystkie grafiki oraz opracowania wykonałem samodzielnie. Strona pełni funkcję sklepu oferującego mojego autorskiego HUD-a, stworzonego z myślą o wspieraniu profesjonalnych pokerzystów w rozgrywkach online.`
 
+    const placeholder = "1"
+
     
 
     return (
-        <main className="kontener flex-row w-auto">
+        <main className="kontener grid grid-cols-2 w-auto">
             <div className="w-[333px]" ><span>{textSzachy}</span></div>
             <div className="w-[333px]"><video autoPlay muted><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
             <div className="w-[333px]"><video autoPlay muted><source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source></video></div>
