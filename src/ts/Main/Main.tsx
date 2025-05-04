@@ -16,7 +16,7 @@ export function Main() {
   const placeholder = "1";
 
   return (
-    <main className="kontener mx-auto grid w-[800px] grid-cols-2">
+    <main className="kontener mx-auto grid w-[816px] grid-cols-2">
       <div className="mx-auto flex w-[333px] items-center px-2 py-4 text-justify">
         <span>{textSzachy}</span>
       </div>
