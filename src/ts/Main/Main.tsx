@@ -47,9 +47,9 @@ export function Main() {
         </Link>
       </div>
       <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
-        <Link to="https://codepen.io/DamianGarasz">
+        <a href="https://codepen.io/DamianGarasz" target="_blank">
           <span>{textCodePen}</span>
-        </Link>
+        </a>
       </div>
       <div className="mx-auto w-[400px] px-2 py-4">
         <Link to="https://codepen.io/DamianGarasz">
