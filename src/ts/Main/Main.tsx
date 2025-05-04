@@ -13,7 +13,7 @@ export function Main() {
 
   const quasar = `Stworzenie pierwszej strony internetowej w technologii no-code na platformie Wix. Wszystkie grafiki oraz opracowania wykonałem samodzielnie. Strona pełni funkcję sklepu oferującego mojego autorskiego HUD-a, stworzonego z myślą o wspieraniu profesjonalnych pokerzystów w rozgrywkach online.`;
 
-  const intro = `Cała ta strona została stworzona w React, łącznie ze wszystkimi komponentami, takimi jak wyszukiwarka, gry czy formularz kontaktowy. Poniżej znajduje się krótka historia mojego programowania.`;
+  const intro = `Strona jest wciąż w budowie. Została stworzona w technologii React, łącznie ze wszystkimi komponentami, takimi jak wyszukiwarka, gry czy formularz kontaktowy. Poniżej znajduje się krótka historia mojej przygody z programowaniem.`;
 
   const placeholder = "1";
 
