@@ -7,7 +7,7 @@ export function Main() {
 
   const textCodePen = `kilka mniejszych projektów w CodePen.io`;
 
-  const textImba = `Strona projektu ImbaProfit, pierwotnie stworzona w technologii no-code na platformie Wix, została przeniesiona do czystego HTML i JavaScript (vanilla JS), aby maksymalnie zredukować wagę strony i znacząco przyspieszyć jej ładowanie. Na stronie dostępny jest blog z kilkoma wpisami, wykresy (charty) oraz sekcja wideo. <span classNode="text-red-500">(Strona ma obecnie kilka mankamentów z powodu braku obsługi routingu przez GitHub Pages)<span>`;
+  const textImba = `Strona projektu ImbaProfit, pierwotnie stworzona w technologii no-code na platformie Wix, została przeniesiona do czystego HTML i JavaScript (vanilla JS), aby maksymalnie zredukować wagę strony i znacząco przyspieszyć jej ładowanie. Na stronie dostępny jest blog z kilkoma wpisami, wykresy (charty) oraz sekcja wideo.`;
 
   const frontendmasters = `Rozpoczęcie nauki programowania ze szkołą FrontendMasters zaowocowało zdobyciem wielu certyfikatów potwierdzających ukończenie kursów, m.in. "The Hard Parts of Object-Oriented JavaScript", "Web Performance Fundamentals" czy "The Hard Parts of Asynchronous JavaScript". Łącznie ponad 1500 godzin nauki, głównie w formie samodzielnej pracy z kodem.`;
 
@@ -65,7 +65,11 @@ export function Main() {
       </div>
       <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
         <a href="https://damiangarasz.github.io/ImbaProfit/" target="_blank">
-          <span>{textImba}</span>
+          <span>{textImba} </span>
+          <span className="text-red-400">
+            (Strona ma obecnie kilka mankamentów z powodu braku obsługi routingu
+            przez GitHub Pages)
+          </span>
         </a>
       </div>
       <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
