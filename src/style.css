@@ -9,7 +9,7 @@
 
 @layer base {
   body{
-    background-image: url('img/main/1.webp');
+    background-image: url('../img/main/1.webp');
     background-size: auto;
   }
 
