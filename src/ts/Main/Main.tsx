@@ -19,7 +19,7 @@ export function Main() {
 
   return (
     <main className="kontener mx-auto grid w-[832px] grid-cols-2">
-      <div className="col-span-2 px-40 py-32 text-center">
+      <div className="col-span-2 px-40 py-20 text-center">
         <span>{intro}</span>
       </div>
       <div className="mx-auto flex w-[333px] items-center px-2 py-4 text-justify">
