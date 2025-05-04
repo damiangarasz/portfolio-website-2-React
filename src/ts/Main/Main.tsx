@@ -17,48 +17,48 @@ export function Main() {
 
   return (
     <main className="kontener mx-auto grid w-[800px] grid-cols-2">
-      <div className="flex w-[333px] items-center px-2 py-4 text-justify">
+      <div className="mx-auto flex w-[333px] items-center px-2 py-4 text-justify">
         <span>{textSzachy}</span>
       </div>
-      <div className="w-[400px] items-center justify-center">
+      <div className="mx-auto w-[400px] items-center justify-center px-2 py-4">
         <video autoPlay muted loop>
           <source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source>
         </video>
       </div>
-      <div className="w-[400px]">
+      <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
         <video autoPlay muted loop>
           <source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source>
         </video>
       </div>
-      <div className="flex w-[400px] items-center text-justify">
+      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify">
         <span>{textArcade}</span>
       </div>
-      <div className="flex w-[400px] items-center text-justify">
+      <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
         <span>{textCodePen}</span>
       </div>
-      <div className="w-[400px]">
+      <div className="mx-auto w-[400px] px-2 py-4">
         <img src="img/main/codepen.png"></img>
       </div>
-      <div className="w-[400px]">
+      <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
         <video autoPlay muted loop>
           <source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source>
         </video>
       </div>
-      <div className="flex w-[400px] items-center text-justify">
+      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify">
         <span>{textImba}</span>
       </div>
-      <div className="flex w-[400px] items-center text-justify">
+      <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
         <span>{frontendmasters}</span>
       </div>
-      <div className="w-[400px]">
+      <div className="mx-auto w-[400px] px-2 py-4">
         <img src="img/main/front.png"></img>
       </div>
-      <div className="w-[400px]">
+      <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
         <video autoPlay muted loop>
           <source src="img/main/quasarhud.mp4" type="video/mp4"></source>
         </video>
       </div>
-      <div className="flex w-[400px] items-center text-justify">
+      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify">
         <span>{quasar}</span>
       </div>
     </main>
