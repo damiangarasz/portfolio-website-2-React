@@ -29,7 +29,7 @@ const Header = () => {
             ></path>
           </g>
         </svg>
-        <span>Damian Garasz</span>
+        <Link to="/">Damian Garasz</Link>
       </div>
       <Menu />
       <SearchBar />
