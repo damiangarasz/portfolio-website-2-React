@@ -21,12 +21,12 @@ export function Main() {
 
     return (
         <main className="kontener grid grid-cols-2 w-[666px] mx-auto pt-12 gap-4">
-            <div className="w-[333px] text-justify flex items-center" ><span>{textSzachy}</span></div>
-            <div className="w-[333px] justify-center items-center"><video autoPlay muted loop><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
+            <div className="w-[333px] text-justify flex items-center bg-black " ><span>{textSzachy}</span></div>
+            <div className="w-[333px] justify-center items-center bg-black"><video autoPlay muted loop><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
             <div className="w-[333px]"><video autoPlay muted loop><source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source></video></div>
             <div className="w-[333px] text-justify flex items-center"><span>{textArcade}</span></div>
-            <div className="w-[333px] text-justify flex items-center"><span>{textCodePen}</span></div>
-            <div className="w-[333px]"><img src="img/main/codepen.png"></img></div>
+            <div className="w-[333px] text-justify flex items-center bg-black bg-opacity-50"><span>{textCodePen}</span></div>
+            <div className="w-[333px] bg-black bg-opacity-50"><img src="img/main/codepen.png"></img></div>
             <div className="w-[333px]"><video autoPlay muted loop><source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source></video></div>
             <div className="w-[333px] text-justify flex items-center"><span>{textImba}</span></div>
             <div className="w-[333px] text-justify flex items-center"><span>{frontendmasters}</span></div>
