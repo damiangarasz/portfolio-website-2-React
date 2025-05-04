@@ -13,15 +13,14 @@ export function Main() {
 
     const frontendmasters = `Rozpoczęcie nauki programowania ze szkołą FrontendMasters zaowocowało zdobyciem wielu certyfikatów potwierdzających ukończenie kursów, m.in. "The Hard Parts of Object-Oriented JavaScript", "Web Performance Fundamentals" czy "The Hard Parts of Asynchronous JavaScript". Łącznie ponad 1500 godzin nauki, głównie w formie samodzielnej pracy z kodem.`
     
+    const quasar = `Stworzenie pierwszej strony internetowej w technologii no-code na platformie Wix. Wszystkie grafiki oraz opracowania wykonałem samodzielnie. Strona pełni funkcję sklepu oferującego mojego autorskiego HUD-a, stworzonego z myślą o wspieraniu profesjonalnych pokerzystów w rozgrywkach online.`
 
     
 
     return (
-        <main className="kontener">
+        <main className="kontener grid-cols-2">
             <div><span>{textSzachy}</span></div>
             <div><video autoPlay muted><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
-            <div><img src="img/main/1.webp
-            "></img></div>
             <div><video autoPlay muted><source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source></video></div>
             <div><span>{textArcade}</span></div>
             <div><span>{textCodePen}</span></div>
@@ -30,6 +29,9 @@ export function Main() {
             <div><video autoPlay muted><source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source></video></div>
             <div><img src="img/main/front.png"></img></div>
             <div><span>{frontendmasters}</span></div>
+            <div><span>{quasar}</span></div>\
+            <div><video autoPlay muted><source src="img/main/quasarhud.mp4" type="video/mp4"></source></video></div>
+
         </main>
     );
   }
