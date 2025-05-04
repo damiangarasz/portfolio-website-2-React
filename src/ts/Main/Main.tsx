@@ -18,19 +18,19 @@ export function Main() {
     
 
     return (
-        <main className="kontener flex-wrap flex-col w-auto">
-            <div><span>{textSzachy}</span></div>
-            <div><video autoPlay muted><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
-            <div><video autoPlay muted><source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source></video></div>
-            <div><span>{textArcade}</span></div>
-            <div><span>{textCodePen}</span></div>
-            <div><img src="img/main/codepen.png"></img></div>
-            <div><span>{textImba}</span></div>
-            <div><video autoPlay muted><source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source></video></div>
-            <div><img src="img/main/front.png"></img></div>
-            <div><span>{frontendmasters}</span></div>
-            <div><span>{quasar}</span></div>\
-            <div><video autoPlay muted><source src="img/main/quasarhud.mp4" type="video/mp4"></source></video></div>
+        <main className="kontener flex-wrap flex-row w-auto">
+            <div className="w-[333px]" ><span>{textSzachy}</span></div>
+            <div className="w-[333px]"><video autoPlay muted><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
+            <div className="w-[333px]"><video autoPlay muted><source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source></video></div>
+            <div className="w-[333px]"><span>{textArcade}</span></div>
+            <div className="w-[333px]"><span>{textCodePen}</span></div>
+            <div className="w-[333px]"><img src="img/main/codepen.png"></img></div>
+            <div className="w-[333px]"><span>{textImba}</span></div>
+            <div className="w-[333px]"><video autoPlay muted><source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source></video></div>
+            <div className="w-[333px]"><img src="img/main/front.png"></img></div>
+            <div className="w-[333px]"><span>{frontendmasters}</span></div>
+            <div className="w-[333px]"><span>{quasar}</span></div>\
+            <div className="w-[333px]"><video autoPlay muted><source src="img/main/quasarhud.mp4" type="video/mp4"></source></video></div>
 
         </main>
     );
