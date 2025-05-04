@@ -18,7 +18,7 @@ export function Main() {
     
 
     return (
-        <main className="kontener grid-cols-2">
+        <main className="kontener flex-wrap flex-col w-auto">
             <div><span>{textSzachy}</span></div>
             <div><video autoPlay muted><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
             <div><video autoPlay muted><source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source></video></div>
