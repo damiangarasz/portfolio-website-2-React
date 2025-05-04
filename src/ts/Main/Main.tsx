@@ -20,9 +20,9 @@ export function Main() {
     
 
     return (
-        <main className="kontener grid grid-cols-2 w-auto">
-            <div className="w-[333px]" ><span>{textSzachy}</span></div>
-            <div className="w-[333px]"><video autoPlay muted><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
+        <main className="kontener grid grid-cols-2 w-auto pt-8">
+            <div className="w-[333px] justify-center items-center" ><span>{textSzachy}</span></div>
+            <div className="w-[333px] justify-center items-center"><video autoPlay muted><source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source></video></div>
             <div className="w-[333px]"><video autoPlay muted><source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source></video></div>
             <div className="w-[333px]"><span>{textArcade}</span></div>
             <div className="w-[333px]"><span>{textCodePen}</span></div>
