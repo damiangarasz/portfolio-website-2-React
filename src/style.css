@@ -8,6 +8,11 @@
 } */
 
 @layer base {
+  body{
+    background-image: url('img/main/honeycomb-bg.svg');
+    background-size: auto;
+  }
+
   .dancing-script-form {
     font-family: "Dancing Script", cursive;
     font-optical-sizing: auto;
