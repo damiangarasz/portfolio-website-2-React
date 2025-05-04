@@ -7,6 +7,7 @@ import { Game2 } from "./Games/Game-2/Game-2";
 import { Blog } from "./Blog/Blog";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Main } from "./Main/Main";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,9 @@ const App = () => {
           </Routes>
           <Routes>
             <Route path="/blog" element={<Blog />}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/" element={<Main/>}></Route>
           </Routes>
         </QueryClientProvider>
       </BrowserRouter>
