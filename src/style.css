@@ -32,9 +32,9 @@
     box-sizing: inherit;
   }
 
-  body {
+  /* body {
     background-color: #edebef;
-  }
+  } */
 
   /* hamburger toggle logika POCZĄTEK */
   .hamburger-toggle[data-state="on"] {
