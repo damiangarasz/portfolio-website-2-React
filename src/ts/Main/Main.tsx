@@ -29,14 +29,14 @@ export function Main() {
       </div>
       <div className="mx-auto w-[400px] items-center justify-center px-2 py-4">
         <Link to="/Game-2">
-          <video autoPlay muted loop>
+          <video autoPlay muted loop preload="none">
             <source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source>
           </video>
         </Link>
       </div>
       <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
         <Link to="/Game-1">
-          <video autoPlay muted loop>
+          <video autoPlay muted loop preload="none">
             <source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source>
           </video>
         </Link>
@@ -58,7 +58,7 @@ export function Main() {
       </div>
       <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
         <a href="https://damiangarasz.github.io/ImbaProfit/" target="_blank">
-          <video autoPlay muted loop>
+          <video autoPlay muted loop preload="none">
             <source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source>
           </video>
         </a>
@@ -84,7 +84,7 @@ export function Main() {
       </div>
       <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
         <a href="https://www.quasarhud.com/" target="_blank">
-          <video autoPlay muted loop>
+          <video autoPlay muted loop preload="none">
             <source src="img/main/quasarhud.mp4" type="video/mp4"></source>
           </video>
         </a>
