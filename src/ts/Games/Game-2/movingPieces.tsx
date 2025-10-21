@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { engine } from "./engine";
-import { clone, cloneDeep } from "lodash";
-import { AiRes } from "./AiRes";
+import { useEffect, useRef, useState } from 'react';
+import { engine } from './engine';
+import { clone, cloneDeep } from 'lodash';
+import { AiRes } from './AiRes';
 
 export function MovingPieces() {
   const target = useRef<HTMLElement | null>(null);
@@ -11,70 +11,70 @@ export function MovingPieces() {
   const [dubble, setDubble] = useState(0);
   const [posArr, setPosArr] = useState(() => {
     const lol: Array<{ [key: string]: string }> = [
-      { 1: "br" },
-      { 2: "bn" },
-      { 3: "bb" },
-      { 4: "bq" },
-      { 5: "bk" },
-      { 6: "bb" },
-      { 7: "bn" },
-      { 8: "br" },
-      { 9: "bp" },
-      { 10: "bp" },
-      { 11: "bp" },
-      { 12: "bp" },
-      { 13: "bp" },
-      { 14: "bp" },
-      { 15: "bp" },
-      { 16: "bp" },
-      { 17: "" },
-      { 18: "" },
-      { 19: "" },
-      { 20: "" },
-      { 21: "" },
-      { 22: "" },
-      { 23: "" },
-      { 24: "" },
-      { 25: "" },
-      { 26: "" },
-      { 27: "" },
-      { 28: "" },
-      { 29: "" },
-      { 30: "" },
-      { 31: "" },
-      { 32: "" },
-      { 33: "" },
-      { 34: "" },
-      { 35: "" },
-      { 36: "" },
-      { 37: "" },
-      { 38: "" },
-      { 39: "" },
-      { 40: "" },
-      { 41: "" },
-      { 42: "" },
-      { 43: "" },
-      { 44: "" },
-      { 45: "" },
-      { 46: "" },
-      { 47: "" },
-      { 48: "" },
-      { 49: "wp" },
-      { 50: "wp" },
-      { 51: "wp" },
-      { 52: "wp" },
-      { 53: "wp" },
-      { 54: "wp" },
-      { 55: "wp" },
-      { 56: "wp" },
-      { 57: "wr" },
-      { 58: "wn" },
-      { 59: "wb" },
-      { 60: "wq" },
-      { 61: "wk" },
-      { 62: "wb" },
-      { 63: "wn" },
-      { 64: "wr" },
+      { 1: 'br' },
+      { 2: 'bn' },
+      { 3: 'bb' },
+      { 4: 'bq' },
+      { 5: 'bk' },
+      { 6: 'bb' },
+      { 7: 'bn' },
+      { 8: 'br' },
+      { 9: 'bp' },
+      { 10: 'bp' },
+      { 11: 'bp' },
+      { 12: 'bp' },
+      { 13: 'bp' },
+      { 14: 'bp' },
+      { 15: 'bp' },
+      { 16: 'bp' },
+      { 17: '' },
+      { 18: '' },
+      { 19: '' },
+      { 20: '' },
+      { 21: '' },
+      { 22: '' },
+      { 23: '' },
+      { 24: '' },
+      { 25: '' },
+      { 26: '' },
+      { 27: '' },
+      { 28: '' },
+      { 29: '' },
+      { 30: '' },
+      { 31: '' },
+      { 32: '' },
+      { 33: '' },
+      { 34: '' },
+      { 35: '' },
+      { 36: '' },
+      { 37: '' },
+      { 38: '' },
+      { 39: '' },
+      { 40: '' },
+      { 41: '' },
+      { 42: '' },
+      { 43: '' },
+      { 44: '' },
+      { 45: '' },
+      { 46: '' },
+      { 47: '' },
+      { 48: '' },
+      { 49: 'wp' },
+      { 50: 'wp' },
+      { 51: 'wp' },
+      { 52: 'wp' },
+      { 53: 'wp' },
+      { 54: 'wp' },
+      { 55: 'wp' },
+      { 56: 'wp' },
+      { 57: 'wr' },
+      { 58: 'wn' },
+      { 59: 'wb' },
+      { 60: 'wq' },
+      { 61: 'wk' },
+      { 62: 'wb' },
+      { 63: 'wn' },
+      { 64: 'wr' },
     ];
     return lol;
   });
@@ -104,14 +104,14 @@ export function MovingPieces() {
       if (
         arrr &&
         arrr.children[0] &&
-        arrr.children[0].getAttribute("class") == "myImage"
+        arrr.children[0].getAttribute('class') == 'myImage'
       ) {
         return false;
       } else {
         return true;
       }
     }
-    return new Error("lol");
+    return new Error('lol');
   }
 
   function rightSpace(): boolean | Error {
@@ -124,35 +124,35 @@ export function MovingPieces() {
       if (
         arrr &&
         arrr.children[0] &&
-        arrr.children[0].getAttribute("class") == "myImage"
+        arrr.children[0].getAttribute('class') == 'myImage'
       ) {
         return false;
       } else {
         return true;
       }
     }
-    return new Error("lol");
+    return new Error('lol');
   }
 
   useEffect(() => {
     setDoesItFreeLeft(true);
     //czyta czy king sie ruszył
-    const pastKingMoveString = sessionStorage.getItem("king");
+    const pastKingMoveString = sessionStorage.getItem('king');
     const pastKingMoveJson =
       pastKingMoveString && JSON.parse(pastKingMoveString)
         ? JSON.parse(pastKingMoveString)
-        : "";
+        : '';
     if (pastKingMoveJson) {
       setDidKingMove(pastKingMoveJson);
     }
   }, []);
 
-  const [whoseMove, setWhoseMove] = useState("white");
+  const [whoseMove, setWhoseMove] = useState('white');
 
   useEffect(() => {
     //ustawianie w historii czy king ruszył
     const doesKing = JSON.stringify(didKingMove);
-    sessionStorage.setItem("king", doesKing);
+    sessionStorage.setItem('king', doesKing);
   }, [didKingMove]);
 
   // hook dla pola przemiany
@@ -171,9 +171,9 @@ export function MovingPieces() {
     doesItMove: { [key: string]: boolean };
     doesItFree: { [key: string]: boolean };
   }>({
-    pieceId: "",
+    pieceId: '',
     startBoardId: 0,
-    startBoardDivId: "",
+    startBoardDivId: '',
     targetBoardId: 0,
     occupatedSquares: [],
     collision: false,
@@ -200,10 +200,10 @@ export function MovingPieces() {
       return;
     }
 
-    sessionStorage.setItem("value", JSON.stringify(posArr));
-    if (whoseMove == "white") {
+    sessionStorage.setItem('value', JSON.stringify(posArr));
+    if (whoseMove == 'white') {
       return;
-    } else if (whoseMove == "black") {
+    } else if (whoseMove == 'black') {
       async function ejaj() {
         const lol = await AiRes(JSON.stringify(posArr));
         // const lol = [9, 17];
@@ -211,11 +211,11 @@ export function MovingPieces() {
         if (!lol) return;
         const from = Number(lol[0]);
         const to = Number(lol[1]);
-        console.log("from:", from, "to:", to);
+        console.log('from:', from, 'to:', to);
 
         if (
-          posArr[from - 1][from.toString()] == "" ||
-          posArr[from - 1][from.toString()][0] == "w"
+          posArr[from - 1][from.toString()] == '' ||
+          posArr[from - 1][from.toString()][0] == 'w'
         ) {
           ejaj();
         } else {
@@ -225,7 +225,7 @@ export function MovingPieces() {
           newState.pieceId = posArr[from - 1][from.toString()];
 
           //pchanie zajętych kwadratów
-          const imgSquare = document.querySelectorAll(".myImage");
+          const imgSquare = document.querySelectorAll('.myImage');
           for (let n of imgSquare) {
             const parent = n.parentElement;
             const id = Number(parent?.id.slice(1));
@@ -240,12 +240,12 @@ export function MovingPieces() {
             setPosArr((data) => {
               const newState = cloneDeep(data);
 
-              newState[from - 1][from.toString()] = "";
+              newState[from - 1][from.toString()] = '';
               newState[to - 1][to.toString()] =
                 posArr[from - 1][from.toString()];
 
-              sessionStorage.setItem("value", JSON.stringify(newState));
-              setWhoseMove("white");
+              sessionStorage.setItem('value', JSON.stringify(newState));
+              setWhoseMove('white');
 
               return newState;
             });
@@ -256,24 +256,24 @@ export function MovingPieces() {
 
           //TODO TUTAJ
           if (lol.isLegal && lol.legalSquares.includes(to)) {
-            if (Object.values(posArr)[from - 1][from] == "bp") {
+            if (Object.values(posArr)[from - 1][from] == 'bp') {
               if (
                 (to - 9 == from || to - 7 == from) &&
-                Object.values(posArr)[to - 1][to].slice(0, 1) == "w"
+                Object.values(posArr)[to - 1][to].slice(0, 1) == 'w'
               ) {
                 //jeżeli gra po przekątnych i trafia na przeciwnika to legal
                 legalAI();
               } else if (
                 to - 8 == from &&
-                Object.values(posArr)[to - 1][to] == ""
+                Object.values(posArr)[to - 1][to] == ''
               ) {
-                console.log("tutaj ");
+                console.log('tutaj ');
                 //jeżeli jedzie jedno do przodu i nic nie ma legal
                 legalAI();
               } else if (
                 to - 16 == from &&
-                Object.values(posArr)[to - 1][to] == "" &&
-                Object.values(posArr)[to - 9][to - 8] == ""
+                Object.values(posArr)[to - 1][to] == '' &&
+                Object.values(posArr)[to - 9][to - 8] == ''
               ) {
                 //jezeli gra o 2 i nie ma przeszkody
                 legalAI();
@@ -281,7 +281,7 @@ export function MovingPieces() {
                 console.log(Object.values(posArr)[to - 1][to].slice(0, 1));
                 illegalIA();
               }
-            } else if (Object.values(posArr)[to - 1][to].slice(0, 1) == "b") {
+            } else if (Object.values(posArr)[to - 1][to].slice(0, 1) == 'b') {
               illegalIA();
             } else {
               legalAI();
@@ -299,21 +299,18 @@ export function MovingPieces() {
     //dodawanie kropek
     const engineData = engine(dataObj);
 
-    if (dataObj.pieceId == "wp" || dataObj.pieceId == "bp") {
+    if (dataObj.pieceId == 'wp' || dataObj.pieceId == 'bp') {
       const idArr = engineData.legalSquares;
 
       idArr.map((n) => {
         const parent = document.querySelector(`#s${n}`) as HTMLElement | null;
 
         function dot() {
-          const el = document.createElement("img");
-          el.setAttribute(
-            "src",
-            "img/Game-2/dot.png",
-          );
-          el.setAttribute("class", "dot");
-          el.style.pointerEvents = "none";
-          el.style.position = "absolute";
+          const el = document.createElement('img');
+          el.setAttribute('src', 'img/Game-2/dot.png');
+          el.setAttribute('class', 'dot');
+          el.style.pointerEvents = 'none';
+          el.style.position = 'absolute';
           parent?.appendChild(el);
         }
         const top = [25, 26, 27, 28, 29, 30, 31, 32];
@@ -324,30 +321,30 @@ export function MovingPieces() {
 
           if (dataObj.startBoardId < 32) {
             const pastParentChildren = document.querySelector(
-              `#s${n - 8} > img`,
+              `#s${n - 8} > img`
             ) as HTMLElement | null;
             const pastParentChildrenClass =
-              pastParentChildren?.getAttribute("class");
-            if (pastParentChildrenClass != "myImage") dot();
+              pastParentChildren?.getAttribute('class');
+            if (pastParentChildrenClass != 'myImage') dot();
           } else {
             const pastParentChildren = document.querySelector(
-              `#s${n + 8} > img`,
+              `#s${n + 8} > img`
             ) as HTMLElement | null;
             const pastParentChildrenClass =
-              pastParentChildren?.getAttribute("class");
-            if (pastParentChildrenClass != "myImage") dot();
+              pastParentChildren?.getAttribute('class');
+            if (pastParentChildrenClass != 'myImage') dot();
           }
         } else if (
           dataObj.startBoardId - 8 == n ||
           dataObj.startBoardId + 8 == n
         ) {
-          if (parent?.children[0]?.getAttribute("class") != "myImage") dot();
+          if (parent?.children[0]?.getAttribute('class') != 'myImage') dot();
         } else {
           //pion idzie po skosie sprawdzam czy krakta jest pusta czy trafia na img
           const parent = document.querySelector(`#s${n}`);
           let src;
           if (parent?.children[0])
-            src = parent?.children[0].getAttribute("src");
+            src = parent?.children[0].getAttribute('src');
           let pieceId;
           if (src) pieceId = src.match(/(\w{1}).\.png$/); //maczuje w or b
 
@@ -358,7 +355,7 @@ export function MovingPieces() {
           ) {
             //przechodzi jeżeli w vs b || b vs w
             if (parent instanceof HTMLElement)
-              parent.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
+              parent.style.backgroundColor = 'rgba(255, 255, 51, 0.5)';
           } else if (
             dataObj.startBoardId - 1 == dubble &&
             top.includes(dataObj.startBoardId) &&
@@ -405,28 +402,25 @@ export function MovingPieces() {
 
         const parent = document.querySelector(`#s${n}`);
         let src;
-        if (parent?.children[0]) src = parent?.children[0].getAttribute("src");
+        if (parent?.children[0]) src = parent?.children[0].getAttribute('src');
         let pieceId;
         if (src) pieceId = src.match(/(\w{1}).\.png$/);
 
         if (sq?.children[0] == undefined) {
-          const el = document.createElement("img");
-          el.setAttribute(
-            "src",
-            "img/Game-2/dot.png",
-          );
-          el.setAttribute("class", "dot");
-          el.style.pointerEvents = "none";
-          el.style.position = "absolute";
+          const el = document.createElement('img');
+          el.setAttribute('src', 'img/Game-2/dot.png');
+          el.setAttribute('class', 'dot');
+          el.style.pointerEvents = 'none';
+          el.style.position = 'absolute';
           sq?.appendChild(el);
         } else if (
           sq?.children[0] &&
-          sq?.children[0].getAttribute("class") == "myImage" &&
+          sq?.children[0].getAttribute('class') == 'myImage' &&
           pieceId &&
           parent?.children[0] instanceof HTMLElement &&
           pieceId[1] != dataObj.pieceId.slice(0, 1)
         ) {
-          if (sq) sq.style.backgroundColor = "rgba(255, 255, 51, 0.5)";
+          if (sq) sq.style.backgroundColor = 'rgba(255, 255, 51, 0.5)';
         }
       });
     }
@@ -434,7 +428,7 @@ export function MovingPieces() {
 
   useEffect(() => {
     //pobieranie ustawienia pionów z cacha przed refreshem
-    const cacheJSON = sessionStorage.getItem("value");
+    const cacheJSON = sessionStorage.getItem('value');
     let cache;
     if (cacheJSON) cache = JSON.parse(cacheJSON);
 
@@ -447,40 +441,34 @@ export function MovingPieces() {
         const tagName =
           cell && cell.children[0] && cell.children[0].tagName
             ? cell.children[0].tagName
-            : "";
+            : '';
 
-        if (cell && tagName == "IMG") {
+        if (cell && tagName == 'IMG') {
           const img = document.querySelector(`#s${number} .myImage`);
-          const src = img?.getAttribute("src");
+          const src = img?.getAttribute('src');
           const idArr =
-            src && src.match(/(\w{2})\.png$/) ? src.match(/(\w{2})\.png$/) : "";
+            src && src.match(/(\w{2})\.png$/) ? src.match(/(\w{2})\.png$/) : '';
 
-          const id = idArr && idArr[1] ? idArr[1] : "";
+          const id = idArr && idArr[1] ? idArr[1] : '';
 
-          if (img && pieceId != id && pieceId != "") {
+          if (img && pieceId != id && pieceId != '') {
             cell.removeChild(img);
 
-            const el = document.createElement("img");
-            el.setAttribute(
-              "src",
-              `img/Game-2/${pieceId}.png`,
-            );
-            el.setAttribute("class", "myImage");
+            const el = document.createElement('img');
+            el.setAttribute('src', `img/Game-2/${pieceId}.png`);
+            el.setAttribute('class', 'myImage');
 
             cell.appendChild(el);
-          } else if (img && pieceId == "") {
+          } else if (img && pieceId == '') {
             cell.removeChild(img);
           }
-        } else if (cell && tagName == "" && pieceId != "") {
-          const el = document.createElement("img");
-          el.setAttribute(
-            "src",
-            `img/Game-2/${pieceId}.png`,
-          );
-          el.setAttribute("class", "myImage");
+        } else if (cell && tagName == '' && pieceId != '') {
+          const el = document.createElement('img');
+          el.setAttribute('src', `img/Game-2/${pieceId}.png`);
+          el.setAttribute('class', 'myImage');
 
           cell.appendChild(el);
-        } else if (cell && tagName.length >= 1 && pieceId == "") {
+        } else if (cell && tagName.length >= 1 && pieceId == '') {
           const child = document.querySelector(`#s${number} .myImage`);
           if (child) cell.removeChild(child);
         }
@@ -490,7 +478,7 @@ export function MovingPieces() {
 
   useEffect(() => {
     //pchanie zajętych kwadratów
-    const imgSquare = document.querySelectorAll(".myImage");
+    const imgSquare = document.querySelectorAll('.myImage');
     for (let n of imgSquare) {
       const parent = n.parentElement;
       const id = Number(parent?.id.slice(1));
@@ -512,7 +500,7 @@ export function MovingPieces() {
     for (let n = 1; n <= 64; n++) {
       const temp = document.querySelector(`#s${n}`);
       if (temp?.children[0]) {
-        const src = temp.children[0].getAttribute("src");
+        const src = temp.children[0].getAttribute('src');
         let pieceId;
         if (src) pieceId = src.match(/(\w{2})\.png$/);
 
@@ -522,7 +510,7 @@ export function MovingPieces() {
       }
     }
     occupatedSqueres.map((n) => {
-      if (Object.values(n)[0].slice(0, 1) == "b") {
+      if (Object.values(n)[0].slice(0, 1) == 'b') {
         figures.push(n);
       }
     });
@@ -535,7 +523,7 @@ export function MovingPieces() {
   }, []);
 
   useEffect(() => {
-    const square = document.querySelectorAll(".chess-grid > div");
+    const square = document.querySelectorAll('.chess-grid > div');
     if (!square) {
       return;
     }
@@ -543,14 +531,14 @@ export function MovingPieces() {
     function MovingPicesHandler(event: MouseEvent) {
       event.preventDefault();
 
-      if (whoseMove == "black") return;
+      if (whoseMove == 'black') return;
       //TODO tutaj
 
-      const boardX = document.querySelector(".chess-grid") as HTMLElement;
+      const boardX = document.querySelector('.chess-grid') as HTMLElement;
       function right(e: MouseEvent) {
         e.preventDefault();
       }
-      boardX.addEventListener("contextmenu", right);
+      boardX.addEventListener('contextmenu', right);
       if (event.button !== 0) {
         return;
       }
@@ -564,9 +552,9 @@ export function MovingPieces() {
       if (target.current == null) return;
       parent.current = target.current.parentElement;
 
-      if (target.current.className == "myImage") {
+      if (target.current.className == 'myImage') {
         //dodaje do obiektu data info o początkowym id elementu
-        const id = parent.current?.getAttribute("id");
+        const id = parent.current?.getAttribute('id');
 
         setDataObj((data) => {
           const newState = cloneDeep(data);
@@ -584,27 +572,27 @@ export function MovingPieces() {
         });
 
         // usuwanie oobrazka z diva
-        if (parent.current) parent.current.innerHTML = "";
+        if (parent.current) parent.current.innerHTML = '';
         //koniec usuwania obrazka z diva
 
         // zapisuje obrazek
-        const img = target.current.getAttribute("src");
+        const img = target.current.getAttribute('src');
         //koniec zapisywania obrazka
 
         //Tworze elmenent do przeciągania
-        const temp = document.createElement("img");
+        const temp = document.createElement('img');
         if (img) {
           temp.src = img;
         }
-        temp.style.position = "absolute";
-        temp.style.width = squareWidth + "px";
-        temp.style.pointerEvents = "none";
-        temp.style.left = event.clientX - sqAdj + "px";
-        temp.style.top = event.clientY - sqAdj + "px";
-        temp.className = "temp";
+        temp.style.position = 'absolute';
+        temp.style.width = squareWidth + 'px';
+        temp.style.pointerEvents = 'none';
+        temp.style.left = event.clientX - sqAdj + 'px';
+        temp.style.top = event.clientY - sqAdj + 'px';
+        temp.className = 'temp';
 
         const div = document.getElementsByClassName(
-          "chess-grid",
+          'chess-grid'
         ) as HTMLCollectionOf<HTMLDivElement>;
 
         //wyznaczam granice szachownicy do anulowania przeciąganego elementu
@@ -613,14 +601,14 @@ export function MovingPieces() {
         const tableWidth = window.innerWidth * 0.6;
 
         const piceMove = function (event: MouseEvent) {
-          temp.style.left = event.clientX - sqAdj + "px";
-          temp.style.top = event.clientY - sqAdj + "px";
+          temp.style.left = event.clientX - sqAdj + 'px';
+          temp.style.top = event.clientY - sqAdj + 'px';
         };
 
-        window.addEventListener("mousemove", piceMove);
+        window.addEventListener('mousemove', piceMove);
 
         // wstawiam nowy element tymczasowy podczas przeciągania
-        const chwytak = document.querySelector(".chess-grid");
+        const chwytak = document.querySelector('.chess-grid');
         chwytak?.appendChild(temp);
 
         const mouseMove = function (event: MouseEvent) {
@@ -634,18 +622,18 @@ export function MovingPieces() {
             setDataObj((data) => {
               const newState = cloneDeep(data);
 
-              newState.startBoardDivId = "";
+              newState.startBoardDivId = '';
 
               return newState;
             });
 
-            const tempEl = document.querySelector(".temp");
-            const id = parent.current?.getAttribute("id");
-            const chwytakSq = document.getElementById("" + id);
+            const tempEl = document.querySelector('.temp');
+            const id = parent.current?.getAttribute('id');
+            const chwytakSq = document.getElementById('' + id);
             if (target.current == null) return;
-            const src = target.current.getAttribute("src");
-            const el = document.createElement("img");
-            el.className = "myImage";
+            const src = target.current.getAttribute('src');
+            const el = document.createElement('img');
+            el.className = 'myImage';
             if (src) {
               el.src = src;
             }
@@ -662,7 +650,7 @@ export function MovingPieces() {
               const sqIMGdot = document.querySelector(`#s${n} > .dot`);
               const parent = document.querySelector(`#s${n}`);
               //usuwanie wszystkich inline style
-              parent?.removeAttribute("style");
+              parent?.removeAttribute('style');
               if (sqIMGdot) {
                 parent?.removeChild(sqIMGdot);
               }
@@ -670,20 +658,20 @@ export function MovingPieces() {
           }
         };
 
-        window.addEventListener("mousemove", mouseMove);
+        window.addEventListener('mousemove', mouseMove);
       }
 
       //wyciąganie id trzymanego piona
-      const piece = document.querySelector(".temp");
-      const pieceSrc = piece?.getAttribute("src");
+      const piece = document.querySelector('.temp');
+      const pieceSrc = piece?.getAttribute('src');
       let pieceId;
       if (pieceSrc) {
         pieceId = pieceSrc.match(/(\w{2})\.png$/);
       }
-      let letters: string = "";
+      let letters: string = '';
       if (pieceId) letters = pieceId[1];
 
-      if (letters[0] == "b") return;
+      if (letters[0] == 'b') return;
 
       setDataObj((data) => {
         const newState = cloneDeep(data);
@@ -696,15 +684,15 @@ export function MovingPieces() {
 
       //TODO lol
       // sprawdzanie czy można roszade czy jest przeszkoda
-      if (dataObj.pieceId == "wk" && dataObj.startBoardId == 61) {
-        const left = document.querySelector("#s60");
-        const right = document.querySelector("#s62");
+      if (dataObj.pieceId == 'wk' && dataObj.startBoardId == 61) {
+        const left = document.querySelector('#s60');
+        const right = document.querySelector('#s62');
 
         if (
           (left && left.children[0] == undefined) ||
           (left &&
             left.children[0] &&
-            left.children[0].getAttribute("class") != "myImage")
+            left.children[0].getAttribute('class') != 'myImage')
         ) {
           setDoesItFreeLeft(true);
         }
@@ -713,7 +701,7 @@ export function MovingPieces() {
           (right && right.children[0] == undefined) ||
           (right &&
             right.children[0] &&
-            right.children[0].getAttribute("class") != "myImage")
+            right.children[0].getAttribute('class') != 'myImage')
         ) {
           setDoesItFreeRight(true);
         }
@@ -721,24 +709,24 @@ export function MovingPieces() {
       }
 
       return () => {
-        boardX.removeEventListener("contextmenu", right);
+        boardX.removeEventListener('contextmenu', right);
       };
     }
 
     for (let n of square) {
-      n.addEventListener("mousedown", MovingPicesHandler as EventListener);
+      n.addEventListener('mousedown', MovingPicesHandler as EventListener);
     }
 
     function DropPicesHandler(event: MouseEvent) {
-      const temp = document.querySelector(".temp");
+      const temp = document.querySelector('.temp');
       if (!temp) return;
-      if (whoseMove == "black") return;
-      const chwytak = document.querySelector(".chess-grid");
+      if (whoseMove == 'black') return;
+      const chwytak = document.querySelector('.chess-grid');
 
       const target = event.target as HTMLElement;
-      const div = target.getAttribute("id");
+      const div = target.getAttribute('id');
       const parentDiv = target.parentElement;
-      const parentDivId = parentDiv?.getAttribute("id");
+      const parentDivId = parentDiv?.getAttribute('id');
 
       //dodawanie do data targetowanego id
       if (div) {
@@ -761,7 +749,7 @@ export function MovingPieces() {
         const endIDnumber = dataObj.targetBoardId;
         const endIDstring: string = dataObj.targetBoardId.toString();
 
-        if (dataObj.pieceId == "wk" && startIDnumber != endIDnumber) {
+        if (dataObj.pieceId == 'wk' && startIDnumber != endIDnumber) {
           setDidKingMove((x) => {
             if (x == false) {
               return true;
@@ -773,11 +761,11 @@ export function MovingPieces() {
 
         const pion = dataObj.pieceId;
         setPosArr((prevPosArr) => {
-          const pastDataString = sessionStorage.getItem("value");
+          const pastDataString = sessionStorage.getItem('value');
           const pastDataObj =
             pastDataString && JSON.parse(pastDataString)
               ? JSON.parse(pastDataString)
-              : "";
+              : '';
           let newPosArr;
 
           if (pastDataObj) {
@@ -785,20 +773,20 @@ export function MovingPieces() {
           } else {
             newPosArr = prevPosArr.map((item) => ({ ...item }));
           }
-          newPosArr[startIDnumber - 1][startIDstring] = "";
+          newPosArr[startIDnumber - 1][startIDstring] = '';
           newPosArr[endIDnumber - 1][endIDstring] = pion;
 
           return newPosArr;
         });
 
-        if (target.tagName == "DIV") {
+        if (target.tagName == 'DIV') {
           //kiedy wchodzimy na puste pole
-          const img = temp?.getAttribute("src");
-          const query = "" + div;
+          const img = temp?.getAttribute('src');
+          const query = '' + div;
           const insertDiv = document.getElementById(query);
 
-          const imgEl = document.createElement("img");
-          imgEl.className = "myImage";
+          const imgEl = document.createElement('img');
+          imgEl.className = 'myImage';
           if (img) {
             imgEl.src = img;
           }
@@ -810,24 +798,24 @@ export function MovingPieces() {
           }
         } else {
           //kiedy bijemy
-          const piece = document.querySelector(".temp");
-          const pieceSrc = piece?.getAttribute("src");
-          const el = document.createElement("img");
+          const piece = document.querySelector('.temp');
+          const pieceSrc = piece?.getAttribute('src');
+          const el = document.createElement('img');
           if (!pieceSrc) return;
-          el.setAttribute("src", pieceSrc);
-          el.className = "myImage";
+          el.setAttribute('src', pieceSrc);
+          el.className = 'myImage';
 
-          const targetId = target.parentElement?.getAttribute("id");
+          const targetId = target.parentElement?.getAttribute('id');
           const targetImg = document.querySelector(`#${targetId} > img`);
 
           const square = document.querySelector(`#${targetId}`);
           if (targetImg) square?.removeChild(targetImg);
           square?.appendChild(el);
-          const board = document.querySelector(".chess-grid");
+          const board = document.querySelector('.chess-grid');
           if (piece) board?.removeChild(piece);
         }
 
-        setWhoseMove("black");
+        setWhoseMove('black');
 
         // sessionStorage.setItem("value", JSON.stringify(posArr));
       }
@@ -837,63 +825,39 @@ export function MovingPieces() {
         const x = event.clientX;
         const y = event.clientY;
 
-        const div = document.createElement("div");
-        div.style.position = "absolute";
-        div.style.top = y + "px";
-        div.style.left = x + "px";
-        div.style.cursor = "pointer";
-        div.style.height = "70px";
-        div.style.display = "flex";
-        div.style.backgroundColor = "#dce8e0";
-        div.setAttribute("class", "przemianaTemp");
+        const div = document.createElement('div');
+        div.style.position = 'absolute';
+        div.style.top = y + 'px';
+        div.style.left = x + 'px';
+        div.style.cursor = 'pointer';
+        div.style.height = '70px';
+        div.style.display = 'flex';
+        div.style.backgroundColor = '#dce8e0';
+        div.setAttribute('class', 'przemianaTemp');
 
-        if (dataObj.pieceId == "wp") {
-          const rookWhite = document.createElement("img");
-          rookWhite.setAttribute(
-            "src",
-            "img/Game-2/wr.png",
-          );
-          const bishopWhite = document.createElement("img");
-          bishopWhite.setAttribute(
-            "src",
-            "img/Game-2/wb.png",
-          );
-          const knightWhite = document.createElement("img");
-          knightWhite.setAttribute(
-            "src",
-            "img/Game-2/wn.png",
-          );
-          const queenWhite = document.createElement("img");
-          queenWhite.setAttribute(
-            "src",
-            "img/Game-2/wq.png",
-          );
+        if (dataObj.pieceId == 'wp') {
+          const rookWhite = document.createElement('img');
+          rookWhite.setAttribute('src', 'img/Game-2/wr.png');
+          const bishopWhite = document.createElement('img');
+          bishopWhite.setAttribute('src', 'img/Game-2/wb.png');
+          const knightWhite = document.createElement('img');
+          knightWhite.setAttribute('src', 'img/Game-2/wn.png');
+          const queenWhite = document.createElement('img');
+          queenWhite.setAttribute('src', 'img/Game-2/wq.png');
 
           div.appendChild(rookWhite);
           div.appendChild(bishopWhite);
           div.appendChild(knightWhite);
           div.appendChild(queenWhite);
         } else {
-          const rookBlack = document.createElement("img");
-          rookBlack.setAttribute(
-            "src",
-            "img/Game-2/br.png",
-          );
-          const bishopBlack = document.createElement("img");
-          bishopBlack.setAttribute(
-            "src",
-            "img/Game-2/bb.png",
-          );
-          const knightBlack = document.createElement("img");
-          knightBlack.setAttribute(
-            "src",
-            "img/Game-2/bn.png",
-          );
-          const queenBlack = document.createElement("img");
-          queenBlack.setAttribute(
-            "src",
-            "img/Game-2/bq.png",
-          );
+          const rookBlack = document.createElement('img');
+          rookBlack.setAttribute('src', 'img/Game-2/br.png');
+          const bishopBlack = document.createElement('img');
+          bishopBlack.setAttribute('src', 'img/Game-2/bb.png');
+          const knightBlack = document.createElement('img');
+          knightBlack.setAttribute('src', 'img/Game-2/bn.png');
+          const queenBlack = document.createElement('img');
+          queenBlack.setAttribute('src', 'img/Game-2/bq.png');
 
           div.appendChild(rookBlack);
           div.appendChild(bishopBlack);
@@ -901,14 +865,14 @@ export function MovingPieces() {
           div.appendChild(queenBlack);
         }
 
-        const board = document.querySelector(".chess-grid");
+        const board = document.querySelector('.chess-grid');
         board?.appendChild(div);
 
-        const temp = document.querySelector(".temp");
+        const temp = document.querySelector('.temp');
         if (temp) board?.removeChild(temp);
 
         const przemianaBoard: NodeListOf<Element> = document.querySelectorAll(
-          ".przemianaTemp > img",
+          '.przemianaTemp > img'
         );
 
         function przemianaHandler(przemianaBoard: NodeListOf<Element>) {
@@ -920,8 +884,8 @@ export function MovingPieces() {
 
             for (let n of przemianaBoard) {
               n.addEventListener(
-                "click",
-                przemianaClick.current as EventListener,
+                'click',
+                przemianaClick.current as EventListener
               );
             }
           });
@@ -929,21 +893,21 @@ export function MovingPieces() {
 
         przemianaHandler(przemianaBoard).then((event) => {
           let src;
-          if (event) src = event.getAttribute("src");
+          if (event) src = event.getAttribute('src');
 
-          const element = document.createElement("img");
-          element.setAttribute("class", "myImage");
-          if (src) element.setAttribute("src", src);
+          const element = document.createElement('img');
+          element.setAttribute('class', 'myImage');
+          if (src) element.setAttribute('src', src);
 
           const tagname = target.tagName;
           let targetId;
-          if (tagname == "IMG") {
-            targetId = target.parentElement?.getAttribute("id");
+          if (tagname == 'IMG') {
+            targetId = target.parentElement?.getAttribute('id');
             const img = document.querySelector(`#${targetId} > img`);
             const sqTarget = document.querySelector(`#${targetId}`);
             if (img) sqTarget?.removeChild(img);
           } else {
-            targetId = target.getAttribute("id");
+            targetId = target.getAttribute('id');
           }
 
           let sqTarget;
@@ -951,11 +915,11 @@ export function MovingPieces() {
           const childr = sqTarget?.children;
           if (sqTarget) sqTarget.appendChild(element);
 
-          const przemianaTemp = document.querySelector(".przemianaTemp");
+          const przemianaTemp = document.querySelector('.przemianaTemp');
           if (przemianaTemp) board?.removeChild(przemianaTemp);
 
           const startIDnumber: number = Number(
-            dataObj.startBoardDivId.slice(1),
+            dataObj.startBoardDivId.slice(1)
           );
           const startIDstring: string = dataObj.startBoardDivId.slice(1);
 
@@ -964,49 +928,49 @@ export function MovingPieces() {
 
           let pion;
           if (src) pion = src.match(/(\w{2})\.png$/);
-          let pionId: string = "";
+          let pionId: string = '';
           if (pion) pionId = pion[1];
 
           setPosArr((prevPosArr) => {
-            const pastDataString = sessionStorage.getItem("value");
+            const pastDataString = sessionStorage.getItem('value');
             const pastDataObj =
               pastDataString && JSON.parse(pastDataString)
                 ? JSON.parse(pastDataString)
-                : "";
+                : '';
             let newPosArr;
             if (pastDataObj) {
               newPosArr = pastDataObj;
             } else {
               newPosArr = prevPosArr.map((item) => ({ ...item }));
             }
-            newPosArr[startIDnumber - 1][startIDstring] = "";
+            newPosArr[startIDnumber - 1][startIDstring] = '';
             newPosArr[endIDnumber - 1][endIDstring] = pionId;
 
             return newPosArr;
           });
         });
 
-        setWhoseMove("black");
+        setWhoseMove('black');
 
         // sessionStorage.setItem("value", JSON.stringify(posArr));
 
         return () => {
           for (let n of przemianaBoard) {
             n.removeEventListener(
-              "click",
-              przemianaClick.current as EventListener,
+              'click',
+              przemianaClick.current as EventListener
             );
           }
         };
       }
 
       function wPrzeplocie() {
-        const img = temp?.getAttribute("src");
-        const query = "" + div;
+        const img = temp?.getAttribute('src');
+        const query = '' + div;
         const insertDiv = document.getElementById(query);
 
-        const imgEl = document.createElement("img");
-        imgEl.className = "myImage";
+        const imgEl = document.createElement('img');
+        imgEl.className = 'myImage';
         if (img) {
           imgEl.src = img;
         }
@@ -1030,11 +994,11 @@ export function MovingPieces() {
 
         const pion = dataObj.pieceId;
         setPosArr((prevPosArr) => {
-          const pastDataString = sessionStorage.getItem("value");
+          const pastDataString = sessionStorage.getItem('value');
           const pastDataObj =
             pastDataString && JSON.parse(pastDataString)
               ? JSON.parse(pastDataString)
-              : "";
+              : '';
           let newPosArr;
 
           //TODO grzebie tutaj
@@ -1043,98 +1007,86 @@ export function MovingPieces() {
           } else {
             newPosArr = prevPosArr.map((item) => ({ ...item }));
           }
-          newPosArr[startIDnumber - 1][startIDstring] = "";
+          newPosArr[startIDnumber - 1][startIDstring] = '';
           newPosArr[endIDnumber - 1][endIDstring] = pion;
 
-          if (dataObj.pieceId == "wp") {
-            newPosArr[endIDnumber + 7]["bp"] = "";
-          } else if (dataObj.pieceId == "bp") {
-            newPosArr[endIDnumber - 9]["bp"] = "";
+          if (dataObj.pieceId == 'wp') {
+            newPosArr[endIDnumber + 7]['bp'] = '';
+          } else if (dataObj.pieceId == 'bp') {
+            newPosArr[endIDnumber - 9]['bp'] = '';
           }
 
           return newPosArr;
         });
 
-        setWhoseMove("black");
+        setWhoseMove('black');
       }
 
       function illegal() {
-        const piece = document.querySelector(".temp");
-        const pieceSrc = piece?.getAttribute("src");
-        const el = document.createElement("img");
+        const piece = document.querySelector('.temp');
+        const pieceSrc = piece?.getAttribute('src');
+        const el = document.createElement('img');
         if (!pieceSrc) return;
-        el.setAttribute("src", pieceSrc);
-        el.className = "myImage";
+        el.setAttribute('src', pieceSrc);
+        el.className = 'myImage';
 
-        const startId = "#s" + dataObj.startBoardId;
+        const startId = '#s' + dataObj.startBoardId;
         const target = document.querySelector(startId);
         target?.appendChild(el);
 
-        const parent = document.querySelector(".chess-grid");
+        const parent = document.querySelector('.chess-grid');
         if (!piece) return;
         parent?.removeChild(piece);
       }
 
       function roszada(strona: string) {
-        if (strona == "lewa") {
-          const oldRookSq = document.querySelector("#s57");
-          const oldRookImg = document.querySelector("#s57 .myImage");
+        if (strona == 'lewa') {
+          const oldRookSq = document.querySelector('#s57');
+          const oldRookImg = document.querySelector('#s57 .myImage');
           if (oldRookImg) oldRookSq?.removeChild(oldRookImg);
 
-          const newRookSq = document.querySelector("#s60");
-          const newRookImg = document.createElement("img");
-          newRookImg.setAttribute(
-            "src",
-            "img/Game-2/wr.png",
-          );
-          newRookImg.setAttribute("class", "myImage");
+          const newRookSq = document.querySelector('#s60');
+          const newRookImg = document.createElement('img');
+          newRookImg.setAttribute('src', 'img/Game-2/wr.png');
+          newRookImg.setAttribute('class', 'myImage');
           newRookSq?.appendChild(newRookImg);
 
-          const oldKingSq = document.querySelector("#s61");
-          const oldKingImg = document.querySelector("#s61 .myImage");
+          const oldKingSq = document.querySelector('#s61');
+          const oldKingImg = document.querySelector('#s61 .myImage');
           if (oldKingImg) oldKingSq?.removeChild(oldKingImg);
 
-          const newKingSq = document.querySelector("#s59");
-          const newKingImg = document.createElement("img");
-          newKingImg.setAttribute(
-            "src",
-            "img/Game-2/wk.png",
-          );
-          newKingImg.setAttribute("class", "myImage");
+          const newKingSq = document.querySelector('#s59');
+          const newKingImg = document.createElement('img');
+          newKingImg.setAttribute('src', 'img/Game-2/wk.png');
+          newKingImg.setAttribute('class', 'myImage');
           newKingSq?.appendChild(newKingImg);
 
-          const board = document.querySelector(".chess-grid");
-          const temp = document.querySelector(".temp");
+          const board = document.querySelector('.chess-grid');
+          const temp = document.querySelector('.temp');
           if (temp) board?.removeChild(temp);
-        } else if (strona == "prawa") {
-          const oldRookSq = document.querySelector("#s64");
-          const oldRookImg = document.querySelector("#s64 .myImage");
+        } else if (strona == 'prawa') {
+          const oldRookSq = document.querySelector('#s64');
+          const oldRookImg = document.querySelector('#s64 .myImage');
           if (oldRookImg) oldRookSq?.removeChild(oldRookImg);
 
-          const newRookSq = document.querySelector("#s62");
-          const newRookImg = document.createElement("img");
-          newRookImg.setAttribute(
-            "src",
-            "img/Game-2/wr.png",
-          );
-          newRookImg.setAttribute("class", "myImage");
+          const newRookSq = document.querySelector('#s62');
+          const newRookImg = document.createElement('img');
+          newRookImg.setAttribute('src', 'img/Game-2/wr.png');
+          newRookImg.setAttribute('class', 'myImage');
           newRookSq?.appendChild(newRookImg);
 
-          const oldKingSq = document.querySelector("#s61");
-          const oldKingImg = document.querySelector("#s61 .myImage");
+          const oldKingSq = document.querySelector('#s61');
+          const oldKingImg = document.querySelector('#s61 .myImage');
           if (oldKingImg) oldKingSq?.removeChild(oldKingImg);
 
-          const newKingSq = document.querySelector("#s63");
-          const newKingImg = document.createElement("img");
-          newKingImg.setAttribute(
-            "src",
-            "img/Game-2/wk.png",
-          );
-          newKingImg.setAttribute("class", "myImage");
+          const newKingSq = document.querySelector('#s63');
+          const newKingImg = document.createElement('img');
+          newKingImg.setAttribute('src', 'img/Game-2/wk.png');
+          newKingImg.setAttribute('class', 'myImage');
           newKingSq?.appendChild(newKingImg);
 
-          const board = document.querySelector(".chess-grid");
-          const temp = document.querySelector(".temp");
+          const board = document.querySelector('.chess-grid');
+          const temp = document.querySelector('.temp');
           if (temp) board?.removeChild(temp);
         }
         const startIDnumber: number = Number(dataObj.startBoardDivId.slice(1));
@@ -1145,11 +1097,11 @@ export function MovingPieces() {
 
         const pion = dataObj.pieceId;
         setPosArr((prevPosArr) => {
-          const pastDataString = sessionStorage.getItem("value");
+          const pastDataString = sessionStorage.getItem('value');
           const pastDataObj =
             pastDataString && JSON.parse(pastDataString)
               ? JSON.parse(pastDataString)
-              : "";
+              : '';
           let newPosArr;
 
           if (pastDataObj) {
@@ -1157,28 +1109,28 @@ export function MovingPieces() {
           } else {
             newPosArr = prevPosArr.map((item) => ({ ...item }));
           }
-          newPosArr[startIDnumber - 1][startIDstring] = "";
+          newPosArr[startIDnumber - 1][startIDstring] = '';
           newPosArr[endIDnumber - 1][endIDstring] = pion;
 
-          if (strona == "lewa") {
-            newPosArr[56]["57"] = "";
-            newPosArr[59]["60"] = "wr";
-          } else if (strona == "prawa") {
-            newPosArr[63]["64"] = "";
-            newPosArr[61]["62"] = "wr";
+          if (strona == 'lewa') {
+            newPosArr[56]['57'] = '';
+            newPosArr[59]['60'] = 'wr';
+          } else if (strona == 'prawa') {
+            newPosArr[63]['64'] = '';
+            newPosArr[61]['62'] = 'wr';
           } else {
-            throw new Error("roszada no bueno");
+            throw new Error('roszada no bueno');
           }
 
           return newPosArr;
         });
 
-        setWhoseMove("black");
+        setWhoseMove('black');
       }
 
       if (returnData.isLegal) {
-        if (target.tagName == "DIV") {
-          if (dataObj.pieceId == "wp" || dataObj.pieceId == "bp") {
+        if (target.tagName == 'DIV') {
+          if (dataObj.pieceId == 'wp' || dataObj.pieceId == 'bp') {
             const targetId = Number(target.id.slice(1));
             const top = [25, 26, 27, 28, 29, 30, 31, 32];
             const bottom = [33, 34, 35, 36, 37, 38, 39, 40];
@@ -1186,33 +1138,33 @@ export function MovingPieces() {
             const polePrzemianyBottom = [49, 50, 51, 52, 53, 54, 55, 56];
 
             const przeszkodaPionkaGora = document.querySelector(
-              `#s${dataObj.startBoardId + 8} > img`,
+              `#s${dataObj.startBoardId + 8} > img`
             );
             let przeszkodamPionkaChildrenTop;
             if (przeszkodaPionkaGora) {
               przeszkodamPionkaChildrenTop =
-                przeszkodaPionkaGora.getAttribute("class");
+                przeszkodaPionkaGora.getAttribute('class');
             }
 
             const przeszkodamPionkaDol = document.querySelector(
-              `#s${dataObj.startBoardId - 8} > img`,
+              `#s${dataObj.startBoardId - 8} > img`
             );
             let przeszkodamPionkaChildren;
             if (przeszkodamPionkaDol)
               przeszkodamPionkaChildren =
-                przeszkodamPionkaDol.getAttribute("class");
+                przeszkodamPionkaDol.getAttribute('class');
 
             if (Math.abs(dataObj.startBoardId - targetId) == 8) {
               //TODO na twardo dla białych i czarnych
               if (
-                dataObj.pieceId == "wp" &&
+                dataObj.pieceId == 'wp' &&
                 polePrzemianyTop.includes(dataObj.startBoardId)
               ) {
                 //pole przemiany góra białe
                 przemiana();
                 setDubble(0);
               } else if (
-                dataObj.pieceId == "bp" &&
+                dataObj.pieceId == 'bp' &&
                 polePrzemianyBottom.includes(dataObj.startBoardId)
               ) {
                 //pole przemiany dół czarne
@@ -1226,14 +1178,14 @@ export function MovingPieces() {
             } else if (
               Math.abs(dataObj.startBoardId - targetId) == 16 &&
               przeszkodamPionkaChildren &&
-              przeszkodamPionkaChildren == "myImage" &&
+              przeszkodamPionkaChildren == 'myImage' &&
               polePrzemianyBottom.includes(dataObj.startBoardId)
             ) {
               illegal();
             } else if (
               Math.abs(dataObj.startBoardId - targetId) == 16 &&
               przeszkodamPionkaChildren &&
-              przeszkodamPionkaChildren != "myImage" &&
+              przeszkodamPionkaChildren != 'myImage' &&
               polePrzemianyBottom.includes(dataObj.startBoardId)
             ) {
               setDubble(targetId);
@@ -1241,14 +1193,14 @@ export function MovingPieces() {
             } else if (
               Math.abs(dataObj.startBoardId - targetId) == 16 &&
               przeszkodamPionkaChildrenTop &&
-              przeszkodamPionkaChildrenTop == "myImage" &&
+              przeszkodamPionkaChildrenTop == 'myImage' &&
               polePrzemianyTop.includes(dataObj.startBoardId)
             ) {
               illegal();
             } else if (
               Math.abs(dataObj.startBoardId - targetId) == 16 &&
               przeszkodamPionkaChildrenTop &&
-              przeszkodamPionkaChildrenTop != "myImage" &&
+              przeszkodamPionkaChildrenTop != 'myImage' &&
               polePrzemianyTop.includes(dataObj.startBoardId)
             ) {
               setDubble(targetId);
@@ -1286,7 +1238,7 @@ export function MovingPieces() {
               illegal();
             }
           } else if (
-            dataObj.pieceId == "wk" &&
+            dataObj.pieceId == 'wk' &&
             dataObj.targetBoardId == 59 &&
             didKingMove == false &&
             didLeftRookMove == false &&
@@ -1294,9 +1246,9 @@ export function MovingPieces() {
           ) {
             setDubble(0);
             returnData.legalSquares.push(59);
-            roszada("lewa");
+            roszada('lewa');
           } else if (
-            dataObj.pieceId == "wk" &&
+            dataObj.pieceId == 'wk' &&
             dataObj.targetBoardId == 63 &&
             didKingMove == false &&
             didRightRookMove == false &&
@@ -1304,7 +1256,7 @@ export function MovingPieces() {
           ) {
             setDubble(0);
             returnData.legalSquares.push(59);
-            roszada("prawa");
+            roszada('prawa');
           } else if (dataObj.startBoardId == dataObj.targetBoardId) {
             setDubble(0);
             illegal();
@@ -1320,7 +1272,7 @@ export function MovingPieces() {
           let targetTag;
 
           //sprawdzanie dokąłdnie jakie figury są zaangażowane
-          const targetSq = target.getAttribute("src");
+          const targetSq = target.getAttribute('src');
           let pieceId;
           if (targetSq) {
             pieceId = targetSq.match(/(\w{2})\.png$/);
@@ -1332,11 +1284,11 @@ export function MovingPieces() {
           if (srcTag == targetTag) {
             //figury tego samego koloru trafiają na siebie illegal
             illegal();
-          } else if (srcTag != targetTag && ogTag != "wp" && ogTag != "bp") {
+          } else if (srcTag != targetTag && ogTag != 'wp' && ogTag != 'bp') {
             //figury różnego koloru trafiają na siebie i hero to nie jest pionek
             setDubble(0);
             legal();
-          } else if (ogTag == "wp" || ogTag == "bp") {
+          } else if (ogTag == 'wp' || ogTag == 'bp') {
             //figury różnego koloru i hero to jest pionek
             if (!target.parentElement) return;
             const targetId = Number(target.parentElement.id.slice(1));
@@ -1354,13 +1306,13 @@ export function MovingPieces() {
               //pionek pórbuje bić na wprost illegal
               illegal();
             } else if (
-              dataObj.pieceId == "wp" &&
+              dataObj.pieceId == 'wp' &&
               polePrzemianyTop.includes(dataObj.startBoardId)
             ) {
               przemiana();
               setDubble(0);
             } else if (
-              dataObj.pieceId == "bp" &&
+              dataObj.pieceId == 'bp' &&
               polePrzemianyBottom.includes(dataObj.startBoardId)
             ) {
               przemiana();
@@ -1382,7 +1334,7 @@ export function MovingPieces() {
         const sqIMGdot = document.querySelector(`#s${n} > .dot`);
         const parent = document.querySelector(`#s${n}`);
         //usuwanie wszystkich inline style
-        parent?.removeAttribute("style");
+        parent?.removeAttribute('style');
         if (sqIMGdot) {
           parent?.removeChild(sqIMGdot);
         }
@@ -1393,9 +1345,9 @@ export function MovingPieces() {
         const newState = cloneDeep(data);
         // newState.occupatedSquares = [];
 
-        (newState.pieceId = ""),
+        (newState.pieceId = ''),
           (newState.startBoardId = 0),
-          (newState.startBoardDivId = ""),
+          (newState.startBoardDivId = ''),
           (newState.targetBoardId = 0),
           (newState.occupatedSquares = []),
           (newState.collision = false);
@@ -1408,15 +1360,15 @@ export function MovingPieces() {
       setFillArr(fillArr ? false : true);
     }
     for (let n of square) {
-      n.addEventListener("mouseup", DropPicesHandler as EventListener);
+      n.addEventListener('mouseup', DropPicesHandler as EventListener);
     }
 
     return () => {
       for (let n of square) {
-        n.removeEventListener("mousedown", MovingPicesHandler as EventListener);
+        n.removeEventListener('mousedown', MovingPicesHandler as EventListener);
       }
       for (let n of square) {
-        n.removeEventListener("mouseup", DropPicesHandler as EventListener);
+        n.removeEventListener('mouseup', DropPicesHandler as EventListener);
       }
     };
   });

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="360" viewBox="0 0 240 360" fill="none" role="img" aria-label="Myszka z sugerowanym scrollowaniem">
+  <!-- transparent background -->
+  <rect width="100%" height="100%" fill="none" />
+  <!-- mouse outline (rounded capsule) -->
+  <rect x="60" y="50" width="120" height="220" rx="60" ry="60" stroke="#111111" stroke-width="4" fill="none" />
+  <!-- inner wheel rectangle (stylized) -->
+  <rect x="115" y="110" width="10" height="40" rx="5" ry="5" fill="#111111" />
+  <!-- top arrow (chevron) -->
+  <path d="M120 30 L100 52 L140 52 Z" fill="#111111" />
+  <!-- bottom arrow (chevron) -->
+  <path d="M120 330 L100 308 L140 308 Z" fill="#111111" />
+  <!-- optional small gap indicators between arrows and mouse -->
+  <line x1="120" y1="62" x2="120" y2="98" stroke="#111111" stroke-width="2" stroke-linecap="round" />
+  <line x1="120" y1="172" x2="120" y2="306" stroke="#111111" stroke-width="2" stroke-linecap="round" />
+  <!-- accessible title/desc -->
+  <title>Myszka z sugerowanym scrollowaniem</title>
+  <desc>Ikona myszki w orientacji pionowej z chevronami nad i pod myszką sugerującymi przewijanie.</desc>
+</svg>

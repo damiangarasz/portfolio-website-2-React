@@ -9,22 +9,22 @@
 
 @layer base {
   body {
-    background-image: url("../img/main/honeycomb-bg.svg");
+    background-image: url('../img/main/honeycomb_tile_fixed_v2.svg');
     background-size: auto;
-    font-family: "Lato", sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 400;
     font-style: normal;
   }
 
   .dancing-script-form {
-    font-family: "Dancing Script", cursive;
+    font-family: 'Dancing Script', cursive;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
   }
 
   .lato {
-    font-family: "Lato", sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 400;
     font-style: normal;
   }
@@ -40,16 +40,16 @@
   } */
 
   /* hamburger toggle logika POCZĄTEK */
-  .hamburger-toggle[data-state="on"] {
+  .hamburger-toggle[data-state='on'] {
     display: block;
   }
-  .hamburger-toggle[data-state="off"] {
+  .hamburger-toggle[data-state='off'] {
     display: none;
   }
-  .x-toggle[data-state="off"] {
+  .x-toggle[data-state='off'] {
     display: none;
   }
-  .x-toggle[data-state="on"] {
+  .x-toggle[data-state='on'] {
     display: block;
   }
   /* hamburger toggle logika KONIEC */
@@ -77,16 +77,16 @@
   /* menu główne KONIEC */
 
   /* search bar POCZĄTEK */
-  .search-bar[data-state="on"] {
+  .search-bar[data-state='on'] {
     display: block;
   }
-  .search-bar[data-state="off"] {
+  .search-bar[data-state='off'] {
     display: none;
   }
-  .lupa[data-state="on"] {
+  .lupa[data-state='on'] {
     display: block;
   }
-  .lupa[data-state="off"] {
+  .lupa[data-state='off'] {
     display: none;
   }
   /* search bar KONIEC */
@@ -106,7 +106,7 @@
   }
 
   .form-imput::placeholder {
-    font-family: "Dancing Script", cursive;
+    font-family: 'Dancing Script', cursive;
   }
   /* form KONIEC */
 
@@ -116,7 +116,7 @@
 
   /* chess board początek */
   .chess-grid {
-    background-image: url("./img/Game-2/board.png");
+    background-image: url('./img/Game-2/board.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Menu = () => {
   return (
@@ -7,7 +7,7 @@ const Menu = () => {
         <svg
           className="md:hidden"
           aria-hidden="true"
-          fill="#000000"
+          fill="#000000ff"
           width="25px"
           height="25px"
           viewBox="0 0 1920 1920"
@@ -36,7 +36,7 @@ const Menu = () => {
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
-          fill="#000000"
+          fill="#000000ff"
         >
           <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
           <g
@@ -74,28 +74,32 @@ const Menu = () => {
       <nav aria-label="main menu hover:color" aria-expanded="false">
         <ol className="main-menu cursor-pointer space-x-5 max-md:hidden md:flex">
           <li>
-            <span className="dot max-md:text-xs">•</span>
+            <span className="dot text-white max-md:text-xs">•</span>
             <Link to="/">
-              <span className="text-xl">Home</span>
+              <span className="text-xl text-white">Home</span>
             </Link>
           </li>
           <li className="learn relative">
-            <span className="dot">•</span>
-            <span className="text-xl">Games</span>
-            <span>⯆</span>
+            <span className="dot text-white">•</span>
+            <span className="text-xl text-white">Game</span>
+            <span className="text-white">⯆</span>
             <ul className="drop-menu absolute top-4 hidden hover:block">
               <li className="text-black">
-                <Link to="/game-1">Game 1</Link>
+                <Link to="/game-1">
+                  <p className="text-white">Gane 1</p>
+                </Link>
               </li>
               <li className="text-black">
-                <Link to="/game-2">Game 2</Link>
+                <Link to="/game-2">
+                  <p className="text-white">Game 2</p>
+                </Link>
               </li>
             </ul>
           </li>
           <li>
-            <span className="dot">•</span>
+            <span className="dot text-white">•</span>
             <Link to="/blog">
-              <span className="text-xl">Blog</span>
+              <span className="text-xl text-white">Blog</span>
             </Link>
           </li>
         </ol>

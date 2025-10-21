@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import { MovingPieces } from "./movingPieces";
+import { useEffect, useState } from 'react';
+import { MovingPieces } from './movingPieces';
 
 export function Game2() {
   useEffect(() => {
     //usuwam defalutowe działanie przeciągania elementu
-    const test = document.querySelectorAll(".chess-grid div");
+    const test = document.querySelectorAll('.chess-grid div');
     function preventDefaultDrag(event: DragEvent) {
       event.preventDefault();
     }
     for (let n of test) {
-      n.addEventListener("dragstart", preventDefaultDrag as EventListener);
+      n.addEventListener('dragstart', preventDefaultDrag as EventListener);
     }
 
     return () => {
       for (let n of test) {
-        n.removeEventListener("dragstart", preventDefaultDrag as EventListener);
+        n.removeEventListener('dragstart', preventDefaultDrag as EventListener);
       }
     };
   });
@@ -27,8 +27,8 @@ export function Game2() {
     }
 
     const ret = {
-      width: temp + "px",
-      height: temp + "px",
+      width: temp + 'px',
+      height: temp + 'px',
     };
 
     return ret;
@@ -41,16 +41,16 @@ export function Game2() {
         temp = 580;
       }
       const rozmiar = {
-        width: temp + "px",
-        height: temp + "px",
+        width: temp + 'px',
+        height: temp + 'px',
       };
       setRozmiarOkna(rozmiar);
     }
 
-    window.addEventListener("resize", resize);
+    window.addEventListener('resize', resize);
 
     return () => {
-      window.removeEventListener("resize", resize);
+      window.removeEventListener('resize', resize);
     };
   });
   //koniec określania wielkości boardu

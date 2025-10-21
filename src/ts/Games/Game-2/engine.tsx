@@ -21,42 +21,42 @@ export function engine(data: {
   };
 
   switch (data.pieceId) {
-    case "br":
-    case "wr":
+    case 'br':
+    case 'wr':
       returnData.legalSquares = ruchyWiezy(data.startBoardId);
 
       break;
-    case "bn":
-    case "wn":
+    case 'bn':
+    case 'wn':
       returnData.legalSquares = ruchySkoczka(data.startBoardId);
 
       break;
-    case "bb":
-    case "wb":
+    case 'bb':
+    case 'wb':
       returnData.legalSquares = ruchyGonca(data.startBoardId);
 
       break;
-    case "bq":
-    case "wq":
+    case 'bq':
+    case 'wq':
       returnData.legalSquares = ruchyHetmana(data.startBoardId);
 
       break;
-    case "bk":
-    case "wk":
+    case 'bk':
+    case 'wk':
       returnData.legalSquares = ruchyKrola(
         data.startBoardId,
         data.pieceId,
         true,
         data.doesItMove,
-        data.doesItFree,
+        data.doesItFree
       );
 
       break;
-    case "bp":
+    case 'bp':
       returnData.legalSquares = ruchyPionka(data.startBoardId, false, false);
 
       break;
-    case "wp":
+    case 'wp':
       returnData.legalSquares = ruchyPionka(data.startBoardId, true, false);
 
       break;
@@ -527,7 +527,7 @@ export function engine(data: {
     pieceId: string,
     naTwardo: boolean,
     doesItMove: { [key: string]: boolean },
-    doesItFree: { [key: string]: boolean },
+    doesItFree: { [key: string]: boolean }
   ): number[] {
     const ruchy: number[] = [];
 
@@ -585,7 +585,7 @@ export function engine(data: {
       }
     }
 
-    if (pieceId == "wk" && naTwardo) {
+    if (pieceId == 'wk' && naTwardo) {
       //na twardo dla białego króla
       const lol = krolPrzeciwnika();
       if (lol) {
@@ -610,7 +610,7 @@ export function engine(data: {
 
     for (let n of data.kingCollisions.pieces) {
       switch (Object.values(n)[0]) {
-        case "br":
+        case 'br':
           let temp1 = ruchyWiezy(Number(Object.keys(n)[0]));
 
           for (let n of temp1) {
@@ -619,7 +619,7 @@ export function engine(data: {
             }
           }
           break;
-        case "bn":
+        case 'bn':
           let temp2 = ruchySkoczka(Number(Object.keys(n)[0]));
           for (let n of temp2) {
             if (!polaPodOstrzalem.includes(n)) {
@@ -627,7 +627,7 @@ export function engine(data: {
             }
           }
           break;
-        case "bb":
+        case 'bb':
           let temp3 = ruchyGonca(Number(Object.keys(n)[0]));
           for (let n of temp3) {
             if (!polaPodOstrzalem.includes(n)) {
@@ -635,7 +635,7 @@ export function engine(data: {
             }
           }
           break;
-        case "bq":
+        case 'bq':
           let temp4 = ruchyHetmana(Number(Object.keys(n)[0]));
           for (let n of temp4) {
             if (!polaPodOstrzalem.includes(n)) {
@@ -643,13 +643,13 @@ export function engine(data: {
             }
           }
           break;
-        case "bk":
+        case 'bk':
           let temp5 = ruchyKrola(
             Number(Object.keys(n)[0]),
             data.pieceId,
             false,
             data.doesItMove,
-            data.doesItFree,
+            data.doesItFree
           );
           if (!temp5) return;
           for (let n of temp5) {
@@ -658,7 +658,7 @@ export function engine(data: {
             }
           }
           break;
-        case "bp":
+        case 'bp':
           let temp = ruchyPionka(Number(Object.keys(n)[0]), false, true);
           for (let n of temp) {
             if (!polaPodOstrzalem.includes(n)) {

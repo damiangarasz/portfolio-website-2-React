@@ -1,17 +1,17 @@
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 
 const data = [
-  "krówka",
-  "konik",
-  "muszka",
-  "prówka",
-  "robaczek",
-  "krokusek",
-  "krokodylek",
+  'krówka',
+  'konik',
+  'muszka',
+  'prówka',
+  'robaczek',
+  'krokusek',
+  'krokodylek',
 ];
 
 const SearchBar = () => {
-  const [search, searchResoult] = useState("");
+  const [search, searchResoult] = useState('');
   const [wynik, filtrowanie] = useState<string[]>([]);
   const [animachaSearchBara, aktywacjaAnimacjiSearchBara] = useState(false);
 
@@ -22,32 +22,32 @@ const SearchBar = () => {
       });
       filtrowanie(filteredData);
     },
-    [search],
+    [search]
   );
 
   useEffect(() => {
-    const lol = document.querySelector<HTMLElement>(".hint");
+    const lol = document.querySelector<HTMLElement>('.hint');
     if (search.length != 0) {
       if (lol) {
-        lol.classList.remove("hidden");
-        lol.classList.add("visible");
+        lol.classList.remove('hidden');
+        lol.classList.add('visible');
         console.log(search);
       }
     } else {
       if (lol) {
-        lol.classList.remove("visible");
-        lol.classList.add("hidden");
+        lol.classList.remove('visible');
+        lol.classList.add('hidden');
       }
     }
   }, [wynik]);
 
   // ----- logika kliknięcia w lupę początek
 
-  const [stanSearchBar, searchBarFn] = useState("off");
-  const [stanLupa, lupaFn] = useState("on");
+  const [stanSearchBar, searchBarFn] = useState('off');
+  const [stanLupa, lupaFn] = useState('on');
   function lupaSwitch() {
-    searchBarFn((prev): string => (prev === "off" ? "on" : "off"));
-    lupaFn((prev): string => (prev === "on" ? "off" : "on"));
+    searchBarFn((prev): string => (prev === 'off' ? 'on' : 'off'));
+    lupaFn((prev): string => (prev === 'on' ? 'off' : 'on'));
     aktywacjaAnimacjiSearchBara(true);
   }
 
@@ -57,7 +57,7 @@ const SearchBar = () => {
   useEffect(() => {
     function clickOutside(event: MouseEvent) {
       if (
-        stanSearchBar == "on" &&
+        stanSearchBar == 'on' &&
         formRef.current &&
         !formRef.current.contains(event.target as Node) &&
         lupaRef.current &&
@@ -68,10 +68,10 @@ const SearchBar = () => {
       }
     }
 
-    document.addEventListener("click", clickOutside);
+    document.addEventListener('click', clickOutside);
 
     return () => {
-      document.removeEventListener("click", clickOutside);
+      document.removeEventListener('click', clickOutside);
     };
   }, [stanSearchBar]);
   // ----- logika klikniecia w lupę koniec
@@ -96,7 +96,7 @@ const SearchBar = () => {
     }
     kolejnaFn();
 
-    window.addEventListener("resize", kolejnaFn);
+    window.addEventListener('resize', kolejnaFn);
 
     const animacja = requestAnimationFrame(animacjaSearchBara);
 
@@ -105,7 +105,7 @@ const SearchBar = () => {
 
       if (
         Math.abs(
-          docelowaSzererokoscSearchBara - poczatkowaSzerokoscSearchBara.current,
+          docelowaSzererokoscSearchBara - poczatkowaSzerokoscSearchBara.current
         ) < tolerancja
       ) {
         //jezeli Math.abs zwróci true to returnuje całą funkcję co zatrzymuje animacje
@@ -130,7 +130,7 @@ const SearchBar = () => {
     }
 
     return () => {
-      window.removeEventListener("resize", kolejnaFn);
+      window.removeEventListener('resize', kolejnaFn);
       cancelAnimationFrame(animacja);
     };
   }, [animachaSearchBara]);
@@ -154,7 +154,7 @@ const SearchBar = () => {
             type="search"
             data-state=""
             placeholder="search"
-            className="absolute right-[75px] -top-0.5 h-3 rounded-full"
+            className="absolute -top-0.5 right-[75px] h-3 rounded-full"
           />
           {/* mapowanie wyników search bara */}
           <ul className="hint absolute right-[105px] top-6 hidden">
@@ -164,7 +164,7 @@ const SearchBar = () => {
           </ul>
           <button data-state="on">
             <svg
-              fill="#000000"
+              fill="#ffffffff"
               viewBox="0 0 32 32"
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
@@ -191,10 +191,10 @@ const SearchBar = () => {
           console.log(poczatkowaSzerokoscSearchBara.current);
         }}
         data-state={stanLupa}
-        className="lupa absolute right-20 top-1 hover:cursor-pointer"
+        className="lupa absolute -top-2 right-20 hover:cursor-pointer"
       >
         <svg
-          fill="#000000"
+          fill="#ffffffff"
           viewBox="0 0 32 32"
           version="1.1"
           width="20px"

@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
 
 export function Main() {
+  const textApkaMath =
+    'Pierwsza aplikacja stworzona w React Native opublikowana w Google Play. Aktualnie dostępna w wersji Alfa dla testów';
+
   const textSzachy = `Mój najnowszy projekt to samodzielnie zakodowana aplikacja szachowa. Opracowałem dla niej autorski, podstawowy silnik, który zarządza mechaniką gry, uwzględniając specjalne ruchy (roszada, bicie w przelocie) i kontrolujący legalność posunięć. Wykorzystałem API ChatGPT jako AI przeciwnika, który gra czarnymi`;
 
   const textArcade = `Krótkie demo stworzone na <canvas> z mechaniką podskoku i opadania postaci`;
@@ -15,85 +18,147 @@ export function Main() {
 
   const intro = `Strona jest wciąż w budowie. Została stworzona w technologii React, łącznie ze wszystkimi komponentami, takimi jak wyszukiwarka, gry czy formularz kontaktowy. Poniżej znajduje się krótka historia mojej przygody z programowaniem.`;
 
-  const placeholder = "1";
+  const iloscPodstorn = 8;
+
+  const [pageShown, setPageShown] = useState(0);
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY > 0 && pageShown < 8) {
+        setPageShown((num) => num + 1);
+      } else if (e.deltaY < 0 && pageShown > 0) {
+        setPageShown((num) => num - 1);
+      } else if (e.deltaY > 0 && pageShown == 8) {
+        setPageShown(8);
+      } else if (e.deltaY < 0 && pageShown <= 0) {
+        setPageShown(0);
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel);
+
+    return () => {
+      removeEventListener('wheel', handleWheel);
+    };
+  });
+
+  const lol = () => {
+    if (pageShown == 0) {
+      return (
+        <div className="col-span-2 mx-auto flex h-[100%] w-[75%] items-center">
+          <p className="text-center text-white">{intro}</p>
+        </div>
+      );
+    } else {
+      switch (pageShown) {
+        case 1:
+          render();
+      }
+    }
+    //tutaj jestem lol
+    function render(tail1, tail2) {
+      return (
+        <div className="kontener relative">
+          <div className="tail-1">{tail1}</div>
+          <div className="tail-2">{tail2}</div>
+          <div className="kursor absolute">
+            <img
+              src="../img/main/mouse_scroll.svg"
+              alt="Myszka scroll"
+              className="h-36 w-24"
+            />
+          </div>
+        </div>
+      );
+    }
+  };
 
   return (
-    <main className="kontener mx-auto grid w-[832px] grid-cols-2">
-      <div className="col-span-2 px-40 py-20 text-center">
-        <span>{intro}</span>
-      </div>
-      <div className="mx-auto flex w-[333px] items-center px-2 py-4 text-justify">
-        <Link className="block" to="/Game-2">
-          <span>{textSzachy}</span>
-        </Link>
-      </div>
-      <div className="mx-auto w-[400px] items-center justify-center px-2 py-4">
-        <Link to="/Game-2">
-          <video autoPlay muted loop preload="none">
-            <source src="img/main/szachy-gotowy.mp4" type="video/mp4"></source>
-          </video>
-        </Link>
-      </div>
-      <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
-        <Link to="/Game-1">
-          <video autoPlay muted loop preload="none">
-            <source src="img/main/arcade-gotowy.mp4" type="video/mp4"></source>
-          </video>
-        </Link>
-      </div>
-      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
-        <Link to="/Game-1">
-          <span>{textArcade}</span>
-        </Link>
-      </div>
-      <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
-        <a href="https://codepen.io/DamianGarasz" target="_blank">
-          <span>{textCodePen}</span>
-        </a>
-      </div>
-      <div className="mx-auto w-[400px] px-2 py-4">
-        <a href="https://codepen.io/DamianGarasz" target="_blank">
-          <img src="img/main/codepen.png"></img>
-        </a>
-      </div>
-      <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
-        <a href="https://damiangarasz.github.io/ImbaProfit/" target="_blank">
-          <video autoPlay muted loop preload="none">
-            <source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source>
-          </video>
-        </a>
-      </div>
-      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
-        <a href="https://damiangarasz.github.io/ImbaProfit/" target="_blank">
-          <span>{textImba} </span>
-          <span className="text-red-400">
-            (Strona ma obecnie kilka mankamentów z powodu braku obsługi routingu
-            przez GitHub Pages)
-          </span>
-        </a>
-      </div>
-      <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
-        <a href="https://frontendmasters.com/u/Garik/" target="_blank">
-          <span>{frontendmasters}</span>
-        </a>
-      </div>
-      <div className="mx-auto w-[400px] px-2 py-4">
-        <a href="https://frontendmasters.com/u/Garik/" target="_blank">
-          <img src="img/main/front.png"></img>
-        </a>
-      </div>
-      <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
-        <a href="https://www.quasarhud.com/" target="_blank">
-          <video autoPlay muted loop preload="none">
-            <source src="img/main/quasarhud.mp4" type="video/mp4"></source>
-          </video>
-        </a>
-      </div>
-      <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
-        <a href="https://www.quasarhud.com/" target="_blank">
-          <span>{quasar}</span>
-        </a>
-      </div>
-    </main>
+    <main className="kontener h-[90vh] w-[100%]">{lol()}</main>
+    //   <main className="kontener mx-auto grid w-[832px] grid-cols-2">
+    //<div className="mx-auto flex h-[100%] w-[75%] items-center">
+    //   <div className="mx-auto flex w-[333px] items-center px-2 py-4 text-justify">
+    //     <Link className="block" to="/Game-2">
+    //       <p className="text-white">{textSzachy}</p>
+    //     </Link>
+    //   </div>
+    //   <div className="mx-auto w-[400px] items-center justify-center px-2 py-4">
+    //     <Link to="/Game-2">
+    //       <video autoPlay muted loop preload="none">
+    //         <source
+    //           src="img/main/szachy-gotowy.mp4"
+    //           type="video/mp4"
+    //         ></source>
+    //       </video>
+    //     </Link>
+    //   </div>
+    // </div>
+    //
+    //<div>
+    //   <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
+    //     <Link to="/Game-1">
+    //       <video autoPlay muted loop preload="none">
+    //         <source
+    //           src="img/main/arcade-gotowy.mp4"
+    //           type="video/mp4"
+    //         ></source>
+    //       </video>
+    //     </Link>
+    //   </div>
+    //   <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
+    //     <Link to="/Game-1">
+    //       <p className="text-white">{textArcade}</p>
+    //     </Link>
+    //   </div>
+    // </div>
+    //     <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
+    //       <a href="https://codepen.io/DamianGarasz" target="_blank">
+    //         <p className="text-white">{textCodePen}</p>
+    //       </a>
+    //     </div>
+    //     <div className="mx-auto w-[400px] px-2 py-4">
+    //       <a href="https://codepen.io/DamianGarasz" target="_blank">
+    //         <img src="img/main/codepen.png"></img>
+    //       </a>
+    //     </div>
+    //     <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
+    //       <a href="https://damiangarasz.github.io/ImbaProfit/" target="_blank">
+    //         <video autoPlay muted loop preload="none">
+    //           <source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source>
+    //         </video>
+    //       </a>
+    //     </div>
+    //     <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
+    //       <a href="https://damiangarasz.github.io/ImbaProfit/" target="_blank">
+    //         <p className="text-white">{textImba} </p>
+    //         <span className="text-red-400">
+    //           (Strona ma obecnie kilka mankamentów z powodu braku obsługi routingu
+    //           przez GitHub Pages)
+    //         </span>
+    //       </a>
+    //     </div>
+    //     <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
+    //       <a href="https://frontendmasters.com/u/Garik/" target="_blank">
+    //         <p className="text-white">{frontendmasters}</p>
+    //       </a>
+    //     </div>
+    //     <div className="mx-auto w-[400px] px-2 py-4">
+    //       <a href="https://frontendmasters.com/u/Garik/" target="_blank">
+    //         <img src="img/main/front.png"></img>
+    //       </a>
+    //     </div>
+    //     <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
+    //       <a href="https://www.quasarhud.com/" target="_blank">
+    //         <video autoPlay muted loop preload="none">
+    //           <source src="img/main/quasarhud.mp4" type="video/mp4"></source>
+    //         </video>
+    //       </a>
+    //     </div>
+    //     <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
+    //       <a href="https://www.quasarhud.com/" target="_blank">
+    //         <p className="text-white">{quasar}</p>
+    //       </a>
+    //     </div>
+    //   </main>
   );
 }

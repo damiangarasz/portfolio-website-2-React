@@ -1,17 +1,17 @@
-import { useEffect } from "react";
-import { ImageCache } from "./ImageCache";
+import { useEffect } from 'react';
+import { ImageCache } from './ImageCache';
 
 export function Game1() {
   useEffect(() => {
-    const canvas = document.querySelector("#game_canvas") as HTMLCanvasElement;
+    const canvas = document.querySelector('#game_canvas') as HTMLCanvasElement;
     if (!canvas) {
-      console.error("Canvas element nie został znaleziony.");
+      console.error('Canvas element nie został znaleziony.');
       return;
     }
 
-    const ctx = canvas.getContext("2d")!;
+    const ctx = canvas.getContext('2d')!;
     if (!ctx) {
-      console.error("Nie udało się uzyskać kontekstu 2D dla canvas.");
+      console.error('Nie udało się uzyskać kontekstu 2D dla canvas.');
       return;
     }
 
@@ -75,7 +75,7 @@ export function Game1() {
         this.frame = 0;
         this.currWidth = 64;
         this.maxframes = 3;
-        this.state = "idle";
+        this.state = 'idle';
         this.velocity = 0;
         this.weight = 2;
         this.switched = false;
@@ -108,7 +108,6 @@ export function Game1() {
 
       dead() {
         this.img = imageCache.heroDead;
-        console.log(this.img);
       }
 
       draw() {
@@ -193,7 +192,7 @@ export function Game1() {
           this.pos.x,
           this.pos.y,
           this.currWidth,
-          80,
+          80
         );
 
         this.jump();
@@ -243,7 +242,7 @@ export function Game1() {
           this.pos.x,
           this.pos.y,
           64,
-          64,
+          64
         );
       }
     }
@@ -271,22 +270,22 @@ export function Game1() {
     // bee koniec
 
     // zczytywnaie klawiszy początek
-    window.addEventListener("keydown", keydown);
-    window.addEventListener("keyup", keyup);
+    window.addEventListener('keydown', keydown);
+    window.addEventListener('keyup', keyup);
 
     function keydown(event: KeyboardEvent) {
-      if (event.key == "ArrowRight" || event.key == "d" || event.key == "D") {
+      if (event.key == 'ArrowRight' || event.key == 'd' || event.key == 'D') {
         key.prawo.pressed = true;
       } else if (
-        event.key == "ArrowLeft" ||
-        event.key == "a" ||
-        event.key == "A"
+        event.key == 'ArrowLeft' ||
+        event.key == 'a' ||
+        event.key == 'A'
       ) {
         key.lewo.pressed = true;
       } else if (
-        event.key == "w" ||
-        event.key == "W" ||
-        event.key == "ArrowUp"
+        event.key == 'w' ||
+        event.key == 'W' ||
+        event.key == 'ArrowUp'
       ) {
         key.skok.pressed = true;
       } else if (event.keyCode == 32) {
@@ -295,20 +294,20 @@ export function Game1() {
     }
 
     function keyup(event: KeyboardEvent) {
-      if (event.key == "ArrowRight" || event.key == "d" || event.key == "D") {
+      if (event.key == 'ArrowRight' || event.key == 'd' || event.key == 'D') {
         key.prawo.pressed = false;
         damian.moving = false;
       } else if (
-        event.key == "ArrowLeft" ||
-        event.key == "a" ||
-        event.key == "A"
+        event.key == 'ArrowLeft' ||
+        event.key == 'a' ||
+        event.key == 'A'
       ) {
         key.lewo.pressed = false;
         damian.moving = false;
       } else if (
-        event.key == "w" ||
-        event.key == "W" ||
-        event.key == "ArrowUp"
+        event.key == 'w' ||
+        event.key == 'W' ||
+        event.key == 'ArrowUp'
       ) {
         key.skok.pressed = false;
         damian.moving = false;

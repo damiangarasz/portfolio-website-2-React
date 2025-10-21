@@ -1,21 +1,21 @@
-import { useMutation } from "@tanstack/react-query";
-import postContact from "./postContact";
+import { useMutation } from '@tanstack/react-query';
+import postContact from './postContact';
 
 export function Form() {
   const mutation = useMutation({
     mutationFn: (formData: FormData) => {
       return postContact(
-        formData.get("name") as string,
-        formData.get("email") as string,
-        formData.get("message") as string,
+        formData.get('name') as string,
+        formData.get('email') as string,
+        formData.get('message') as string
       );
     },
     onSuccess: () => {
-      console.log("ja jebie");
+      console.log('ja jebie');
     },
 
     onError: (error) => {
-      console.error("Error occurred:", error);
+      console.error('Error occurred:', error);
     },
   });
 

@@ -1,12 +1,12 @@
 export async function AiRes(state: string) {
   const cloudFunctionUrl =
-    "https://europe-west1-spatial-box-456215-j3.cloudfunctions.net/moj-openai-proxy";
+    'https://europe-west1-spatial-box-456215-j3.cloudfunctions.net/moj-openai-proxy';
 
   const prompt = {
-    model: "gpt-4o",
+    model: 'gpt-4o',
     messages: [
       {
-        role: "user",
+        role: 'user',
         content: `We play chess; 
                 you play black; 
                 you can not play castling; 
@@ -35,9 +35,9 @@ export async function AiRes(state: string) {
 
   try {
     const response = await fetch(cloudFunctionUrl, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(prompt),
     });
@@ -46,6 +46,6 @@ export async function AiRes(state: string) {
     if (data) numbers = data.response.match(/\d+/g);
     return numbers;
   } catch (error) {
-    console.error("Błąd podczas komunikacji z funkcją:", error);
+    console.error('Błąd podczas komunikacji z funkcją:', error);
   }
 }
