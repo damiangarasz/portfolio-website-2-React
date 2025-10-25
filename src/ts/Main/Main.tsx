@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
 export function Main() {
   const textApkaMath =
@@ -21,6 +21,24 @@ export function Main() {
   const iloscPodstorn = 8;
 
   const [pageShown, setPageShown] = useState(0);
+  const [obrazekLiczydlo, setobrazekLiczydlo] = useState(1);
+
+  useEffect(() => {
+    if (pageShown == 1) {
+      const timer = setInterval(() => {
+        setobrazekLiczydlo((prev) => {
+          if (prev >= 3) {
+            return 1;
+          } else {
+            return prev + 1;
+          }
+        });
+      }, 3000);
+      return () => clearInterval(timer);
+    } else {
+      return;
+    }
+  });
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
@@ -38,32 +56,71 @@ export function Main() {
     window.addEventListener('wheel', handleWheel);
 
     return () => {
-      removeEventListener('wheel', handleWheel);
+      window.removeEventListener('wheel', handleWheel);
     };
-  });
+  }, [pageShown]);
 
   const lol = () => {
     if (pageShown == 0) {
       return (
-        <div className="col-span-2 mx-auto flex h-[100%] w-[75%] items-center">
-          <p className="text-center text-white">{intro}</p>
+        <div className="col-span-2 mx-auto flex h-[100%] max-w-xl items-center text-xl leading-relaxed transition-opacity duration-150 ease-out">
+          <p className="bg-gray-900/70 p-[20px] text-center text-white">
+            {intro}
+          </p>
         </div>
       );
     } else {
       switch (pageShown) {
         case 1:
-          render();
+          const lol = `./img/main/Zrzut ekranu ${obrazekLiczydlo}.png`;
+          return render(textApkaMath, <img src={lol} />);
+        case 2:
+          return render(
+            <video autoPlay key={pageShown} loop muted preload="none">
+              <source src="./img/main/szachy-gotowy.mp4" type="video/mp4" />
+            </video>,
+            textSzachy
+          );
+        case 3:
+          return render(
+            <video autoPlay key={pageShown} loop muted preload="none">
+              <source src="./img/main/arcade-gotowy.mp4" type="video/mp4" />
+            </video>,
+            textArcade
+          );
+        case 4:
+          return render(textCodePen, <img src="./img/main/codepen.png" />);
+        case 5:
+          return render(
+            textImba,
+            <video autoPlay loop muted preload="none">
+              <source src="./img/main/IMBA-gotowy.mp4" type="video/mp4" />
+            </video>
+          );
+        case 6:
+          return render(<img src="./img/main/front.png" />, frontendmasters);
+        case 7:
+          return render(
+            quasar,
+            <video autoPlay loop muted preload="none">
+              <source src="./img/main/quasarhud.mp4" type="video/mp4" />
+            </video>
+          );
+        default:
+          return <div>dupa</div>;
       }
     }
-    //tutaj jestem lol
-    function render(tail1, tail2) {
+    function render(
+      tail1: ReactElement | string,
+      tail2: ReactElement | string
+    ) {
       return (
         <div className="kontener relative">
-          <div className="tail-1">{tail1}</div>
-          <div className="tail-2">{tail2}</div>
+          <div className="tail-1 text-white">{tail1}</div>
+          <div className="tail-2 text-white">{tail2}</div>
           <div className="kursor absolute">
             <img
-              src="../img/main/mouse_scroll.svg"
+              src="./img/main/mouse_scroll.svg"
               alt="Myszka scroll"
               className="h-36 w-24"
             />
