@@ -63,7 +63,7 @@ export function Main() {
   const lol = () => {
     if (pageShown == 0) {
       return (
-        <div className="col-span-2 mx-auto flex h-[100%] max-w-xl items-center text-xl leading-relaxed transition-opacity duration-150 ease-out">
+        <div className="animate-slideIntro col-span-2 mx-auto flex h-[100%] max-w-xl items-center text-xl">
           <p className="bg-gray-900/70 p-[20px] text-center text-white">
             {intro}
           </p>
@@ -73,36 +73,85 @@ export function Main() {
       switch (pageShown) {
         case 1:
           const lol = `./img/main/Zrzut ekranu ${obrazekLiczydlo}.png`;
-          return render(textApkaMath, <img src={lol} />);
+          return render(
+            <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
+              {textApkaMath}
+            </p>,
+            <img className="animate-kafel2 m-auto w-[50%]" src={lol} />
+          );
         case 2:
           return render(
-            <video autoPlay key={pageShown} loop muted preload="none">
+            <video
+              className="animate-kafel1"
+              autoPlay
+              key={pageShown}
+              loop
+              muted
+              preload="none"
+            >
               <source src="./img/main/szachy-gotowy.mp4" type="video/mp4" />
             </video>,
-            textSzachy
+            <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
+              {textSzachy}
+            </p>
           );
         case 3:
           return render(
-            <video autoPlay key={pageShown} loop muted preload="none">
+            <video
+              className="animate-kafel1"
+              autoPlay
+              key={pageShown}
+              loop
+              muted
+              preload="none"
+            >
               <source src="./img/main/arcade-gotowy.mp4" type="video/mp4" />
             </video>,
-            textArcade
+            <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
+              {textArcade}
+            </p>
           );
         case 4:
-          return render(textCodePen, <img src="./img/main/codepen.png" />);
+          return render(
+            <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
+              {textCodePen}
+            </p>,
+            <img className="animate-kafel2" src="./img/main/codepen.png" />
+          );
         case 5:
           return render(
-            textImba,
-            <video autoPlay loop muted preload="none">
+            <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
+              {textImba}
+            </p>,
+            <video
+              className="animate-kafel2"
+              autoPlay
+              loop
+              muted
+              preload="none"
+            >
               <source src="./img/main/IMBA-gotowy.mp4" type="video/mp4" />
             </video>
           );
         case 6:
-          return render(<img src="./img/main/front.png" />, frontendmasters);
+          return render(
+            <img className="animate-kafel1" src="./img/main/front.png" />,
+            <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
+              {frontendmasters}
+            </p>
+          );
         case 7:
           return render(
-            quasar,
-            <video autoPlay loop muted preload="none">
+            <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
+              {quasar}
+            </p>,
+            <video
+              className="animate-kafel2"
+              autoPlay
+              loop
+              muted
+              preload="none"
+            >
               <source src="./img/main/quasarhud.mp4" type="video/mp4" />
             </video>
           );
@@ -115,9 +164,9 @@ export function Main() {
       tail2: ReactElement | string
     ) {
       return (
-        <div className="kontener relative">
-          <div className="tail-1 text-white">{tail1}</div>
-          <div className="tail-2 text-white">{tail2}</div>
+        <div className="kontener relative m-auto flex h-[100%] w-[75%] flex-row items-center text-justify align-baseline">
+          <div className="tail-1 w-[50%]">{tail1}</div>
+          <div className="tail-2 w-[50%]">{tail2}</div>
           <div className="kursor absolute">
             <img
               src="./img/main/mouse_scroll.svg"

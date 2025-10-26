@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext", // Używanie ESNext do generowania nowoczesnych plików JS
     "module": "ESNext", // Używanie modułów ESNext
-    "moduleResolution": "node", // Rozwiązywanie modułów jak w Node.js
+    "moduleResolution": "node10", // Rozwiązywanie modułów jak w Node.js
     "jsx": "react-jsx", // JSX w stylu React 17
     "strict": true, // Włączenie wszystkich reguł TypeScript
     "esModuleInterop": true, // Pozwala na interoperacyjność z CommonJS
