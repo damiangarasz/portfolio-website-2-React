@@ -1,4 +1,5 @@
 import { ReactElement, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export function Main() {
   const textApkaMath =
@@ -74,60 +75,94 @@ export function Main() {
     } else if (pageShown >= 3 && pageShown < 6) {
       const lol = `./img/main/Zrzut ekranu ${obrazekLiczydlo}.png`;
       return render(
-        <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
-          {textApkaMath}
-        </p>,
-        <img className="m-auto w-[50%] animate-kafel2" src={lol} />
+        <a
+          href="https://play.google.com/apps/internaltest/4701599852931904094"
+          target="blank"
+        >
+          <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
+            {textApkaMath}
+          </p>
+        </a>,
+        <a
+          href="https://play.google.com/apps/internaltest/4701599852931904094"
+          target="blak"
+        >
+          <img className="m-auto w-[50%] animate-kafel2" src={lol} />
+        </a>
       );
     } else if (pageShown >= 6 && pageShown < 9) {
       return render(
-        <video className="animate-kafel1" autoPlay loop muted preload="none">
-          <source src="./img/main/szachy-gotowy.mp4" type="video/mp4" />
-        </video>,
-        <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
-          {textSzachy}
-        </p>
+        <Link to="/game-2">
+          <video className="animate-kafel1" autoPlay loop muted preload="none">
+            <source src="./img/main/szachy-gotowy.mp4" type="video/mp4" />
+          </video>
+        </Link>,
+        <Link to="/game-2">
+          <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-justify text-white">
+            {textSzachy}
+          </p>
+        </Link>
       );
     } else if (pageShown >= 9 && pageShown < 12) {
       return render(
-        <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
-          {textArcade}
-        </p>,
-        <video className="animate-kafel1" autoPlay loop muted preload="none">
-          <source src="./img/main/arcade-gotowy.mp4" type="video/mp4" />
-        </video>
+        <Link to="/game-1">
+          <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-justify text-white">
+            {textArcade}
+          </p>
+        </Link>,
+        <Link to="/game-1">
+          <video className="animate-kafel1" autoPlay loop muted preload="none">
+            <source src="./img/main/arcade-gotowy.mp4" type="video/mp4" />
+          </video>
+        </Link>
       );
     } else if (pageShown >= 12 && pageShown < 15) {
       return render(
-        <img className="animate-kafel2" src="./img/main/codepen.png" />,
-        <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
-          {textCodePen}
-        </p>
+        <a href="https://codepen.io/DamianGarasz" target="_blank">
+          <img className="animate-kafel2" src="./img/main/codepen.png" />
+        </a>,
+        <a href="https://codepen.io/DamianGarasz" target="_blank">
+          <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-justify text-white">
+            {textCodePen}
+          </p>
+        </a>
       );
     } else if (pageShown >= 15 && pageShown < 18) {
       return render(
-        <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
-          {textImba}
-        </p>,
-        <video className="animate-kafel2" autoPlay loop muted preload="none">
-          <source src="./img/main/IMBA-gotowy.mp4" type="video/mp4" />
-        </video>
+        <a href="https://damiangarasz.github.io/ImbaProfit/" target="blank">
+          <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-justify text-white">
+            {textImba}
+          </p>
+        </a>,
+        <a href="https://damiangarasz.github.io/ImbaProfit/" target="blank">
+          <video className="animate-kafel2" autoPlay loop muted preload="none">
+            <source src="./img/main/IMBA-gotowy.mp4" type="video/mp4" />
+          </video>
+        </a>
       );
     } else if (pageShown >= 18 && pageShown < 21) {
       return render(
-        <img className="animate-kafel1" src="./img/main/front.png" />,
-        <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
-          {frontendmasters}
-        </p>
+        <a href="https://frontendmasters.com/u/Garik/" target="blank">
+          <img className="animate-kafel1" src="./img/main/front.png" />
+        </a>,
+        <a href="https://frontendmasters.com/u/Garik/" target="blank">
+          <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-justify text-white">
+            {frontendmasters}
+          </p>
+        </a>
       );
     } else if (pageShown >= 21 && pageShown < 24) {
       return render(
-        <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
-          {quasar}
-        </p>,
-        <video className="animate-kafel2" autoPlay loop muted preload="none">
-          <source src="./img/main/quasarhud.mp4" type="video/mp4" />
-        </video>
+        <a href="https://quasarhud.com/" target="blank">
+          <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-justify text-white">
+            {quasar}
+          </p>
+        </a>,
+        <a href="https://quasarhud.com/" target="blank">
+          <video className="animate-kafel2" autoPlay loop muted preload="none">
+            <source src="./img/main/quasarhud.mp4" type="video/mp4" />
+          </video>
+        </a>
       );
     }
 
