@@ -81,12 +81,12 @@ const Menu = () => {
           </li>
           <li className="learn relative">
             <span className="dot text-white">•</span>
-            <span className="text-xl text-white">Game</span>
+            <span className="text-xl text-white">Games</span>
             <span className="text-white">⯆</span>
             <ul className="drop-menu absolute top-4 hidden hover:block">
               <li className="text-black">
                 <Link to="/game-1">
-                  <p className="text-white">Gane 1</p>
+                  <p className="text-white">Game 1</p>
                 </Link>
               </li>
               <li className="text-black">

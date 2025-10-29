@@ -21,11 +21,11 @@ const Header = () => {
           <g id="SVGRepo_iconCarrier">
             <path
               d="M15 1H1V7H3.38197L4.88196 4L7.11803 4L10 9.76393L11.382 7H15V1Z"
-              fill="#ffea00ff"
+              fill="#535773"
             ></path>
             <path
               d="M15 9H12.618L11.118 12L8.88197 12L6 6.23607L4.61803 9H1V15H15V9Z"
-              fill="#ff00ffff"
+              fill="#fff"
             ></path>
           </g>
         </svg>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="200" viewBox="0 0 120 200" aria-labelledby="title desc" role="img">
+  <title id="title">Scroll prompt — mysz z animowanymi strzałkami</title>
+  <desc id="desc">Biała ikona myszy z kreską u góry i animowanymi strzałkami zachęcająca do przewijania.</desc>
+
+  <style>
+    .mouse-outline { fill: none; stroke: #ffffff; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .wheel-line { stroke: #ffffff; stroke-width: 3; stroke-linecap: round; }
+
+    .arrow { fill: none; stroke: #ffffff; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.95; }
+    .arrow.up { transform-origin: 60px 36px; }
+    .arrow.down { transform-origin: 60px 164px; }
+
+    @keyframes arrowUp {
+      0% { transform: translateY(0); opacity: 0.9; }
+      50% { transform: translateY(-8px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.9; }
+    }
+    @keyframes arrowDown {
+      0% { transform: translateY(0); opacity: 0.9; }
+      50% { transform: translateY(8px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.9; }
+    }
+    .arrow.up { animation: arrowUp 1.6s ease-in-out infinite; }
+    .arrow.down { animation: arrowDown 1.6s ease-in-out infinite; }
+
+    @keyframes wheelPulse {
+      0% { opacity: 0.85; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(3px); }
+      100% { opacity: 0.85; transform: translateY(0); }
+    }
+    .wheel-line { animation: wheelPulse 1.6s ease-in-out infinite; }
+  </style>
+
+  <path class="arrow up" d="M48 42 L60 30 L72 42" />
+  <rect x="30" y="50" width="60" height="100" rx="28" ry="28" class="mouse-outline" />
+  <line x1="60" y1="63" x2="60" y2="77" class="wheel-line" />
+  <path class="arrow down" d="M48 158 L60 170 L72 158" />
+</svg>

@@ -23,6 +23,7 @@ export function Main() {
   const [pageShown, setPageShown] = useState(0);
   const [obrazekLiczydlo, setobrazekLiczydlo] = useState(1);
 
+  //ustawienie zmieniania się obrazków
   useEffect(() => {
     if (pageShown == 1) {
       const timer = setInterval(() => {
@@ -42,12 +43,13 @@ export function Main() {
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (e.deltaY > 0 && pageShown < 8) {
+      console.log(e);
+      if (e.deltaY > 0 && pageShown < 21) {
         setPageShown((num) => num + 1);
       } else if (e.deltaY < 0 && pageShown > 0) {
         setPageShown((num) => num - 1);
-      } else if (e.deltaY > 0 && pageShown == 8) {
-        setPageShown(8);
+      } else if (e.deltaY > 0 && pageShown == 21) {
+        setPageShown(21);
       } else if (e.deltaY < 0 && pageShown <= 0) {
         setPageShown(0);
       }
@@ -61,210 +63,97 @@ export function Main() {
   }, [pageShown]);
 
   const lol = () => {
-    if (pageShown == 0) {
+    if (pageShown < 3) {
       return (
-        <div className="animate-slideIntro col-span-2 mx-auto flex h-[100%] max-w-xl items-center text-xl">
+        <div className="col-span-2 mx-auto flex h-[100%] max-w-xl animate-slideIntro items-center text-xl">
           <p className="bg-gray-900/70 p-[20px] text-center text-white">
             {intro}
           </p>
         </div>
       );
-    } else {
-      switch (pageShown) {
-        case 1:
-          const lol = `./img/main/Zrzut ekranu ${obrazekLiczydlo}.png`;
-          return render(
-            <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
-              {textApkaMath}
-            </p>,
-            <img className="animate-kafel2 m-auto w-[50%]" src={lol} />
-          );
-        case 2:
-          return render(
-            <video
-              className="animate-kafel1"
-              autoPlay
-              key={pageShown}
-              loop
-              muted
-              preload="none"
-            >
-              <source src="./img/main/szachy-gotowy.mp4" type="video/mp4" />
-            </video>,
-            <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
-              {textSzachy}
-            </p>
-          );
-        case 3:
-          return render(
-            <video
-              className="animate-kafel1"
-              autoPlay
-              key={pageShown}
-              loop
-              muted
-              preload="none"
-            >
-              <source src="./img/main/arcade-gotowy.mp4" type="video/mp4" />
-            </video>,
-            <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
-              {textArcade}
-            </p>
-          );
-        case 4:
-          return render(
-            <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
-              {textCodePen}
-            </p>,
-            <img className="animate-kafel2" src="./img/main/codepen.png" />
-          );
-        case 5:
-          return render(
-            <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
-              {textImba}
-            </p>,
-            <video
-              className="animate-kafel2"
-              autoPlay
-              loop
-              muted
-              preload="none"
-            >
-              <source src="./img/main/IMBA-gotowy.mp4" type="video/mp4" />
-            </video>
-          );
-        case 6:
-          return render(
-            <img className="animate-kafel1" src="./img/main/front.png" />,
-            <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
-              {frontendmasters}
-            </p>
-          );
-        case 7:
-          return render(
-            <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
-              {quasar}
-            </p>,
-            <video
-              className="animate-kafel2"
-              autoPlay
-              loop
-              muted
-              preload="none"
-            >
-              <source src="./img/main/quasarhud.mp4" type="video/mp4" />
-            </video>
-          );
-        default:
-          return <div>dupa</div>;
-      }
+    } else if (pageShown >= 3 && pageShown < 6) {
+      const lol = `./img/main/Zrzut ekranu ${obrazekLiczydlo}.png`;
+      return render(
+        <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
+          {textApkaMath}
+        </p>,
+        <img className="m-auto w-[50%] animate-kafel2" src={lol} />
+      );
+    } else if (pageShown >= 6 && pageShown < 9) {
+      return render(
+        <video className="animate-kafel1" autoPlay loop muted preload="none">
+          <source src="./img/main/szachy-gotowy.mp4" type="video/mp4" />
+        </video>,
+        <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
+          {textSzachy}
+        </p>
+      );
+    } else if (pageShown >= 9 && pageShown < 12) {
+      return render(
+        <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
+          {textArcade}
+        </p>,
+        <video className="animate-kafel1" autoPlay loop muted preload="none">
+          <source src="./img/main/arcade-gotowy.mp4" type="video/mp4" />
+        </video>
+      );
+    } else if (pageShown >= 12 && pageShown < 15) {
+      return render(
+        <img className="animate-kafel2" src="./img/main/codepen.png" />,
+        <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
+          {textCodePen}
+        </p>
+      );
+    } else if (pageShown >= 15 && pageShown < 18) {
+      return render(
+        <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
+          {textImba}
+        </p>,
+        <video className="animate-kafel2" autoPlay loop muted preload="none">
+          <source src="./img/main/IMBA-gotowy.mp4" type="video/mp4" />
+        </video>
+      );
+    } else if (pageShown >= 18 && pageShown < 21) {
+      return render(
+        <img className="animate-kafel1" src="./img/main/front.png" />,
+        <p className="animate-kafel2 bg-gray-900/70 p-[20px] text-center text-white">
+          {frontendmasters}
+        </p>
+      );
+    } else if (pageShown >= 21 && pageShown < 24) {
+      return render(
+        <p className="animate-kafel1 bg-gray-900/70 p-[20px] text-center text-white">
+          {quasar}
+        </p>,
+        <video className="animate-kafel2" autoPlay loop muted preload="none">
+          <source src="./img/main/quasarhud.mp4" type="video/mp4" />
+        </video>
+      );
     }
+
     function render(
       tail1: ReactElement | string,
       tail2: ReactElement | string
     ) {
       return (
-        <div className="kontener relative m-auto flex h-[100%] w-[75%] flex-row items-center text-justify align-baseline">
-          <div className="tail-1 w-[50%]">{tail1}</div>
-          <div className="tail-2 w-[50%]">{tail2}</div>
-          <div className="kursor absolute">
-            <img
-              src="./img/main/mouse_scroll.svg"
-              alt="Myszka scroll"
-              className="h-36 w-24"
-            />
-          </div>
+        <div className="kontener m-auto flex h-[100%] w-[75%] flex-row items-center gap-3 text-justify align-baseline">
+          <div className="tail-1 w-[50%] text-xl">{tail1}</div>
+          <div className="tail-2 w-[50%] text-xl">{tail2}</div>
         </div>
       );
     }
   };
 
   return (
-    <main className="kontener h-[90vh] w-[100%]">{lol()}</main>
-    //   <main className="kontener mx-auto grid w-[832px] grid-cols-2">
-    //<div className="mx-auto flex h-[100%] w-[75%] items-center">
-    //   <div className="mx-auto flex w-[333px] items-center px-2 py-4 text-justify">
-    //     <Link className="block" to="/Game-2">
-    //       <p className="text-white">{textSzachy}</p>
-    //     </Link>
-    //   </div>
-    //   <div className="mx-auto w-[400px] items-center justify-center px-2 py-4">
-    //     <Link to="/Game-2">
-    //       <video autoPlay muted loop preload="none">
-    //         <source
-    //           src="img/main/szachy-gotowy.mp4"
-    //           type="video/mp4"
-    //         ></source>
-    //       </video>
-    //     </Link>
-    //   </div>
-    // </div>
-    //
-    //<div>
-    //   <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
-    //     <Link to="/Game-1">
-    //       <video autoPlay muted loop preload="none">
-    //         <source
-    //           src="img/main/arcade-gotowy.mp4"
-    //           type="video/mp4"
-    //         ></source>
-    //       </video>
-    //     </Link>
-    //   </div>
-    //   <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
-    //     <Link to="/Game-1">
-    //       <p className="text-white">{textArcade}</p>
-    //     </Link>
-    //   </div>
-    // </div>
-    //     <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
-    //       <a href="https://codepen.io/DamianGarasz" target="_blank">
-    //         <p className="text-white">{textCodePen}</p>
-    //       </a>
-    //     </div>
-    //     <div className="mx-auto w-[400px] px-2 py-4">
-    //       <a href="https://codepen.io/DamianGarasz" target="_blank">
-    //         <img src="img/main/codepen.png"></img>
-    //       </a>
-    //     </div>
-    //     <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
-    //       <a href="https://damiangarasz.github.io/ImbaProfit/" target="_blank">
-    //         <video autoPlay muted loop preload="none">
-    //           <source src="img/main/IMBA-gotowy.mp4" type="video/mp4"></source>
-    //         </video>
-    //       </a>
-    //     </div>
-    //     <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
-    //       <a href="https://damiangarasz.github.io/ImbaProfit/" target="_blank">
-    //         <p className="text-white">{textImba} </p>
-    //         <span className="text-red-400">
-    //           (Strona ma obecnie kilka mankamentów z powodu braku obsługi routingu
-    //           przez GitHub Pages)
-    //         </span>
-    //       </a>
-    //     </div>
-    //     <div className="mx-auto flex w-[400px] items-center px-2 py-4 text-justify">
-    //       <a href="https://frontendmasters.com/u/Garik/" target="_blank">
-    //         <p className="text-white">{frontendmasters}</p>
-    //       </a>
-    //     </div>
-    //     <div className="mx-auto w-[400px] px-2 py-4">
-    //       <a href="https://frontendmasters.com/u/Garik/" target="_blank">
-    //         <img src="img/main/front.png"></img>
-    //       </a>
-    //     </div>
-    //     <div className="mx-auto w-[400px] bg-black bg-opacity-75 px-2 py-4">
-    //       <a href="https://www.quasarhud.com/" target="_blank">
-    //         <video autoPlay muted loop preload="none">
-    //           <source src="img/main/quasarhud.mp4" type="video/mp4"></source>
-    //         </video>
-    //       </a>
-    //     </div>
-    //     <div className="mx-auto flex w-[400px] items-center bg-black bg-opacity-75 px-2 py-4 text-justify text-white">
-    //       <a href="https://www.quasarhud.com/" target="_blank">
-    //         <p className="text-white">{quasar}</p>
-    //       </a>
-    //     </div>
-    //   </main>
+    <main className="kontener relative h-[90vh] w-[100%]">
+      {lol()}
+      <div className="kursor absolute left-[47%] top-[78%]">
+        <img
+          src="./img/main/mouse-scroll.svg"
+          alt="Myszka scroll"
+          className="h-36 w-24"
+        />
+      </div>
+    </main>
   );
 }

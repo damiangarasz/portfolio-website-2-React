@@ -22,11 +22,11 @@ module.exports = {
 
         kafel1: {
           from: { transform: 'translateY(-300px)' },
-          to: { transform: 'translateY(-100px)' },
+          to: { transform: 'translateY(0px)' },
         },
         kafel2: {
           from: { transform: 'translateY(300px)' },
-          to: { transform: 'translateY(100px)' },
+          to: { transform: 'translateY(0px)' },
         },
       },
       animation: {
